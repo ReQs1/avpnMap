@@ -8,6 +8,13 @@ generator client {
   output   = "../generated/prisma"
 }
 
+model User {
+  id Int @id @default(autoincrement())
+  username String
+  email String @unique
+  avatarURL String
+}
+
 
 model Pizzeria {
   id           Int    @id @default(autoincrement())
