@@ -7,3 +7,15 @@ generator client {
   provider = "prisma-client-js"
   output   = "../generated/prisma"
 }
+
+
+model Pizzeria {
+  id           Int    @id @default(autoincrement())
+  memberNumber Int? @map("member_number")
+  name         String
+  nation       String
+  address      String
+  lat          Int
+  lng          Int
+  website      String?
+}
