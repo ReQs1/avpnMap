@@ -26,6 +26,7 @@ export class OptionalAuthGuard implements CanActivate {
         req.user = payload;
       } catch (err) {
         res.clearCookie('accessToken');
+        res.clearCookie('refreshToken');
         throw new UnauthorizedException(err);
       }
     }

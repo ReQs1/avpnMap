@@ -12,7 +12,7 @@ export class PizzeriasService {
   async getPizzeriasWithUser(userId: number) {
     const rows = await this.prisma.pizzeria.findMany({
       include: {
-        visitations: {
+        visits: {
           where: { userId },
           take: 1,
           select: {
@@ -25,7 +25,7 @@ export class PizzeriasService {
     });
 
     return rows.map((p) => {
-      const visit = p.visitations[0];
+      const visit = p.visits[0];
       return {
         id: p.id,
         memberNumber: p.memberNumber,
