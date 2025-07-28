@@ -8,3 +8,13 @@ export interface AuthRequest extends Request {
     avatarURL: string;
   };
 }
+
+export interface OptionalUserRequest extends Request {
+  user:
+    | {
+        sub: number;
+        iat: number;
+        exp: number;
+      }
+    | undefined;
+}

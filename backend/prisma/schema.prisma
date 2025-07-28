@@ -9,20 +9,34 @@ generator client {
 }
 
 model User {
-  id Int @id @default(autoincrement())
-  username String
-  email String @unique
-  avatarURL String @map("avatar_url")
+  id           Int          @id @default(autoincrement())
+  username     String
+  email        String       @unique
+  avatarURL    String       @map("avatar_url")
+  visitations  Visitation[]
 }
 
-
 model Pizzeria {
-  id           Int    @id @default(autoincrement())
-  memberNumber Int? @map("member_number")
+  id           Int          @id @default(autoincrement())
+  memberNumber Int?         @map("member_number")
   name         String
   nation       String
   address      String
   lat          Float
   lng          Float
   website      String?
+  visitations  Visitation[]
+}
+
+model Visitation {
+  id           Int       @id @default(autoincrement())
+  user         User      @relation(fields: [userId],    references: [id])
+  userId       Int
+  pizzeria     Pizzeria  @relation(fields: [pizzeriaId], references: [id])
+  pizzeriaId   Int
+  rating       Int?
+  description  String?
+  visitedAt    DateTime
+
+  @@unique([userId, pizzeriaId])
 }

@@ -3,14 +3,14 @@ import { Prisma } from 'generated/prisma';
 import { UserService } from 'src/user/user.service';
 import * as jwt from 'jsonwebtoken';
 import { ConfigType } from '@nestjs/config';
-import accessTokenConfig from './config/access-token.config';
 import { accessTokenExpiresIn } from './constants/jwt-constants';
+import jwtTokensConfig from './config/jwt-tokens.config';
 @Injectable()
 export class AuthService {
   constructor(
     private userService: UserService,
-    @Inject(accessTokenConfig.KEY)
-    private accessTokenConfiguration: ConfigType<typeof accessTokenConfig>,
+    @Inject(jwtTokensConfig.KEY)
+    private jwtTokensConfiguration: ConfigType<typeof jwtTokensConfig>,
   ) {}
 
   async validateGoogleUser(googleUser: Prisma.UserCreateInput) {
@@ -25,8 +25,17 @@ export class AuthService {
       {
         sub: userId,
       },
-      this.accessTokenConfiguration.accessTokenSecret,
+      this.jwtTokensConfiguration.accessTokenSecret,
       { expiresIn: accessTokenExpiresIn },
+    );
+  }
+
+  validateToken(token: string, tokenType: 'access' | 'refresh') {
+    return jwt.verify(
+      token,
+      tokenType === 'access'
+        ? this.jwtTokensConfiguration.accessTokenSecret
+        : this.jwtTokensConfiguration.refreshTokenSecret,
     );
   }
 }

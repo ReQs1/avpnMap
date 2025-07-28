@@ -4,7 +4,43 @@ import { PrismaService } from 'src/prisma/prisma.service';
 @Injectable()
 export class PizzeriasService {
   constructor(private prisma: PrismaService) {}
-  async getAllPizzerias() {
+
+  async getPizzerias() {
     return await this.prisma.pizzeria.findMany();
+  }
+
+  async getPizzeriasWithUser(userId: number) {
+    const rows = await this.prisma.pizzeria.findMany({
+      include: {
+        visitations: {
+          where: { userId },
+          take: 1,
+          select: {
+            rating: true,
+            description: true,
+            visitedAt: true,
+          },
+        },
+      },
+    });
+
+    return rows.map((p) => {
+      const visit = p.visitations[0];
+      return {
+        id: p.id,
+        memberNumber: p.memberNumber,
+        name: p.name,
+        nation: p.nation,
+        address: p.address,
+        lat: p.lat,
+        lng: p.lng,
+        website: p.website,
+
+        visited: Boolean(visit),
+        rating: visit?.rating ?? null,
+        description: visit?.description || null,
+        visitedAt: visit?.visitedAt ?? null,
+      };
+    });
   }
 }

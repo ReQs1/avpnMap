@@ -5,15 +5,16 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import googleConfig from './config/google.config';
 import { GoogleStrategy } from './strategy/google.strategy';
-import accessTokenConfig from './config/access-token.config';
+import jwtTokensConfig from './config/jwt-tokens.config';
 
 @Module({
   providers: [AuthService, GoogleStrategy],
   controllers: [AuthController],
   imports: [
     ConfigModule.forFeature(googleConfig),
-    ConfigModule.forFeature(accessTokenConfig),
+    ConfigModule.forFeature(jwtTokensConfig),
     UserModule,
   ],
+  exports: [AuthService],
 })
 export class AuthModule {}

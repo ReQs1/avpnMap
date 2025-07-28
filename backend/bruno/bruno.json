@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "avpnMap",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}
