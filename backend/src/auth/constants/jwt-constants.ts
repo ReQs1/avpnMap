@@ -1,1 +1,5 @@
-export const accessTokenExpiresIn = 60 * 60;
+export const ACCESS_TOKEN_EXPIRES_IN = 60 * 60; // 1 hour
+export const REFRESH_TOKEN_EXPIRES_IN = 60 * 60 * 24 * 7; // 7 days
+
+export const ACCESS_TOKEN_EXPIRES_IN_MS = ACCESS_TOKEN_EXPIRES_IN * 1000;
+export const REFRESH_TOKEN_EXPIRES_IN_MS = REFRESH_TOKEN_EXPIRES_IN * 1000;

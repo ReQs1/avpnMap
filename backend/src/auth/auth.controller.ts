@@ -1,15 +1,28 @@
-import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpCode,
+  Post,
+  Req,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Response, CookieOptions } from 'express';
 import { GoogleAuthGuard } from './guards/google-auth/google-auth.guard';
 import { AuthRequest } from './interfaces/interfaces';
 import { AuthService } from './auth.service';
-import { accessTokenExpiresIn } from './constants/jwt-constants';
+import {
+  ACCESS_TOKEN_EXPIRES_IN_MS,
+  REFRESH_TOKEN_EXPIRES_IN_MS,
+} from './constants/jwt-constants';
+import { RefreshTokenGuard } from './guards/refresh-token/refresh-token.guard';
 
 @Controller('auth')
 export class AuthController {
   private isProd: boolean;
   private accessCookieOpts: CookieOptions;
+  private refreshCookieOpts: CookieOptions;
   private redirectURL: string;
 
   constructor(
@@ -22,7 +35,14 @@ export class AuthController {
       httpOnly: true,
       secure: this.isProd,
       sameSite: this.isProd ? 'none' : 'lax',
-      maxAge: accessTokenExpiresIn,
+      maxAge: ACCESS_TOKEN_EXPIRES_IN_MS,
+    };
+
+    this.refreshCookieOpts = {
+      httpOnly: true,
+      secure: this.isProd,
+      sameSite: this.isProd ? 'none' : 'lax',
+      maxAge: REFRESH_TOKEN_EXPIRES_IN_MS,
     };
 
     this.redirectURL = this.configService.get<string>('FRONTEND_URL')!;
@@ -35,10 +55,51 @@ export class AuthController {
   @UseGuards(GoogleAuthGuard)
   @Get('google/callback')
   googleCallback(@Req() req: AuthRequest, @Res() res: Response) {
-    const accessToken = this.authService.createAccessToken(req.user.id);
-    // TODO: add refresh token
+    const accessToken = this.authService.createJwtToken(req.user.id, 'access');
+    const refreshToken = this.authService.createJwtToken(
+      req.user.id,
+      'refresh',
+    );
+
     res
       .cookie('accessToken', accessToken, this.accessCookieOpts)
+      .cookie('refreshToken', refreshToken, this.refreshCookieOpts)
       .redirect(this.redirectURL);
+  }
+
+  @HttpCode(200)
+  @Post('logout')
+  logout(@Res({ passthrough: true }) res: Response) {
+    res.clearCookie('accessToken').clearCookie('refreshToken');
+    return { message: 'Logged out successfully' };
+  }
+
+  @UseGuards(RefreshTokenGuard)
+  @HttpCode(200)
+  @Post('refresh')
+  refreshToken(
+    @Req()
+    req: Request & {
+      user: {
+        sub: number;
+        iat: number;
+        exp: number;
+      };
+    },
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    const newAccessToken = this.authService.createJwtToken(
+      req.user.sub,
+      'access',
+    );
+    const newRefreshToken = this.authService.createJwtToken(
+      req.user.sub,
+      'refresh',
+    );
+
+    res
+      .cookie('accessToken', newAccessToken, this.accessCookieOpts)
+      .cookie('refreshToken', newRefreshToken, this.refreshCookieOpts);
+    return { message: 'Tokens refreshed successfully' };
   }
 }

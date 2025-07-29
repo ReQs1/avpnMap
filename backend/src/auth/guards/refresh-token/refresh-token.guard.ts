@@ -8,7 +8,7 @@ import { Request, Response } from 'express';
 import { AuthService } from 'src/auth/auth.service';
 
 @Injectable()
-export class OptionalAuthGuard implements CanActivate {
+export class RefreshTokenGuard implements CanActivate {
   constructor(private authService: AuthService) {}
 
   canActivate(context: ExecutionContext): boolean {
@@ -16,21 +16,17 @@ export class OptionalAuthGuard implements CanActivate {
     const req = ctx.getRequest<Request>();
     const res = ctx.getResponse<Response>();
 
-    const token = req.cookies?.accessToken;
-    if (token) {
-      try {
-        const payload = this.authService.validateToken(
-          token as string,
-          'access',
-        );
-        req.user = payload;
-      } catch (err) {
-        res.clearCookie('accessToken');
-        res.clearCookie('refreshToken');
-        throw new UnauthorizedException(err);
-      }
-    }
+    const token = req.cookies?.refreshToken;
 
-    return true;
+    if (!token) throw new UnauthorizedException('Refresh token missing');
+
+    try {
+      const payload = this.authService.validateToken(token, 'refresh');
+      req.user = payload;
+      return true;
+    } catch (error) {
+      res.clearCookie('accessToken').clearCookie('refreshToken');
+      throw new UnauthorizedException(error);
+    }
   }
 }

@@ -3,7 +3,10 @@ import { Prisma } from 'generated/prisma';
 import { UserService } from 'src/user/user.service';
 import * as jwt from 'jsonwebtoken';
 import { ConfigType } from '@nestjs/config';
-import { accessTokenExpiresIn } from './constants/jwt-constants';
+import {
+  ACCESS_TOKEN_EXPIRES_IN,
+  REFRESH_TOKEN_EXPIRES_IN,
+} from './constants/jwt-constants';
 import jwtTokensConfig from './config/jwt-tokens.config';
 @Injectable()
 export class AuthService {
@@ -20,13 +23,20 @@ export class AuthService {
     return await this.userService.create(googleUser);
   }
 
-  createAccessToken(userId: number) {
+  createJwtToken(userId: number, tokenType: 'access' | 'refresh') {
     return jwt.sign(
       {
         sub: userId,
       },
-      this.jwtTokensConfiguration.accessTokenSecret,
-      { expiresIn: accessTokenExpiresIn },
+      tokenType === 'access'
+        ? this.jwtTokensConfiguration.accessTokenSecret
+        : this.jwtTokensConfiguration.refreshTokenSecret,
+      {
+        expiresIn:
+          tokenType === 'access'
+            ? ACCESS_TOKEN_EXPIRES_IN
+            : REFRESH_TOKEN_EXPIRES_IN,
+      },
     );
   }
 
