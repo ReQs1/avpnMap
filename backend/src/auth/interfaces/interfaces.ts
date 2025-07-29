@@ -9,7 +9,7 @@ export interface AuthRequest extends Request {
   };
 }
 
-export interface OptionalUserRequest extends Request {
+export interface OptionalJwtPayloadRequest extends Request {
   user:
     | {
         sub: number;
@@ -17,4 +17,12 @@ export interface OptionalUserRequest extends Request {
         exp: number;
       }
     | undefined;
+}
+
+export interface JwtPayloadRequest extends Request {
+  user: {
+    sub: number;
+    iat: number;
+    exp: number;
+  };
 }

@@ -10,13 +10,15 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { Response, CookieOptions } from 'express';
 import { GoogleAuthGuard } from './guards/google-auth/google-auth.guard';
-import { AuthRequest } from './interfaces/interfaces';
+import { AuthRequest, JwtPayloadRequest } from './interfaces/interfaces';
 import { AuthService } from './auth.service';
 import {
   ACCESS_TOKEN_EXPIRES_IN_MS,
   REFRESH_TOKEN_EXPIRES_IN_MS,
 } from './constants/jwt-constants';
 import { RefreshTokenGuard } from './guards/refresh-token/refresh-token.guard';
+import { UserService } from 'src/user/user.service';
+import { JwtGuard } from './guards/jwt/jwt.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -28,6 +30,7 @@ export class AuthController {
   constructor(
     private configService: ConfigService,
     private authService: AuthService,
+    private userService: UserService,
   ) {
     this.isProd = this.configService.get<string>('NODE_ENV') === 'production';
 
@@ -48,6 +51,41 @@ export class AuthController {
     this.redirectURL = this.configService.get<string>('FRONTEND_URL')!;
   }
 
+  // TODO: implement
+  @UseGuards(JwtGuard)
+  @Get('me')
+  async getUserInfo(@Req() req: JwtPayloadRequest) {
+    const userId = req.user.sub;
+    return await this.userService.fetchUserInfo(userId);
+  }
+
+  @HttpCode(200)
+  @Post('logout')
+  logout(@Res({ passthrough: true }) res: Response) {
+    res.clearCookie('accessToken').clearCookie('refreshToken');
+    return { message: 'Logged out successfully' };
+  }
+
+  @UseGuards(RefreshTokenGuard)
+  @HttpCode(200)
+  @Post('refresh')
+  refreshToken(
+    @Req() req: JwtPayloadRequest,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    const userId = req.user.sub;
+
+    const newAccessToken = this.authService.createJwtToken(userId, 'access');
+    const newRefreshToken = this.authService.createJwtToken(userId, 'refresh');
+
+    res
+      .cookie('accessToken', newAccessToken, this.accessCookieOpts)
+      .cookie('refreshToken', newRefreshToken, this.refreshCookieOpts);
+    return { message: 'Tokens refreshed successfully' };
+  }
+
+  // google oauth endpoints
+
   @UseGuards(GoogleAuthGuard)
   @Get('google/login')
   googleLogin() {}
@@ -65,41 +103,5 @@ export class AuthController {
       .cookie('accessToken', accessToken, this.accessCookieOpts)
       .cookie('refreshToken', refreshToken, this.refreshCookieOpts)
       .redirect(this.redirectURL);
-  }
-
-  @HttpCode(200)
-  @Post('logout')
-  logout(@Res({ passthrough: true }) res: Response) {
-    res.clearCookie('accessToken').clearCookie('refreshToken');
-    return { message: 'Logged out successfully' };
-  }
-
-  @UseGuards(RefreshTokenGuard)
-  @HttpCode(200)
-  @Post('refresh')
-  refreshToken(
-    @Req()
-    req: Request & {
-      user: {
-        sub: number;
-        iat: number;
-        exp: number;
-      };
-    },
-    @Res({ passthrough: true }) res: Response,
-  ) {
-    const newAccessToken = this.authService.createJwtToken(
-      req.user.sub,
-      'access',
-    );
-    const newRefreshToken = this.authService.createJwtToken(
-      req.user.sub,
-      'refresh',
-    );
-
-    res
-      .cookie('accessToken', newAccessToken, this.accessCookieOpts)
-      .cookie('refreshToken', newRefreshToken, this.refreshCookieOpts);
-    return { message: 'Tokens refreshed successfully' };
   }
 }

@@ -17,4 +17,12 @@ export class UserService {
       data: user,
     });
   }
+
+  async fetchUserInfo(userId: number) {
+    return await this.prisma.user.findFirst({
+      where: {
+        id: userId,
+      },
+    });
+  }
 }

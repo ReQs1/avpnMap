@@ -1,7 +1,7 @@
 import { Controller, Get, Req, UseGuards } from '@nestjs/common';
 import { OptionalAuthGuard } from 'src/auth/guards/optional-auth/optional-auth.guard';
-import { OptionalUserRequest } from 'src/auth/interfaces/interfaces';
 import { PizzeriasService } from './pizzerias.service';
+import { OptionalJwtPayloadRequest } from 'src/auth/interfaces/interfaces';
 
 @Controller('pizzerias')
 export class PizzeriasController {
@@ -9,7 +9,7 @@ export class PizzeriasController {
 
   @UseGuards(OptionalAuthGuard)
   @Get()
-  async getAllPizzerias(@Req() req: OptionalUserRequest) {
+  async getAllPizzerias(@Req() req: OptionalJwtPayloadRequest) {
     const userId = req.user?.sub;
     if (userId) {
       return await this.pizzeriasService.getPizzeriasWithUser(userId);
