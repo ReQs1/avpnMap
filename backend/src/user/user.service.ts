@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma } from 'generated/prisma';
 import { PrismaService } from 'src/prisma/prisma.service';
 
@@ -18,11 +18,82 @@ export class UserService {
     });
   }
 
-  async fetchUserInfo(userId: number) {
+  async findUserSummaryById(userId: number) {
     return await this.prisma.user.findFirst({
       where: {
         id: userId,
       },
     });
+  }
+
+  async findUserProfileById(userId: number) {
+    const [allAchievements, userProfile] = await Promise.all([
+      this.prisma.achievement.findMany({
+        orderBy: { id: 'asc' },
+        omit: { code: true },
+      }),
+      this.prisma.user.findUnique({
+        where: { id: userId },
+        select: {
+          id: true,
+          username: true,
+          avatarURL: true,
+          joinedAt: true,
+          visits: {
+            orderBy: {
+              visitedAt: 'desc',
+            },
+            select: {
+              id: true,
+              description: true,
+              rating: true,
+              visitedAt: true,
+              pizzeria: {
+                select: {
+                  id: true,
+                  memberNumber: true,
+                  name: true,
+                  address: true,
+                  nation: true,
+                },
+              },
+            },
+          },
+          achievements: {
+            select: {
+              achievementId: true,
+              unlockedAt: true,
+            },
+          },
+        },
+      }),
+    ]);
+
+    if (!userProfile) {
+      throw new NotFoundException();
+    }
+
+    const unlockedAchievementsMap = new Map(
+      userProfile.achievements.map((ua) => [ua.achievementId, ua.unlockedAt]),
+    );
+
+    const processedAchievements = allAchievements.map((achievement) => ({
+      ...achievement,
+      unlockedAt: unlockedAchievementsMap.get(achievement.id) || null,
+    }));
+
+    processedAchievements.sort((a, b) => {
+      if (a.unlockedAt && !b.unlockedAt) return -1;
+      if (!a.unlockedAt && b.unlockedAt) return 1;
+      return a.id - b.id;
+    });
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { achievements, ...restOfProfile } = userProfile;
+
+    return {
+      ...restOfProfile,
+      achievements: processedAchievements,
+    };
   }
 }

@@ -1,11 +1,11 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { UserModule } from 'src/user/user.module';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import googleConfig from './config/google.config';
-import { GoogleStrategy } from './strategy/google.strategy';
 import jwtTokensConfig from './config/jwt-tokens.config';
+import { GoogleStrategy } from './strategy/google.strategy';
 
 @Module({
   providers: [AuthService, GoogleStrategy],
@@ -13,7 +13,7 @@ import jwtTokensConfig from './config/jwt-tokens.config';
   imports: [
     ConfigModule.forFeature(googleConfig),
     ConfigModule.forFeature(jwtTokensConfig),
-    UserModule,
+    forwardRef(() => UserModule),
   ],
   exports: [AuthService],
 })

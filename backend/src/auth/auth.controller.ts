@@ -8,17 +8,15 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { Response, CookieOptions } from 'express';
-import { GoogleAuthGuard } from './guards/google-auth/google-auth.guard';
-import { AuthRequest, JwtPayloadRequest } from './interfaces/interfaces';
+import { CookieOptions, Response } from 'express';
 import { AuthService } from './auth.service';
 import {
   ACCESS_TOKEN_EXPIRES_IN_MS,
   REFRESH_TOKEN_EXPIRES_IN_MS,
 } from './constants/jwt-constants';
+import { GoogleAuthGuard } from './guards/google-auth/google-auth.guard';
 import { RefreshTokenGuard } from './guards/refresh-token/refresh-token.guard';
-import { UserService } from 'src/user/user.service';
-import { JwtGuard } from './guards/jwt/jwt.guard';
+import { AuthRequest, JwtPayloadRequest } from './interfaces/interfaces';
 
 @Controller('auth')
 export class AuthController {
@@ -30,7 +28,6 @@ export class AuthController {
   constructor(
     private configService: ConfigService,
     private authService: AuthService,
-    private userService: UserService,
   ) {
     this.isProd = this.configService.get<string>('NODE_ENV') === 'production';
 
@@ -49,14 +46,6 @@ export class AuthController {
     };
 
     this.redirectURL = this.configService.get<string>('FRONTEND_URL')!;
-  }
-
-  // TODO: implement
-  @UseGuards(JwtGuard)
-  @Get('me')
-  async getUserInfo(@Req() req: JwtPayloadRequest) {
-    const userId = req.user.sub;
-    return await this.userService.fetchUserInfo(userId);
   }
 
   @HttpCode(200)
