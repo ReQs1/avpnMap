@@ -88,9 +88,12 @@ export class AuthController {
       'refresh',
     );
 
-    res
-      .cookie('accessToken', accessToken, this.accessCookieOpts)
-      .cookie('refreshToken', refreshToken, this.refreshCookieOpts)
-      .redirect(this.redirectURL);
+    res.json({ accessToken, refreshToken });
+
+    //   res
+    //     .cookie('accessToken', accessToken, this.accessCookieOpts)
+    //     .cookie('refreshToken', refreshToken, this.refreshCookieOpts)
+    //     .redirect(this.redirectURL);
+    // }
   }
 }

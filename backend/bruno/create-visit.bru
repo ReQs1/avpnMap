@@ -1,0 +1,22 @@
+meta {
+  name: create-visit
+  type: http
+  seq: 5
+}
+
+post {
+  url: http://localhost:3000/visits
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "visitedAt": "2025-04-04T00:00:00.000Z",
+    "pizzeriaId": 38
+  }
+}
+
+settings {
+  encodeUrl: true
+}
