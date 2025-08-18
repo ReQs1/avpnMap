@@ -13,6 +13,7 @@ import { CreateVisitDto } from './dto/create-visit.dto';
 import { JwtGuard } from 'src/auth/guards/jwt/jwt.guard';
 import { JwtPayloadRequest } from 'src/auth/interfaces/interfaces';
 import { VisitsService } from './visits.service';
+import { UpdateVisitDto } from './dto/update-visit.dto';
 
 @Controller('visits')
 export class VisitsController {
@@ -28,21 +29,26 @@ export class VisitsController {
 
     await this.visitsService.createVisit(userId, createVisitDto);
 
-    return { message: 'Visit created successfully' };
+    return {
+      message: 'Visit created successfully',
+    };
   }
 
-  @Patch(':id')
-  updateVisit(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() updateVisitBody: any,
+  @UseGuards(JwtGuard)
+  @Patch(':pizzeriaId')
+  async updateVisit(
+    @Param('pizzeriaId', ParseIntPipe) pizzeriaId: number,
+    @Req() req: JwtPayloadRequest,
+    @Body() updateVisitBody: UpdateVisitDto,
   ) {
-    //  todo: implement updating a visit with jwt Guard
-    console.log('Updating visit with body:', updateVisitBody);
+    const userId = req.user.sub;
+    await this.visitsService.updateVisit(userId, pizzeriaId, updateVisitBody);
+    return { message: 'Visit updated successfully' };
   }
 
-  @Delete(':id')
-  deleteVisit(@Param('id', ParseIntPipe) id: number) {
+  @Delete(':visitId')
+  deleteVisit(@Param('visitId', ParseIntPipe) visitId: number) {
     //  todo: implement deleting a visit with jwt Guard
-    console.log('Deleting visit with id:', id);
+    console.log('Deleting visit with id:', visitId);
   }
 }

@@ -1,13 +1,13 @@
+import { Transform } from 'class-transformer';
 import {
   IsInt,
   IsOptional,
   IsString,
-  Min,
+  Matches,
   Max,
-  IsDateString,
   MaxLength,
+  Min,
 } from 'class-validator';
-import { Transform } from 'class-transformer';
 
 export class CreateVisitDto {
   @IsInt({ message: 'Pizzeria ID must be a valid integer' })
@@ -26,6 +26,9 @@ export class CreateVisitDto {
   @Transform(({ value }) => value?.trim())
   description?: string;
 
-  @IsDateString({}, { message: 'Visit date must be a valid ISO date string' })
-  visitedAt: string; // Use string for ISO date input, convert in service
+  @IsString({ message: 'Visit date must be a string' })
+  @Matches(/^\d{1,2}\/\d{1,2}\/\d{4}$/, {
+    message: 'Visit date must be in M/D/YYYY format',
+  })
+  visitedAt: string;
 }
