@@ -23,6 +23,11 @@ export class UserService {
       where: {
         id: userId,
       },
+      select: {
+        id: true,
+        username: true,
+        avatarURL: true,
+      },
     });
   }
 

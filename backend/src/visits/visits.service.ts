@@ -85,4 +85,22 @@ export class VisitsService {
       throw new InternalServerErrorException('Failed to update visit');
     }
   }
+
+  async deleteVisit(userId: number, pizzeriaId: number) {
+    try {
+      return await this.prisma.visit.delete({
+        where: {
+          userId_pizzeriaId: {
+            userId,
+            pizzeriaId,
+          },
+        },
+      });
+    } catch (error) {
+      if (error?.code === 'P2025') {
+        throw new NotFoundException(error.meta?.cause);
+      }
+      throw new InternalServerErrorException('Failed to delete visit');
+    }
+  }
 }

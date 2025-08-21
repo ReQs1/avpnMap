@@ -46,9 +46,15 @@ export class VisitsController {
     return { message: 'Visit updated successfully' };
   }
 
-  @Delete(':visitId')
-  deleteVisit(@Param('visitId', ParseIntPipe) visitId: number) {
-    //  todo: implement deleting a visit with jwt Guard
-    console.log('Deleting visit with id:', visitId);
+  @UseGuards(JwtGuard)
+  @Delete(':pizzeriaId')
+  async deleteVisit(
+    @Req() request: JwtPayloadRequest,
+    @Param('pizzeriaId', ParseIntPipe) pizzeriaId: number,
+  ) {
+    const userId = request.user.sub;
+
+    await this.visitsService.deleteVisit(userId, pizzeriaId);
+    return { message: 'Visit deleted successfully' };
   }
 }
