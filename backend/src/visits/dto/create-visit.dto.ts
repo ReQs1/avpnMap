@@ -1,13 +1,15 @@
 import { Transform } from 'class-transformer';
 import {
+  IsDateString,
   IsInt,
   IsOptional,
   IsString,
-  Matches,
+  IsTimeZone,
   Max,
   MaxLength,
   Min,
 } from 'class-validator';
+import { IsNotFutureDate } from '../decorators/is-not-future-date.decorator';
 
 export class CreateVisitDto {
   @IsInt({ message: 'Pizzeria ID must be a valid integer' })
@@ -26,9 +28,11 @@ export class CreateVisitDto {
   @Transform(({ value }) => value?.trim())
   description?: string;
 
-  @IsString({ message: 'Visit date must be a string' })
-  @Matches(/^\d{1,2}\/\d{1,2}\/\d{4}$/, {
-    message: 'Visit date must be in M/D/YYYY format',
-  })
+  @IsDateString()
+  @IsNotFutureDate()
   visitedAt: string;
+
+  @IsString()
+  @IsTimeZone({ message: 'A valid IANA timezone must be provided' })
+  timeZone: string;
 }

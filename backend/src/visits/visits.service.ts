@@ -15,19 +15,19 @@ export class VisitsService {
   async createVisit(userId: number, createVisitDto: CreateVisitDto) {
     const { visitedAt, ...rest } = createVisitDto;
 
-    const visitDate = this.parseVisitDate(visitedAt);
-    const now = new Date();
-
-    if (visitDate > now) {
-      throw new BadRequestException('Visit date cannot be in the future');
-    }
+    const updateData: {
+      visitedAt: Date;
+      timeZone: string;
+      description?: string;
+      rating?: number;
+      pizzeriaId: number;
+    } = { visitedAt: new Date(visitedAt), ...rest };
 
     try {
       const createdVisit = await this.prisma.visit.create({
         data: {
           userId,
-          ...rest,
-          visitedAt: visitDate,
+          ...updateData,
         },
       });
       return createdVisit;
@@ -45,7 +45,6 @@ export class VisitsService {
           );
         }
       }
-
       throw new InternalServerErrorException('Failed to create visit');
     }
   }
@@ -57,16 +56,15 @@ export class VisitsService {
   ) {
     const { visitedAt, ...rest } = updateVisitDto;
 
-    const updateData: any = { ...rest };
+    const updateData: {
+      visitedAt?: Date;
+      timeZone?: string;
+      description?: string;
+      rating?: number;
+    } = { ...rest };
 
     if (visitedAt) {
-      const visitDate = this.parseVisitDate(visitedAt);
-      const now = new Date();
-
-      if (visitDate > now) {
-        throw new BadRequestException('Visit date cannot be in the future');
-      }
-      updateData.visitedAt = visitDate;
+      updateData.visitedAt = new Date(visitedAt);
     }
 
     try {
@@ -81,19 +79,10 @@ export class VisitsService {
       });
       return updatedVisit;
     } catch (error) {
-      console.log(error);
       if (error?.code === 'P2025') {
         throw new NotFoundException(error.meta?.cause);
       }
       throw new InternalServerErrorException('Failed to update visit');
     }
-  }
-
-  // util function
-  private parseVisitDate(dateString: string): Date {
-    const [month, day, year] = dateString
-      .split('/')
-      .map((num) => parseInt(num, 10));
-    return new Date(Date.UTC(year, month - 1, day, 0, 0, 0, 0));
   }
 }

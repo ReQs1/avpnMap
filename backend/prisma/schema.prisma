@@ -13,7 +13,7 @@ model User {
   username     String
   email        String       @unique
   avatarURL    String       @map("avatar_url")
-  joinedAt     DateTime    @default(now()) @map("joined_at")
+  joinedAt     DateTime    @default(now()) @map("joined_at") @db.Timestamptz()
   visits       Visit[]
   achievements UserAchievement[]
 }
@@ -38,7 +38,8 @@ model Visit {
   pizzeriaId   Int  @map("pizzeria_id")
   rating       Int?
   description  String?
-  visitedAt    DateTime @map("visited_at")
+  visitedAt    DateTime @map("visited_at") @db.Timestamptz()
+  timeZone     String
 
   @@unique([userId, pizzeriaId])
 }
@@ -57,7 +58,7 @@ model UserAchievement {
   userId Int  @map("user_id")
   achievement Achievement @relation(fields: [achievementId], references: [id])
   achievementId Int @map("achievement_id")
-  unlockedAt  DateTime @default(now()) @map("unlocked_at")
+  unlockedAt  DateTime @default(now()) @map("unlocked_at") @db.Timestamptz()
   
   @@id([userId, achievementId])
 }
