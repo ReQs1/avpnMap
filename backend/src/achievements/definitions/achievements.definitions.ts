@@ -1,4 +1,4 @@
-import { Pizzeria, Visit } from 'generated/prisma';
+import { Pizzeria, Visit } from 'prisma/generated/client';
 
 type VisitWithPizzeria = Visit & { pizzeria: Pizzeria };
 

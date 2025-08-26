@@ -1,13 +1,13 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Prisma } from 'generated/prisma';
-import { UserService } from 'src/user/user.service';
-import * as jwt from 'jsonwebtoken';
 import { ConfigType } from '@nestjs/config';
+import * as jwt from 'jsonwebtoken';
+import { Prisma } from 'prisma/generated/client';
+import { UserService } from 'src/user/user.service';
+import jwtTokensConfig from './config/jwt-tokens.config';
 import {
   ACCESS_TOKEN_EXPIRES_IN,
   REFRESH_TOKEN_EXPIRES_IN,
 } from './constants/jwt-constants';
-import jwtTokensConfig from './config/jwt-tokens.config';
 @Injectable()
 export class AuthService {
   constructor(
