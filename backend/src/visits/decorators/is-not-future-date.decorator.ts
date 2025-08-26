@@ -12,12 +12,11 @@ import { toZonedTime } from 'date-fns-tz';
 export class IsNotFutureDateConstraint implements ValidatorConstraintInterface {
   validate(IsoString: string, args: ValidationArguments) {
     /*
-      todo:
-   [ X ] 1. get IANA timezone name and toIsoString() date from frontend
-   [ X ] 2. add offset to toIsoString() and create new Date() with timezone
-   [ X ] 3. compare userVisitDate with offset with todayInUserTz
+    1. get IANA timezone name and toIsoString() date from frontend
+    2. add offset to toIsoString() and create new Date() with timezone
+    3. compare userVisitDate (with offset) with todayInUserTz
       if everything is fine:
-   [ X ] 4. store ISO string of user visit date in database 
+    4. store ISO string of user visit date in database
     */
 
     //  1.

@@ -7,10 +7,14 @@ import {
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateVisitDto } from './dto/create-visit.dto';
 import { UpdateVisitDto } from './dto/update-visit.dto';
+import { AchievementsService } from 'src/achievements/achievements.service';
 
 @Injectable()
 export class VisitsService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private achievementsService: AchievementsService,
+  ) {}
 
   async createVisit(userId: number, createVisitDto: CreateVisitDto) {
     const { visitedAt, ...rest } = createVisitDto;
@@ -30,6 +34,8 @@ export class VisitsService {
           ...updateData,
         },
       });
+
+      await this.achievementsService.synchronizeAchievements(userId);
       return createdVisit;
     } catch (error) {
       if (error.code === 'P2002') {
@@ -77,6 +83,8 @@ export class VisitsService {
         },
         data: updateData,
       });
+
+      await this.achievementsService.synchronizeAchievements(userId);
       return updatedVisit;
     } catch (error) {
       if (error?.code === 'P2025') {
@@ -88,7 +96,7 @@ export class VisitsService {
 
   async deleteVisit(userId: number, pizzeriaId: number) {
     try {
-      return await this.prisma.visit.delete({
+      const deletedVisit = await this.prisma.visit.delete({
         where: {
           userId_pizzeriaId: {
             userId,
@@ -96,6 +104,9 @@ export class VisitsService {
           },
         },
       });
+
+      await this.achievementsService.synchronizeAchievements(userId);
+      return deletedVisit;
     } catch (error) {
       if (error?.code === 'P2025') {
         throw new NotFoundException(error.meta?.cause);
