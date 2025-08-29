@@ -1,5 +1,6 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { RanksService } from 'src/ranks/ranks.service';
 import {
   ACHIEVEMENT_DEFINITIONS,
   AchievementCode,
@@ -7,28 +8,32 @@ import {
 
 @Injectable()
 export class AchievementsService implements OnModuleInit {
-  private allAchievements = new Map<string, number>();
+  private allAchievementsCache = new Map<string, number>();
 
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private ranksService: RanksService,
+  ) {}
 
   async onModuleInit() {
-    const allAchievements = await this.prisma.achievement.findMany({
+    const allAchievementsCache = await this.prisma.achievement.findMany({
       select: {
         id: true,
         code: true,
       },
     });
 
-    for (const achievement of allAchievements) {
-      this.allAchievements.set(achievement.code, achievement.id);
+    for (const achievement of allAchievementsCache) {
+      this.allAchievementsCache.set(achievement.code, achievement.id);
     }
 
     console.log('AchievementsService has been initialized.');
   }
 
+  // TODO: clean up synchronizeAchievements function to smaller functions
   async synchronizeAchievements(userId: number) {
+    let achievementsCount: number;
     try {
-      // TODO add redis for caching user achievements & visits
       const [userVisits, userAchievements] = await Promise.all([
         this.prisma.visit.findMany({
           where: { userId },
@@ -69,12 +74,12 @@ export class AchievementsService implements OnModuleInit {
       }
 
       const rowsToAdd = codesToAdd
-        .map((code) => this.allAchievements.get(code))
+        .map((code) => this.allAchievementsCache.get(code))
         .filter((id) => id !== undefined)
         .map((id) => ({ userId, achievementId: id }));
 
       const idsToRevoke = codesToRevoke
-        .map((code) => this.allAchievements.get(code))
+        .map((code) => this.allAchievementsCache.get(code))
         .filter((id) => id !== undefined);
 
       await this.prisma.$transaction(async (tx) => {
@@ -94,11 +99,14 @@ export class AchievementsService implements OnModuleInit {
           });
         }
       });
+      achievementsCount = shouldHaveCodes.size;
     } catch (error) {
       console.error(
         `Failed to synchronize achievements for user ${userId}:`,
         error,
       );
+      return;
     }
+    await this.ranksService.syncUserRank(userId, achievementsCount);
   }
 }

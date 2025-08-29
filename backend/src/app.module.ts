@@ -6,6 +6,7 @@ import { UserModule } from './user/user.module';
 import { PizzeriasModule } from './pizzerias/pizzerias.module';
 import { VisitsModule } from './visits/visits.module';
 import { AchievementsModule } from './achievements/achievements.module';
+import { RanksModule } from './ranks/ranks.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { AchievementsModule } from './achievements/achievements.module';
     PizzeriasModule,
     VisitsModule,
     AchievementsModule,
+    RanksModule,
   ],
 })
 export class AppModule {}
