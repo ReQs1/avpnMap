@@ -44,6 +44,13 @@ export class UserService {
           username: true,
           avatarURL: true,
           joinedAt: true,
+          rank: {
+            select: {
+              name: true,
+              color: true,
+              icon: true,
+            },
+          },
           visits: {
             orderBy: {
               visitedAt: 'desc',

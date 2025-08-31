@@ -1,6 +1,6 @@
 import { Pizzeria, Visit } from 'prisma/generated/client';
 
-type VisitWithPizzeria = Visit & { pizzeria: Pizzeria };
+export type VisitWithPizzeria = Visit & { pizzeria: Pizzeria };
 
 // Helpers to count specific types of visits
 function countFullReviews(visits: VisitWithPizzeria[]) {

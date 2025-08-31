@@ -36,7 +36,6 @@ export class PizzeriasService {
         lng: p.lng,
         website: p.website,
 
-        visited: Boolean(visit),
         rating: visit?.rating ?? null,
         description: visit?.description || null,
         visitedAt: visit?.visitedAt ?? null,
