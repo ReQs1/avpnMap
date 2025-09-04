@@ -7,12 +7,21 @@ import { PizzeriasModule } from './pizzerias/pizzerias.module';
 import { VisitsModule } from './visits/visits.module';
 import { AchievementsModule } from './achievements/achievements.module';
 import { RanksModule } from './ranks/ranks.module';
+// import { ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    // ThrottlerModule.forRoot({
+    //   throttlers: [
+    //     {
+    //       limit: 200,
+    //       ttl: 60000,
+    //     },
+    //   ],
+    // }),
     PrismaModule,
     AuthModule,
     UserModule,
