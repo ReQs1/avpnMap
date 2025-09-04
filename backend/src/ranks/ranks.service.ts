@@ -31,34 +31,20 @@ export class RanksService implements OnModuleInit {
       );
     }
 
-    /*
-    can't do type assertion here for some reason (even tho I'm 100% sure there is row with that userId - JwtGuard in visits.controller.ts), that's why I have to do it that way
-    */
-    let currentRankId: number;
     try {
-      const { rankId } = await this.prisma.user.findUniqueOrThrow({
-        where: { id: userId },
-        select: {
-          rankId: true,
-        },
-      });
-      currentRankId = rankId;
-    } catch (error) {
-      console.error(
-        `Failed to retrieve current rank for user ${userId}:`,
-        error,
-      );
-      return;
-    }
+      const { rankId: currentRankId } =
+        await this.prisma.user.findUniqueOrThrow({
+          where: { id: userId },
+          select: {
+            rankId: true,
+          },
+        });
 
-    if (currentRankId === newRankId) {
-      return;
-    }
+      if (currentRankId === newRankId) return;
 
-    try {
       await this.assignRankToUser(userId, newRankId);
     } catch (error) {
-      console.error(`Failed to assign new rank to user ${userId}:`, error);
+      console.error(`Failed to sync rank for user ${userId}:`, error);
     }
   }
 
