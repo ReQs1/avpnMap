@@ -1,7 +1,8 @@
-import { PizzaIcon } from "lucide-react";
 import BurgerButton from "@/components/header/burget-btn";
 import MobileNavigation from "@/components/header/mobile-navigation";
 import { useMobileNavigation } from "@/hooks/useMobileNavigation";
+import { PizzaIcon } from "lucide-react";
+import DesktopNavigation from "@/components/header/desktop-navigation";
 
 export type UserSummary =
   | {
@@ -33,9 +34,9 @@ function Header() {
       ref={headerRef}
       className="border-b border-gray-200 bg-white px-6 py-4 shadow-sm"
     >
-      <div className="container mx-auto">
+      <div className="mx-auto max-w-[1400px]">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 md:grow">
             <div className="rounded-xl bg-red-500 p-2" aria-hidden="true">
               <PizzaIcon color="white" />
             </div>
@@ -46,11 +47,15 @@ function Header() {
               </p>
             </div>
           </div>
+
+          {/* only one is visible at a time */}
           <BurgerButton
             ref={burgerButtonRef}
             open={isOpen}
             toggleMenu={toggleMenu}
           />
+
+          <DesktopNavigation user={user} />
         </div>
 
         {isOpen && <MobileNavigation ref={mobileNavRef} user={user} />}

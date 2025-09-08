@@ -7,7 +7,10 @@ export default function UserInformation({
   user: Exclude<UserSummary, undefined>;
 }) {
   return (
-    <div className="grid gap-4" aria-label="User information">
+    <div
+      className="grid gap-4 lg:flex lg:items-center lg:gap-4"
+      aria-label="User information"
+    >
       <div className="flex items-center gap-3">
         <img
           src={user.avatarURL}
@@ -19,9 +22,12 @@ export default function UserInformation({
           <p className="text-sm text-gray-500">{user.rank.name}</p>
         </div>
       </div>
-      <button className="inline-flex items-center gap-2 rounded-sm p-2 text-sm font-semibold text-gray-600 transition hover:bg-gray-100 hover:text-gray-900">
+      <button
+        className="inline-flex items-center gap-2 rounded-sm p-2 text-sm font-semibold text-gray-600 transition hover:bg-gray-100 hover:text-gray-900"
+        aria-label="Sign out"
+      >
         <LogOut size={20} aria-hidden="true" />
-        <span className="font-medium">Sign Out</span>
+        <span className="font-medium lg:sr-only">Sign Out</span>
       </button>
     </div>
   );

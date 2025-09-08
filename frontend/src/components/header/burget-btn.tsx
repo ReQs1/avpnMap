@@ -12,7 +12,7 @@ export default function BurgerButton({
   return (
     <button
       ref={ref}
-      className="rounded-md p-2 transition hover:bg-gray-200 md:hidden"
+      className="rounded-md p-2 transition hover:bg-gray-200 lg:hidden"
       onClick={toggleMenu}
       aria-label={open ? "Close navigation menu" : "Open navigation menu"}
       aria-expanded={open}

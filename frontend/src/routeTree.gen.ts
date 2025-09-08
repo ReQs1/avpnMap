@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as appRouteRouteImport } from './routes/(app)/route'
 import { Route as appIndexRouteImport } from './routes/(app)/index'
+import { Route as appProfileRouteImport } from './routes/(app)/profile'
 import { Route as appMapRouteImport } from './routes/(app)/map'
 
 const appRouteRoute = appRouteRouteImport.update({
@@ -22,6 +23,11 @@ const appIndexRoute = appIndexRouteImport.update({
   path: '/',
   getParentRoute: () => appRouteRoute,
 } as any)
+const appProfileRoute = appProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => appRouteRoute,
+} as any)
 const appMapRoute = appMapRouteImport.update({
   id: '/map',
   path: '/map',
@@ -31,23 +37,26 @@ const appMapRoute = appMapRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof appIndexRoute
   '/map': typeof appMapRoute
+  '/profile': typeof appProfileRoute
 }
 export interface FileRoutesByTo {
   '/map': typeof appMapRoute
+  '/profile': typeof appProfileRoute
   '/': typeof appIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/(app)': typeof appRouteRouteWithChildren
   '/(app)/map': typeof appMapRoute
+  '/(app)/profile': typeof appProfileRoute
   '/(app)/': typeof appIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/map'
+  fullPaths: '/' | '/map' | '/profile'
   fileRoutesByTo: FileRoutesByTo
-  to: '/map' | '/'
-  id: '__root__' | '/(app)' | '/(app)/map' | '/(app)/'
+  to: '/map' | '/profile' | '/'
+  id: '__root__' | '/(app)' | '/(app)/map' | '/(app)/profile' | '/(app)/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -70,6 +79,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof appIndexRouteImport
       parentRoute: typeof appRouteRoute
     }
+    '/(app)/profile': {
+      id: '/(app)/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof appProfileRouteImport
+      parentRoute: typeof appRouteRoute
+    }
     '/(app)/map': {
       id: '/(app)/map'
       path: '/map'
@@ -82,11 +98,13 @@ declare module '@tanstack/react-router' {
 
 interface appRouteRouteChildren {
   appMapRoute: typeof appMapRoute
+  appProfileRoute: typeof appProfileRoute
   appIndexRoute: typeof appIndexRoute
 }
 
 const appRouteRouteChildren: appRouteRouteChildren = {
   appMapRoute: appMapRoute,
+  appProfileRoute: appProfileRoute,
   appIndexRoute: appIndexRoute,
 }
 

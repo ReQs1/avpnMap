@@ -9,8 +9,8 @@ button {
 }
 
 /* Firefox focus outline customization */
-@supports (-moz-appearance: none) {
-  :focus {
+@supports (appearance: none) {
+  :focus-visible {
     outline: 2px solid black !important;
   }
 

@@ -1,9 +1,8 @@
 import type { UserSummary } from "@/components/header/header";
 import NavigationLinks from "@/components/header/mobile-navigation-links";
-import { Link } from "@tanstack/react-router";
-import { LogIn } from "lucide-react";
-import { type RefObject } from "react";
+import SignInButton from "@/components/header/sign-in-btn";
 import UserInformation from "@/components/header/user-information";
+import { type RefObject } from "react";
 
 export default function MobileNavigation({
   user,
@@ -15,24 +14,14 @@ export default function MobileNavigation({
   return (
     <div
       ref={ref}
-      className="mt-4 grid gap-6 md:hidden"
+      className="mt-4 grid gap-6 lg:hidden"
       id="mobile-navigation"
       role="navigation"
       aria-label="Main navigation"
     >
       <NavigationLinks user={user} />
 
-      {user ? (
-        <UserInformation user={user} />
-      ) : (
-        <Link
-          to="/"
-          className="flex w-full items-center justify-center gap-4 rounded-md bg-red-600 px-4 py-2 font-semibold text-white transition hover:bg-red-700"
-        >
-          <LogIn size={20} aria-hidden="true" />
-          <span>Sign In</span>
-        </Link>
-      )}
+      {user ? <UserInformation user={user} /> : <SignInButton />}
     </div>
   );
 }
