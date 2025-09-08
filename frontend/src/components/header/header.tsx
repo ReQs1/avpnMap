@@ -15,15 +15,15 @@ export type UserSummary =
     }
   | undefined;
 
-const user: UserSummary = {
-  id: 1,
-  username: "Test User",
-  avatarURL: "https://avatar.iran.liara.run/public/80",
-  rank: {
-    name: "Novice",
-  },
-};
-// const user: UserSummary = undefined;
+// const user: UserSummary = {
+//   id: 1,
+//   username: "Test User",
+//   avatarURL: "https://avatar.iran.liara.run/public/80",
+//   rank: {
+//     name: "Novice",
+//   },
+// };
+const user: UserSummary = undefined;
 
 function Header() {
   const { isOpen, toggleMenu, mobileNavRef, burgerButtonRef, headerRef } =
@@ -34,7 +34,7 @@ function Header() {
       ref={headerRef}
       className="border-b border-gray-200 bg-white px-6 py-4 shadow-sm"
     >
-      <div className="mx-auto max-w-[1400px]">
+      <div className="mx-auto max-w-[600px] lg:max-w-[1400px]">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3 md:grow">
             <div className="rounded-xl bg-red-500 p-2" aria-hidden="true">
@@ -48,13 +48,12 @@ function Header() {
             </div>
           </div>
 
-          {/* only one is visible at a time */}
+          {/* only burger button OR desktop navigation is visible at a time */}
           <BurgerButton
             ref={burgerButtonRef}
             open={isOpen}
             toggleMenu={toggleMenu}
           />
-
           <DesktopNavigation user={user} />
         </div>
 

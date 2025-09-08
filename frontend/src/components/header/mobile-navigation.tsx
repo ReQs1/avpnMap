@@ -1,5 +1,5 @@
 import type { UserSummary } from "@/components/header/header";
-import NavigationLinks from "@/components/header/mobile-navigation-links";
+import NavigationLinks from "@/components/header/navigation-links";
 import SignInButton from "@/components/header/sign-in-btn";
 import UserInformation from "@/components/header/user-information";
 import { type RefObject } from "react";
