@@ -27,6 +27,11 @@ export class UserService {
         id: true,
         username: true,
         avatarURL: true,
+        rank: {
+          select: {
+            name: true,
+          },
+        },
       },
     });
   }

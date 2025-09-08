@@ -101,7 +101,7 @@ const achievements = [
     code: 'ITALY_VISIT',
     title: 'Ritorno a Casa',
     description: 'Visit a pizzeria in Italy.',
-    icon: '🛵',
+    icon: '🇮🇹',
   },
   {
     code: 'INTERNATIONAL_3',
