@@ -15,15 +15,15 @@ export type UserSummary =
     }
   | undefined;
 
-// const user: UserSummary = {
-//   id: 1,
-//   username: "Test User",
-//   avatarURL: "https://avatar.iran.liara.run/public/80",
-//   rank: {
-//     name: "Novice",
-//   },
-// };
-const user: UserSummary = undefined;
+const user: UserSummary = {
+  id: 1,
+  username: "Test User",
+  avatarURL: "https://avatar.iran.liara.run/public/80",
+  rank: {
+    name: "Novice",
+  },
+};
+// const user: UserSummary = undefined;
 
 function Header() {
   const { isOpen, toggleMenu, mobileNavRef, burgerButtonRef, headerRef } =

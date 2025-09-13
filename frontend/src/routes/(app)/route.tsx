@@ -9,7 +9,7 @@ function AppLayout() {
   return (
     <>
       <Header />
-      <main className="grow">
+      <main className="flex flex-1 items-stretch">
         <Outlet />
       </main>
     </>
