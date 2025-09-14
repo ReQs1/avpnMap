@@ -1,4 +1,5 @@
-import YouAreHere from "@/components/header/map/you-are-here";
+import PizzeriasMarkers from "@/components/map/pizzerias-markers";
+import YouAreHere from "@/components/map/you-are-here";
 import { naplesCoordinates } from "@/lib/constants";
 import { createFileRoute } from "@tanstack/react-router";
 import { Map } from "@vis.gl/react-maplibre";
@@ -15,11 +16,12 @@ function RouteComponent() {
         initialViewState={{
           longitude: naplesCoordinates.lon,
           latitude: naplesCoordinates.lat,
-          zoom: 8,
+          zoom: 6,
         }}
         mapStyle="https://tiles.openfreemap.org/styles/liberty"
       >
         <YouAreHere />
+        <PizzeriasMarkers />
       </Map>
     </div>
   );
