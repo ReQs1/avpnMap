@@ -5,6 +5,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
+import { JsonWebTokenError, NotBeforeError } from 'jsonwebtoken';
 import { AuthService } from 'src/auth/auth.service';
 
 @Injectable()
@@ -25,7 +26,13 @@ export class RefreshTokenGuard implements CanActivate {
       req.user = payload;
       return true;
     } catch (error) {
-      res.clearCookie('accessToken').clearCookie('refreshToken');
+      if (
+        typeof error === JsonWebTokenError ||
+        typeof error === NotBeforeError
+      ) {
+        res.clearCookie('accessToken').clearCookie('refreshToken');
+      }
+
       throw new UnauthorizedException(error);
     }
   }

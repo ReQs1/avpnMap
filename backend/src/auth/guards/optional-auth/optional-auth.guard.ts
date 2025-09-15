@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { AuthService } from 'src/auth/auth.service';
+import { JsonWebTokenError, NotBeforeError } from 'jsonwebtoken';
 
 @Injectable()
 export class OptionalAuthGuard implements CanActivate {
@@ -24,10 +25,15 @@ export class OptionalAuthGuard implements CanActivate {
           'access',
         );
         req.user = payload;
-      } catch (err) {
-        res.clearCookie('accessToken');
-        res.clearCookie('refreshToken');
-        throw new UnauthorizedException(err);
+      } catch (error) {
+        if (
+          typeof error === JsonWebTokenError ||
+          typeof error === NotBeforeError
+        ) {
+          res.clearCookie('accessToken').clearCookie('refreshToken');
+        }
+
+        throw new UnauthorizedException(error);
       }
     }
 

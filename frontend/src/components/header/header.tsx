@@ -4,27 +4,6 @@ import { useMobileNavigation } from "@/hooks/useMobileNavigation";
 import { PizzaIcon } from "lucide-react";
 import DesktopNavigation from "@/components/header/desktop-navigation";
 
-export type UserSummary =
-  | {
-      id: number;
-      username: string;
-      avatarURL: string;
-      rank: {
-        name: string;
-      };
-    }
-  | undefined;
-
-const user: UserSummary = {
-  id: 1,
-  username: "Test User",
-  avatarURL: "https://avatar.iran.liara.run/public/80",
-  rank: {
-    name: "Novice",
-  },
-};
-// const user: UserSummary = undefined;
-
 function Header() {
   const { isOpen, toggleMenu, mobileNavRef, burgerButtonRef, headerRef } =
     useMobileNavigation();
@@ -54,10 +33,10 @@ function Header() {
             open={isOpen}
             toggleMenu={toggleMenu}
           />
-          <DesktopNavigation user={user} />
+          <DesktopNavigation />
         </div>
 
-        {isOpen && <MobileNavigation ref={mobileNavRef} user={user} />}
+        {isOpen && <MobileNavigation ref={mobileNavRef} />}
       </div>
     </header>
   );

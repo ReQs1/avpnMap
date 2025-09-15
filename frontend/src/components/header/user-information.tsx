@@ -1,5 +1,5 @@
+import type { UserSummary } from "@/hooks/useAuth";
 import { LogOut } from "lucide-react";
-import type { UserSummary } from "@/components/header/header";
 
 export default function UserInformation({
   user,
@@ -15,7 +15,8 @@ export default function UserInformation({
         <img
           src={user.avatarURL}
           alt={`${user.username} avatar`}
-          className="h-11 w-11 rounded-full object-cover"
+          className="h-10 w-10 rounded-full object-cover"
+          referrerPolicy="no-referrer"
         />
         <div>
           <p className="font-medium text-gray-800">{user.username}</p>

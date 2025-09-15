@@ -8,6 +8,7 @@ function PizzeriasMarkers() {
 
   if (error) {
     toast.error("Unable to load pizzeria locations.", {
+      id: "pizzerias-error",
       position: "bottom-center",
     });
     return null;

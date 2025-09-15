@@ -1,14 +1,22 @@
-import type { UserSummary } from "@/components/header/header";
 import SignInButton from "@/components/header/sign-in-btn";
 import UserInformation from "@/components/header/user-information";
 import NavigationLinks from "@/components/header/navigation-links";
+import { useAuth } from "@/hooks/useAuth";
 
-export default function DesktopNavigation({ user }: { user: UserSummary }) {
+export default function DesktopNavigation() {
+  const { user, isLoading } = useAuth();
+
   return (
     <div className="hidden lg:flex lg:grow lg:items-center lg:justify-between lg:gap-6">
       <NavigationLinks user={user} />
 
-      {user ? <UserInformation user={user} /> : <SignInButton />}
+      {isLoading ? (
+        <div className="h-8 w-20 animate-pulse rounded bg-gray-200" />
+      ) : user ? (
+        <UserInformation user={user} />
+      ) : (
+        <SignInButton />
+      )}
     </div>
   );
 }
