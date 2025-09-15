@@ -1,5 +1,5 @@
 import type { UserSummary } from "@/hooks/useAuth";
-import { LogOut } from "lucide-react";
+import SignOutButton from "@/components/header/sign-out-btn";
 
 export default function UserInformation({
   user,
@@ -23,13 +23,7 @@ export default function UserInformation({
           <p className="text-sm text-gray-500">{user.rank.name}</p>
         </div>
       </div>
-      <button
-        className="inline-flex items-center gap-2 rounded-sm p-2 text-sm font-semibold text-gray-600 transition hover:bg-gray-100 hover:text-gray-900"
-        aria-label="Sign out"
-      >
-        <LogOut size={20} aria-hidden="true" />
-        <span className="font-medium lg:sr-only">Sign Out</span>
-      </button>
+      <SignOutButton />
     </div>
   );
 }

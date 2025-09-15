@@ -11,6 +11,12 @@ export type Pizzeria = {
   lng: number;
 };
 
+export type PizzeriaWithVisit = Pizzeria & {
+  rating: number | null;
+  description: string | null;
+  visitedAt: Date | null;
+};
+
 export const pizzeriasQuery = queryOptions({
   queryKey: ["pizzerias"],
   staleTime: Infinity,
@@ -23,6 +29,24 @@ export const pizzeriasQuery = queryOptions({
     if (!res.ok) {
       throw new Error("Failed to fetch pizzerias");
     }
+
     return res.json() as Promise<Pizzeria[]>;
+  },
+});
+
+export const pizzeriasWithVisits = queryOptions({
+  queryKey: ["pizzerias"],
+  staleTime: Infinity,
+  refetchOnWindowFocus: false,
+  retry: false,
+  queryFn: async () => {
+    const res = await fetch("/api/pizzerias", {
+      credentials: "include",
+    });
+    if (!res.ok) {
+      throw new Error("Failed to fetch pizzerias");
+    }
+
+    return res.json() as Promise<PizzeriaWithVisit[]>;
   },
 });

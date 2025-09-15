@@ -13,6 +13,7 @@ import { Route as appRouteRouteImport } from './routes/(app)/route'
 import { Route as appIndexRouteImport } from './routes/(app)/index'
 import { Route as appProfileRouteImport } from './routes/(app)/profile'
 import { Route as appMapRouteImport } from './routes/(app)/map'
+import { Route as appLoginRouteImport } from './routes/(app)/login'
 
 const appRouteRoute = appRouteRouteImport.update({
   id: '/(app)',
@@ -33,13 +34,20 @@ const appMapRoute = appMapRouteImport.update({
   path: '/map',
   getParentRoute: () => appRouteRoute,
 } as any)
+const appLoginRoute = appLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => appRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof appIndexRoute
+  '/login': typeof appLoginRoute
   '/map': typeof appMapRoute
   '/profile': typeof appProfileRoute
 }
 export interface FileRoutesByTo {
+  '/login': typeof appLoginRoute
   '/map': typeof appMapRoute
   '/profile': typeof appProfileRoute
   '/': typeof appIndexRoute
@@ -47,16 +55,23 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/(app)': typeof appRouteRouteWithChildren
+  '/(app)/login': typeof appLoginRoute
   '/(app)/map': typeof appMapRoute
   '/(app)/profile': typeof appProfileRoute
   '/(app)/': typeof appIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/map' | '/profile'
+  fullPaths: '/' | '/login' | '/map' | '/profile'
   fileRoutesByTo: FileRoutesByTo
-  to: '/map' | '/profile' | '/'
-  id: '__root__' | '/(app)' | '/(app)/map' | '/(app)/profile' | '/(app)/'
+  to: '/login' | '/map' | '/profile' | '/'
+  id:
+    | '__root__'
+    | '/(app)'
+    | '/(app)/login'
+    | '/(app)/map'
+    | '/(app)/profile'
+    | '/(app)/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -93,16 +108,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof appMapRouteImport
       parentRoute: typeof appRouteRoute
     }
+    '/(app)/login': {
+      id: '/(app)/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof appLoginRouteImport
+      parentRoute: typeof appRouteRoute
+    }
   }
 }
 
 interface appRouteRouteChildren {
+  appLoginRoute: typeof appLoginRoute
   appMapRoute: typeof appMapRoute
   appProfileRoute: typeof appProfileRoute
   appIndexRoute: typeof appIndexRoute
 }
 
 const appRouteRouteChildren: appRouteRouteChildren = {
+  appLoginRoute: appLoginRoute,
   appMapRoute: appMapRoute,
   appProfileRoute: appProfileRoute,
   appIndexRoute: appIndexRoute,
