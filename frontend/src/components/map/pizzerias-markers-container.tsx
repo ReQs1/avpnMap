@@ -1,8 +1,7 @@
-import MarkerIcon from "@/assets/pizza_marker_icon.webp";
 import { pizzeriasQuery } from "@/lib/api/query-options/pizza-query-options";
 import { useQuery } from "@tanstack/react-query";
-import { Marker } from "@vis.gl/react-maplibre";
 import toast from "react-hot-toast";
+import PizzeriaMarker from "./pizzeria-marker";
 
 function PizzeriasMarkers() {
   const { data: pizzerias, error } = useQuery(pizzeriasQuery);
@@ -17,17 +16,7 @@ function PizzeriasMarkers() {
   return (
     pizzerias &&
     pizzerias.map((pizzeria) => (
-      <Marker
-        key={pizzeria.id}
-        longitude={pizzeria.lng}
-        latitude={pizzeria.lat}
-        onClick={() => {
-          alert(`Pizzeria: ${pizzeria.name}`);
-        }}
-        anchor="bottom"
-      >
-        <img src={MarkerIcon} className="h-14 w-10 cursor-pointer" />
-      </Marker>
+      <PizzeriaMarker key={pizzeria.id} pizzeria={pizzeria} />
     ))
   );
 }
