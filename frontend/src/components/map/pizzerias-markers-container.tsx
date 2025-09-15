@@ -1,8 +1,8 @@
+import MarkerIcon from "@/assets/pizza_marker_icon.webp";
 import { pizzeriasQuery } from "@/lib/api/query-options/pizza-query-options";
 import { useQuery } from "@tanstack/react-query";
 import { Marker } from "@vis.gl/react-maplibre";
 import toast from "react-hot-toast";
-import MarkerIcon from "@/assets/pizza_marker_icon.webp";
 
 function PizzeriasMarkers() {
   const { data: pizzerias, error } = useQuery(pizzeriasQuery);

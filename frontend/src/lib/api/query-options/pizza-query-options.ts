@@ -13,9 +13,7 @@ export type Pizzeria = {
 
 export const pizzeriasQuery = queryOptions({
   queryKey: ["pizzerias"],
-  staleTime: ({ state }) => {
-    return state.data && state.data.length > 0 ? Infinity : 0;
-  },
+  staleTime: Infinity,
   refetchOnWindowFocus: false,
   retry: false,
   queryFn: async () => {

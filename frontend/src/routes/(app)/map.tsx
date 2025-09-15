@@ -1,15 +1,20 @@
-import PizzeriasMarkers from "@/components/map/pizzerias-markers";
+import PizzeriasMarkers from "@/components/map/pizzerias-markers-container";
 import YouAreHere from "@/components/map/you-are-here";
+import { pizzeriasQuery } from "@/lib/api/query-options/pizza-query-options";
 import { naplesCoordinates } from "@/lib/constants";
 import { createFileRoute } from "@tanstack/react-router";
 import { Map } from "@vis.gl/react-maplibre";
 import "maplibre-gl/dist/maplibre-gl.css";
 
 export const Route = createFileRoute("/(app)/map")({
-  component: RouteComponent,
+  loader: (ctx) => {
+    const { context } = ctx;
+    context.queryClient.ensureQueryData(pizzeriasQuery);
+  },
+  component: MapPage,
 });
 
-function RouteComponent() {
+function MapPage() {
   return (
     <div className="w-full">
       <Map
