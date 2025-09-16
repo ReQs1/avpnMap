@@ -20,18 +20,11 @@ function extractMessage(data: unknown): string | undefined {
 }
 
 export async function fetchWithCredentials<T>(
-  url: string,
-  options?: RequestInit,
+  fetchFn: () => Promise<Response>,
 ): Promise<T> {
-  const doFetch = () =>
-    fetch(url, {
-      credentials: "include",
-      ...options,
-    });
-
   try {
     // First attempt
-    let res = await doFetch();
+    let res = await fetchFn();
     let data = await res.json();
 
     if (!res.ok && res.status === 401) {
@@ -45,7 +38,7 @@ export async function fetchWithCredentials<T>(
 
           if (refresh.ok) {
             // Second attempt after refreshing token
-            res = await doFetch();
+            res = await fetchFn();
             data = await res.json();
           } else {
             throw new Error("Failed to refresh access token");
