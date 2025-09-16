@@ -19,7 +19,7 @@ function extractMessage(data: unknown): string | undefined {
   return undefined;
 }
 
-export async function fetchWithCredentials<T>(
+export async function fetchWithTokenRefresh<T>(
   fetchFn: () => Promise<Response>,
 ): Promise<T> {
   try {

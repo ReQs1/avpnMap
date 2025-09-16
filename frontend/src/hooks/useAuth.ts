@@ -1,4 +1,4 @@
-import { fetchWithCredentials } from "@/lib/utils";
+import { fetchWithTokenRefresh } from "@/lib/utils";
 import { queryOptions, useQuery } from "@tanstack/react-query";
 
 export type UserSummary = {
@@ -12,7 +12,7 @@ export type UserSummary = {
 
 const fetchUserInfo = async (): Promise<UserSummary> => {
   try {
-    const user = await fetchWithCredentials<UserSummary>(() =>
+    const user = await fetchWithTokenRefresh<UserSummary>(() =>
       fetch("/api/user/me", { credentials: "include" }),
     );
     return user;
