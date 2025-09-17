@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { AuthService } from 'src/auth/auth.service';
+import { JsonWebTokenError, NotBeforeError } from 'jsonwebtoken';
 
 @Injectable()
 export class RefreshTokenGuard implements CanActivate {
@@ -21,13 +22,16 @@ export class RefreshTokenGuard implements CanActivate {
     if (!token) throw new UnauthorizedException('Refresh token missing');
 
     try {
-      const payload = this.authService.validateToken(token, 'refresh');
+      const payload = this.authService.validateToken(
+        token as string,
+        'refresh',
+      );
       req.user = payload;
       return true;
     } catch (error) {
       if (
-        error.name === 'JsonWebTokenError' ||
-        error.name === 'NotBeforeError'
+        error.name === JsonWebTokenError.name ||
+        error.name === NotBeforeError.name
       ) {
         res.clearCookie('accessToken').clearCookie('refreshToken');
       }

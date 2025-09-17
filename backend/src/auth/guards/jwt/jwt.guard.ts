@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { AuthService } from 'src/auth/auth.service';
-
+import { JsonWebTokenError, NotBeforeError } from 'jsonwebtoken';
 @Injectable()
 export class JwtGuard implements CanActivate {
   constructor(private authService: AuthService) {}
@@ -23,12 +23,15 @@ export class JwtGuard implements CanActivate {
     }
 
     try {
-      const payload = this.authService.validateToken(authToken, 'access');
+      const payload = this.authService.validateToken(
+        authToken as string,
+        'access',
+      );
       req.user = payload;
     } catch (error) {
       if (
-        error.name === 'JsonWebTokenError' ||
-        error.name === 'NotBeforeError'
+        error.name === JsonWebTokenError.name ||
+        error.name === NotBeforeError.name
       ) {
         res.clearCookie('accessToken').clearCookie('refreshToken');
       }
