@@ -30,7 +30,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./backend
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
 
       - name: Generate Prisma Client
         working-directory: ./backend
