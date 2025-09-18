@@ -1,4 +1,4 @@
-import { getLocation } from "@/lib/api/getLocation";
+import { getLocation } from "@/lib/api/get-location";
 import { naplesCoordinates } from "@/lib/constants";
 import { useMap } from "@vis.gl/react-maplibre";
 import { useEffect } from "react";

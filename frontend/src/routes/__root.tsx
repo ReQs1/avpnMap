@@ -1,9 +1,9 @@
+import { authQueryOptions } from "@/lib/api/query-options/auth-query-options";
 import type { QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { Toaster } from "react-hot-toast";
-import { authQueryOptions } from "@/hooks/useAuth";
 
 const RootLayout = () => (
   <>
