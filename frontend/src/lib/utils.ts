@@ -1,5 +1,9 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import type {
+  Pizzeria,
+  PizzeriaWithVisit,
+} from "@/lib/api/query-options/pizza-query-options";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -66,4 +70,12 @@ export async function fetchWithTokenRefresh<T>(
     // Handle unexpected errors (network issues, JSON parsing, etc.)
     throw new Error(`Request failed: ${String(error)}`);
   }
+}
+
+export function isPizzeriaWithVisit(
+  pizzeria: Pizzeria | PizzeriaWithVisit,
+): pizzeria is PizzeriaWithVisit {
+  return (
+    "rating" in pizzeria && "description" in pizzeria && "visitedAt" in pizzeria
+  );
 }

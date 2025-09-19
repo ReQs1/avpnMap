@@ -1,10 +1,10 @@
-import type { UserSummary } from "@/hooks/useAuth";
 import SignOutButton from "@/components/header/sign-out-btn";
+import type { UserSummary } from "@/hooks/useAuth";
 
 export default function UserInformation({
   user,
 }: {
-  user: Exclude<UserSummary, null>;
+  user: Exclude<UserSummary, undefined | null>;
 }) {
   return (
     <div

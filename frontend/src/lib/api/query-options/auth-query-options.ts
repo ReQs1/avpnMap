@@ -1,5 +1,5 @@
 import { queryOptions } from "@tanstack/react-query";
-import { fetchUserInfo } from "../fetch-user-info";
+import { fetchUserInfo } from "@/lib/api/fetch-user-info";
 
 export const authQueryOptions = queryOptions({
   queryKey: ["auth"],

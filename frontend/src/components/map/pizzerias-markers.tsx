@@ -1,9 +1,13 @@
+import PizzeriaMarker from "@/components/map/pizzeria-marker";
 import { pizzeriasQuery } from "@/lib/api/query-options/pizza-query-options";
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import toast from "react-hot-toast";
-import PizzeriaMarker from "./pizzeria-marker";
 
 function PizzeriasMarkers() {
+  const [currentOpenPizzeriaId, setCurrentOpenPizzeriaId] = useState<
+    number | null
+  >(null);
   const { data: pizzerias, error } = useQuery(pizzeriasQuery);
 
   if (error) {
@@ -14,10 +18,23 @@ function PizzeriasMarkers() {
     return null;
   }
 
+  const handleCurrentOpenPizzeriaId = (targetId: number | null) => {
+    if (currentOpenPizzeriaId === targetId) {
+      setCurrentOpenPizzeriaId(null);
+      return;
+    }
+    setCurrentOpenPizzeriaId(targetId);
+  };
+
   return (
     pizzerias &&
     pizzerias.map((pizzeria) => (
-      <PizzeriaMarker key={pizzeria.id} pizzeria={pizzeria} />
+      <PizzeriaMarker
+        key={pizzeria.id}
+        pizzeria={pizzeria}
+        currOpenPizzeriaId={currentOpenPizzeriaId}
+        onCLick={handleCurrentOpenPizzeriaId}
+      />
     ))
   );
 }
