@@ -4,11 +4,11 @@ import SignOutButton from "@/components/header/sign-out-btn";
 export default function UserInformation({
   user,
 }: {
-  user: Exclude<UserSummary, undefined>;
+  user: Exclude<UserSummary, null>;
 }) {
   return (
     <div
-      className="grid gap-4 lg:flex lg:items-center lg:gap-4"
+      className="grid w-full gap-4 lg:flex lg:w-auto lg:items-center lg:gap-4"
       aria-label="User information"
     >
       <div className="flex items-center gap-3">
