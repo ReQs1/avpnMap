@@ -1,5 +1,5 @@
 import type { UserSummary } from "@/hooks/useAuth";
-import { fetchWithTokenRefresh } from "../utils";
+import { fetchWithTokenRefresh } from "@/lib/utils/auth-utils";
 
 export const fetchUserInfo = async (): Promise<UserSummary> => {
   try {

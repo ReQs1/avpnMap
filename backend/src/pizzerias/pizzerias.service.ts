@@ -19,6 +19,7 @@ export class PizzeriasService {
             rating: true,
             description: true,
             visitedAt: true,
+            timeZone: true,
           },
         },
       },
@@ -26,6 +27,7 @@ export class PizzeriasService {
 
     return rows.map((p) => {
       const visit = p.visits[0];
+
       return {
         id: p.id,
         memberNumber: p.memberNumber,
@@ -39,6 +41,7 @@ export class PizzeriasService {
         rating: visit?.rating ?? null,
         description: visit?.description || null,
         visitedAt: visit?.visitedAt ?? null,
+        timeZone: visit?.timeZone ?? null,
       };
     });
   }

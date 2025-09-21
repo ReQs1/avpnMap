@@ -1,5 +1,5 @@
 import MarkerIcon from "@/assets/pizza_marker_icon.webp";
-import PizzeriaModal from "@/components/map/pizzeria-modal";
+import PizzeriaModal from "@/components/map/pizzeria-modal/pizzeria-modal";
 import type {
   Pizzeria,
   PizzeriaWithVisit,

@@ -14,7 +14,8 @@ export type Pizzeria = {
 export type PizzeriaWithVisit = Pizzeria & {
   rating: number | null;
   description: string | null;
-  visitedAt: Date | null;
+  visitedAt: string | null;
+  timeZone: string | null;
 };
 
 export const pizzeriasQuery = queryOptions({
