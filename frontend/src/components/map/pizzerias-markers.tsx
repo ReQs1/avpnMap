@@ -33,7 +33,7 @@ function PizzeriasMarkers() {
         key={pizzeria.id}
         pizzeria={pizzeria}
         currOpenPizzeriaId={currentOpenPizzeriaId}
-        onCLick={handleCurrentOpenPizzeriaId}
+        onClick={handleCurrentOpenPizzeriaId}
       />
     ))
   );

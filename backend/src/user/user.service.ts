@@ -65,6 +65,7 @@ export class UserService {
               description: true,
               rating: true,
               visitedAt: true,
+              timeZone: true,
               pizzeria: {
                 select: {
                   id: true,
@@ -99,11 +100,11 @@ export class UserService {
       unlockedAt: unlockedAchievementsMap.get(achievement.id) || null,
     }));
 
-    processedAchievements.sort((a, b) => {
-      if (a.unlockedAt && !b.unlockedAt) return -1;
-      if (!a.unlockedAt && b.unlockedAt) return 1;
-      return a.id - b.id;
-    });
+    // processedAchievements.sort((a, b) => {
+    //   if (a.unlockedAt && !b.unlockedAt) return -1;
+    //   if (!a.unlockedAt && b.unlockedAt) return 1;
+    //   return a.id - b.id;
+    // });
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { achievements, ...restOfProfile } = userProfile;

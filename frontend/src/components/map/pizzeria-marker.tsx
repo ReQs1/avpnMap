@@ -1,42 +1,30 @@
 import MarkerIcon from "@/assets/pizza_marker_icon.webp";
 import PizzeriaModal from "@/components/map/pizzeria-modal/pizzeria-modal";
+import { useCloseOnEsc } from "@/hooks/useCloseOnEsc";
 import type {
   Pizzeria,
   PizzeriaWithVisit,
 } from "@/lib/api/query-options/pizza-query-options";
 import { Marker } from "@vis.gl/react-maplibre";
-import { useEffect } from "react";
 
 function PizzeriaMarker({
   pizzeria,
   currOpenPizzeriaId,
-  onCLick,
+  onClick,
 }: {
   pizzeria: Pizzeria | PizzeriaWithVisit;
   currOpenPizzeriaId: number | null;
-  onCLick: (id: number | null) => void;
+  onClick: (id: number | null) => void;
 }) {
-  useEffect(() => {
-    function closeOnEsc(event: KeyboardEvent) {
-      if (event.key === "Escape") {
-        onCLick(null);
-      }
-    }
-
-    if (currOpenPizzeriaId === pizzeria.id) {
-      window.addEventListener("keydown", closeOnEsc);
-      return () => {
-        window.removeEventListener("keydown", closeOnEsc);
-      };
-    }
-  }, [currOpenPizzeriaId, onCLick, pizzeria.id]);
+  const isActive = currOpenPizzeriaId === pizzeria.id;
+  useCloseOnEsc(isActive, onClick);
 
   return (
     <>
       <Marker
         longitude={pizzeria.lng}
         latitude={pizzeria.lat}
-        onClick={() => onCLick(pizzeria.id)}
+        onClick={() => onClick(pizzeria.id)}
         anchor="bottom"
       >
         <img
@@ -46,7 +34,7 @@ function PizzeriaMarker({
       </Marker>
 
       {currOpenPizzeriaId === pizzeria.id && (
-        <PizzeriaModal pizzeria={pizzeria} onClose={() => onCLick(null)} />
+        <PizzeriaModal pizzeria={pizzeria} onClose={() => onClick(null)} />
       )}
     </>
   );

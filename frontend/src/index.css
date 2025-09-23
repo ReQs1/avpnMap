@@ -1,6 +1,10 @@
 @import "tailwindcss";
 
-body {
+@theme {
+  --color-avpn-green: #059669;
+}
+
+* {
   font-family: "Inter", sans-serif;
 }
 
