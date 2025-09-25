@@ -1,0 +1,20 @@
+import { cn } from "@/lib/utils/utils";
+import { PizzaIcon } from "lucide-react";
+
+function Logo({ className }: { className?: string }) {
+  return (
+    <div className={cn("flex items-center gap-3", className)}>
+      <div className="rounded-xl bg-red-500 p-2" aria-hidden="true">
+        <PizzaIcon color="white" />
+      </div>
+      <div>
+        <h1 className="text-lg font-bold md:text-xl">Pizza Tracker</h1>
+        <p className="hidden text-xs text-gray-500 md:block">
+          AVPN Pizzerias Worldwide
+        </p>
+      </div>
+    </div>
+  );
+}
+
+export default Logo;

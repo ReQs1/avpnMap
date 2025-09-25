@@ -1,4 +1,4 @@
-import SignOutButton from "@/components/header/sign-out-btn";
+import SignOutButton from "@/components/app-header/sign-out-btn";
 import type { UserSummary } from "@/hooks/useAuth";
 
 export default function UserInformation({

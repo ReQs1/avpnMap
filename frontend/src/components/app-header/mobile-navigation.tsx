@@ -1,6 +1,6 @@
-import NavigationLinks from "@/components/header/navigation-links";
-import SignInButton from "@/components/header/sign-in-btn";
-import UserInformation from "@/components/header/user-information";
+import NavigationLinks from "@/components/app-header/navigation-links";
+import SignInButton from "@/components/app-header/sign-in-btn";
+import UserInformation from "@/components/app-header/user-information";
 import { useAuth } from "@/hooks/useAuth";
 import { type RefObject } from "react";
 

@@ -1,3 +1,4 @@
+import GlobalNotFound from "@/components/global-not-found/global-not-found";
 import { authQueryOptions } from "@/lib/api/query-options/auth-query-options";
 import type { QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
@@ -20,5 +21,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     loader: (ctx) => {
       ctx.context.queryClient.ensureQueryData(authQueryOptions);
     },
+    notFoundComponent: GlobalNotFound,
   },
 );
