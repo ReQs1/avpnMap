@@ -1,6 +1,5 @@
 import Logo from "@/components/common/logo";
 import { Link } from "@tanstack/react-router";
-import { Home } from "lucide-react";
 
 function MinimalHeader() {
   return (
@@ -9,10 +8,9 @@ function MinimalHeader() {
         <Logo />
         <Link
           to="/map"
-          className="inline-flex items-center gap-3 rounded-md border border-gray-200 px-4 py-2 text-gray-800 transition-all hover:border-red-300 hover:bg-red-100 hover:text-red-500"
+          className="inline-flex items-center gap-3 rounded-md border border-gray-200 px-4 py-2 font-medium text-gray-800 transition-colors hover:border-red-300 hover:bg-red-100 hover:text-red-500"
         >
-          <Home size={20} />
-          <span>Home</span>
+          Back To Map
         </Link>
       </div>
     </header>
