@@ -10,11 +10,15 @@ export const Route = createFileRoute("/login")({
   component: RouteComponent,
   beforeLoad: async (ctx) => {
     const { context } = ctx;
-    const user = await context.queryClient.ensureQueryData(authQueryOptions);
-    if (user) {
-      throw redirect({
-        to: "/map",
-      });
+    try {
+      const user = await context.queryClient.ensureQueryData(authQueryOptions);
+      if (user) {
+        throw redirect({
+          to: "/map",
+        });
+      }
+    } catch {
+      // Silently ignore auth failures - user is not logged in, show login page
     }
   },
 });
@@ -25,15 +29,13 @@ function RouteComponent() {
       <MinimalHeader />
 
       <main className="to-avpn-green/20 h-full grow bg-linear-to-br from-red-300/10 via-orange-50 px-6 py-10 md:px-8">
-        <div className="mx-auto flex max-w-[1100px] flex-col-reverse gap-10 md:flex-row">
-          {/* title div */}
-          <div className="flex-1 space-y-6">
+        <div className="mx-auto flex max-w-[1300px] flex-col-reverse gap-10 md:flex-row md:justify-between">
+          <div className="max-w-[650px] flex-1 space-y-6">
             <LoginTitle />
             <LoginFeatures />
             <JoinCommunity />
           </div>
 
-          {/* login card */}
           <LoginCard />
         </div>
       </main>
