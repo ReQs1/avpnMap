@@ -1,0 +1,104 @@
+import type { Pizzeria } from "@/lib/api/query-options/pizza-query-options";
+import { submitVisitForm } from "@/lib/api/submit-visit-form";
+import type { CreateVisitBody, UpdateVisitBody } from "@/lib/types";
+import type { QueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+
+type VisitFormValues = {
+  visitedAt: string;
+  rating: number;
+  description: string;
+};
+
+type VisitedPizzeria = Pizzeria & {
+  rating: number | null;
+  description: string | null;
+  visitedAt: string | null;
+  timeZone: string | null;
+} & {
+  visitedAt: string;
+  timeZone: string;
+};
+
+export async function handleVisitFormSubmit({
+  value,
+  isEditing,
+  pizzeria,
+  visitedPizzeria,
+  queryClient,
+  onCloseEdit,
+}: {
+  value: VisitFormValues;
+  isEditing: boolean;
+  pizzeria: Pizzeria;
+  visitedPizzeria: VisitedPizzeria | null;
+  queryClient: QueryClient;
+  onCloseEdit: () => void;
+}) {
+  try {
+    const method: "POST" | "PATCH" = isEditing ? "PATCH" : "POST";
+    const url = isEditing
+      ? `/api/visits/${visitedPizzeria!.id}`
+      : `/api/visits`;
+
+    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+    if (method === "POST") {
+      const reqBody: CreateVisitBody = {
+        pizzeriaId: pizzeria.id,
+        visitedAt: new Date(value.visitedAt).toISOString(),
+        timeZone,
+      };
+
+      // Only include rating if it's greater than 0
+      if (value.rating > 0) {
+        reqBody.rating = value.rating;
+      }
+
+      // Only include description if it's not empty
+      if (value.description.trim()) {
+        reqBody.description = value.description.trim();
+      }
+
+      await submitVisitForm(method, url, reqBody);
+    } else {
+      const reqBody: UpdateVisitBody = {};
+
+      // Handle rating changes
+      const originalRating = visitedPizzeria?.rating ?? 0;
+      if (value.rating !== originalRating) {
+        // If rating is 0, user wants to remove it → send null
+        // If rating is 1-5, user wants to set/update it → send the value
+        reqBody.rating = value.rating === 0 ? null : value.rating;
+      }
+
+      // Handle description changes
+      const originalDescription = visitedPizzeria?.description ?? "";
+      const trimmedDescription = value.description.trim();
+      if (trimmedDescription !== originalDescription) {
+        // If description is empty, user wants to remove it → send null
+        // If description has content, user wants to set/update it → send the value
+        reqBody.description =
+          trimmedDescription === "" ? null : trimmedDescription;
+      }
+
+      // Handle visitedAt changes
+      const originalVisitedAt = visitedPizzeria?.visitedAt.slice(0, 10);
+      if (value.visitedAt !== originalVisitedAt) {
+        reqBody.visitedAt = new Date(value.visitedAt).toISOString();
+        reqBody.timeZone = timeZone;
+      }
+
+      await submitVisitForm(method, url, reqBody);
+    }
+
+    // Success: invalidate query and close form
+    await queryClient.invalidateQueries({ queryKey: ["pizzerias"] });
+    onCloseEdit();
+  } catch (error) {
+    console.error("Failed to submit visit:", error);
+    toast.error("Something went wrong, please try again later", {
+      position: "bottom-center",
+    });
+  }
+}

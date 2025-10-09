@@ -8,14 +8,17 @@ import type {
   PizzeriaWithVisit,
 } from "@/lib/api/query-options/pizza-query-options";
 import { hasValidVisit } from "@/lib/utils/map-utils";
+import { useState } from "react";
+import VisitForm from "@/components/map/pizzeria-modal/visit-form/visit-form";
 
-function PizzeriaModal({
+export default function PizzeriaModal({
   pizzeria,
   onClose,
 }: {
   pizzeria: Pizzeria | PizzeriaWithVisit;
   onClose: () => void;
 }) {
+  const [isEditing, setIsEditing] = useState(false);
   const { user } = useAuth();
 
   const visitedPizzeria = hasValidVisit(pizzeria) ? pizzeria : null;
@@ -34,12 +37,22 @@ function PizzeriaModal({
       {!user && <ModalLogInBanner />}
 
       {/* TODO: add no-visit screen (when user is logged in */}
+      {user && (!visitedPizzeria || isEditing) && (
+        <VisitForm
+          key={isEditing ? `edit-${visitedPizzeria?.id}` : "create"}
+          isEditing={isEditing}
+          pizzeria={pizzeria}
+          visitedPizzeria={visitedPizzeria}
+          onCloseEdit={() => setIsEditing(false)}
+        />
+      )}
 
-      {user && visitedPizzeria && (
-        <PizzeriaModalVisitSection visitedPizzeria={visitedPizzeria} />
+      {user && visitedPizzeria && !isEditing && (
+        <PizzeriaModalVisitSection
+          visitedPizzeria={visitedPizzeria}
+          onEdit={() => setIsEditing(true)}
+        />
       )}
     </div>
   );
 }
-
-export default PizzeriaModal;

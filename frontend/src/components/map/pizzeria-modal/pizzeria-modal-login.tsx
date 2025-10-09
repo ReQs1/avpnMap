@@ -8,7 +8,7 @@ export default function ModalLogInBanner() {
         <LogIn size={20} aria-hidden="true" />
         <span>Sign in to Track Visits</span>
       </p>
-      <p className="text-sm leading-5 font-semibold text-pretty text-blue-700">
+      <p className="text-sm leading-5 text-pretty text-blue-700">
         Create an account to mark this pizzeria as visited, rate your experience
         and track your pizza journey.
       </p>

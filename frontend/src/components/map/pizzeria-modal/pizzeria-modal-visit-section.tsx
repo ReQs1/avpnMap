@@ -10,8 +10,10 @@ type VisitedPizzeria = PizzeriaWithVisit & {
 // Visit Status Header Component
 function VisitStatusHeader({
   visitedPizzeria,
+  onEdit,
 }: {
   visitedPizzeria: VisitedPizzeria;
+  onEdit: () => void;
 }) {
   return (
     <div className="flex items-center justify-between">
@@ -33,6 +35,7 @@ function VisitStatusHeader({
         aria-label="Visit actions"
       >
         <button
+          onClick={onEdit}
           className="rounded p-1 text-gray-800 transition-colors hover:bg-gray-200 hover:text-gray-900"
           aria-label="Edit your visit to this pizzeria"
         >
@@ -113,11 +116,11 @@ function RatingSection({
 function ReviewDisplay({ description }: { description: string }) {
   return (
     <div className="border-avpn-green/30 space-y-2 rounded-lg border bg-white px-4 py-3">
-      <p className="flex items-center gap-4">
+      <div className="flex items-center gap-2">
         <div className="h-2 w-2 rounded-full bg-green-400" aria-hidden="true" />
-        <span className="text-sm font-medium text-gray-600">Your Review</span>
-      </p>
-      <blockquote className="pl-6 text-sm text-gray-700 italic">
+        <p className="text-sm font-medium text-gray-600">Your Review</p>
+      </div>
+      <blockquote className="pl-4 text-sm text-gray-700 italic">
         "{description}"
       </blockquote>
     </div>
@@ -159,12 +162,14 @@ function ReviewSection({
 // Main Component
 export default function PizzeriaModalVisitSection({
   visitedPizzeria,
+  onEdit,
 }: {
   visitedPizzeria: VisitedPizzeria;
+  onEdit: () => void;
 }) {
   return (
     <section className="border-avpn-green/30 from-avpn-green/10 space-y-4 rounded-lg border bg-gradient-to-r to-emerald-50 p-4">
-      <VisitStatusHeader visitedPizzeria={visitedPizzeria} />
+      <VisitStatusHeader visitedPizzeria={visitedPizzeria} onEdit={onEdit} />
       <RatingSection visitedPizzeria={visitedPizzeria} />
       <ReviewSection visitedPizzeria={visitedPizzeria} />
     </section>
