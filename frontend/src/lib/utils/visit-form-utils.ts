@@ -1,6 +1,10 @@
 import type { Pizzeria } from "@/lib/api/query-options/pizza-query-options";
 import { submitVisitForm } from "@/lib/api/submit-visit-form";
-import type { CreateVisitBody, UpdateVisitBody } from "@/lib/types";
+import type {
+  CreateVisitBody,
+  UpdateVisitBody,
+  VisitedPizzeria,
+} from "@/lib/types";
 import type { QueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
@@ -8,16 +12,6 @@ type VisitFormValues = {
   visitedAt: string;
   rating: number;
   description: string;
-};
-
-type VisitedPizzeria = Pizzeria & {
-  rating: number | null;
-  description: string | null;
-  visitedAt: string | null;
-  timeZone: string | null;
-} & {
-  visitedAt: string;
-  timeZone: string;
 };
 
 export async function handleVisitFormSubmit({

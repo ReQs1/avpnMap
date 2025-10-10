@@ -1,4 +1,5 @@
 import type { LucideIcon } from "lucide-react";
+import type { PizzeriaWithVisit } from "./api/query-options/pizza-query-options";
 
 export type LoginFeatureType = {
   icon: LucideIcon;
@@ -32,4 +33,9 @@ export type UpdateVisitBody = {
   description?: string | null;
   visitedAt?: string;
   timeZone?: string;
+};
+
+export type VisitedPizzeria = PizzeriaWithVisit & {
+  visitedAt: string;
+  timeZone: string;
 };

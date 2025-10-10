@@ -3,6 +3,7 @@ import VisitDescriptionField from "@/components/map/pizzeria-modal/visit-form/vi
 import VisitFormButtons from "@/components/map/pizzeria-modal/visit-form/visit-form-buttons";
 import VisitRatingField from "@/components/map/pizzeria-modal/visit-form/visit-rating-field";
 import type { Pizzeria } from "@/lib/api/query-options/pizza-query-options";
+import type { VisitedPizzeria } from "@/lib/types";
 import { handleVisitFormSubmit } from "@/lib/utils/visit-form-utils";
 import { useForm } from "@tanstack/react-form";
 import { useQueryClient } from "@tanstack/react-query";
@@ -15,17 +16,7 @@ export default function VisitForm({
 }: {
   isEditing: boolean;
   pizzeria: Pizzeria;
-  visitedPizzeria:
-    | (Pizzeria & {
-        rating: number | null;
-        description: string | null;
-        visitedAt: string | null;
-        timeZone: string | null;
-      } & {
-        visitedAt: string;
-        timeZone: string;
-      })
-    | null;
+  visitedPizzeria: VisitedPizzeria | null;
   onCloseEdit: () => void;
 }) {
   const queryClient = useQueryClient();
