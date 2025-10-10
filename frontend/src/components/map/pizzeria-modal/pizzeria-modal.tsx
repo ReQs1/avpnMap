@@ -1,7 +1,8 @@
 import ModalHeader from "@/components/map/pizzeria-modal/pizzeria-modal-header";
 import ModalPizzeriaInfo from "@/components/map/pizzeria-modal/pizzeria-modal-info";
-import ModalLogInBanner from "@/components/map/pizzeria-modal/pizzeria-modal-login";
+import LogInBanner from "@/components/map/pizzeria-modal/pizzeria-modal-login";
 import PizzeriaModalVisitSection from "@/components/map/pizzeria-modal/pizzeria-modal-visit-section";
+import VisitForm from "@/components/map/pizzeria-modal/visit-form";
 import { useAuth } from "@/hooks/useAuth";
 import type {
   Pizzeria,
@@ -9,7 +10,6 @@ import type {
 } from "@/lib/api/query-options/pizza-query-options";
 import { hasValidVisit } from "@/lib/utils/map-utils";
 import { useState } from "react";
-import VisitForm from "@/components/map/pizzeria-modal/visit-form/visit-form";
 
 export default function PizzeriaModal({
   pizzeria,
@@ -34,9 +34,8 @@ export default function PizzeriaModal({
       <ModalPizzeriaInfo pizzeria={pizzeria} />
 
       {/* visit data section */}
-      {!user && <ModalLogInBanner />}
+      {!user && <LogInBanner />}
 
-      {/* TODO: add no-visit screen (when user is logged in */}
       {user && (!visitedPizzeria || isEditing) && (
         <VisitForm
           key={isEditing ? `edit-${visitedPizzeria?.id}` : "create"}
