@@ -7,6 +7,7 @@ import type { VisitedPizzeria } from "@/lib/types";
 import { handleVisitFormSubmit } from "@/lib/utils/visit-form-utils";
 import { useForm } from "@tanstack/react-form";
 import { useQueryClient } from "@tanstack/react-query";
+import { isFuture } from "date-fns";
 
 export default function VisitForm({
   isEditing,
@@ -52,7 +53,15 @@ export default function VisitForm({
     >
       <form.Field
         name="visitedAt"
-        // TODO: add validator for future dates
+        validators={{
+          onSubmit: ({ value }) => {
+            if (isFuture(value)) {
+              return "Future dates are not allowed";
+            }
+
+            return undefined;
+          },
+        }}
         children={(field) => <VisitDateField field={field} />}
       />
 

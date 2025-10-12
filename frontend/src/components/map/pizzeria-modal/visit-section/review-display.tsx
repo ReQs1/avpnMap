@@ -9,7 +9,7 @@ export default function ReviewDisplay({
         <div className="h-2 w-2 rounded-full bg-green-400" aria-hidden="true" />
         <p className="text-sm font-medium text-gray-600">Your Review</p>
       </div>
-      <blockquote className="pl-4 text-sm text-gray-700 italic">
+      <blockquote className="max-h-32 overflow-y-auto pl-4 text-sm break-words text-gray-700 italic">
         "{description}"
       </blockquote>
     </div>

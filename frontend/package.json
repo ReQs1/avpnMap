@@ -18,6 +18,7 @@
     "@tanstack/react-router-devtools": "^1.131.35",
     "@vis.gl/react-maplibre": "^8.0.4",
     "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
     "lucide-react": "^0.542.0",
     "maplibre-gl": "^5.7.1",
     "react": "^19.1.1",
