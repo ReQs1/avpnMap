@@ -1,5 +1,5 @@
 import { deleteVisit } from "@/lib/api/delete-visit";
-import type { VisitedPizzeria } from "@/lib/types";
+import type { VisitedPizzeria } from "@/lib/types/pizzeria.types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AlertCircle } from "lucide-react";
 import toast from "react-hot-toast";

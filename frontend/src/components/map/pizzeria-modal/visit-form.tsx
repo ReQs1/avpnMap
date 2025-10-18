@@ -3,7 +3,7 @@ import VisitDescriptionField from "@/components/map/pizzeria-modal/visit-form/vi
 import VisitFormButtons from "@/components/map/pizzeria-modal/visit-form/visit-form-buttons";
 import VisitRatingField from "@/components/map/pizzeria-modal/visit-form/visit-rating-field";
 import type { Pizzeria } from "@/lib/api/query-options/pizza-query-options";
-import type { VisitedPizzeria } from "@/lib/types";
+import type { VisitedPizzeria } from "@/lib/types/pizzeria.types";
 import { handleVisitFormSubmit } from "@/lib/utils/visit-form-utils";
 import { useForm } from "@tanstack/react-form";
 import { useQueryClient } from "@tanstack/react-query";

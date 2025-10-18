@@ -1,5 +1,6 @@
 import { MapPin, Pizza, Search, Star, Trophy, Users } from "lucide-react";
-import type { LoginFeatureType, NotFoundFeatureCard } from "@/lib/types";
+import type { LoginFeatureType } from "@/lib/types/login.types";
+import type { NotFoundFeatureCard } from "@/lib/types/not-found.types";
 
 export const naplesCoordinates = {
   lat: 40.85177510196397,

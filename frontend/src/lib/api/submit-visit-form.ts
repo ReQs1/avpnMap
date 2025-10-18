@@ -1,5 +1,8 @@
-import type { CreateVisitBody, UpdateVisitBody } from "@/lib/types";
 import { fetchWithTokenRefresh } from "@/lib/utils/auth-utils";
+import type {
+  CreateVisitBody,
+  UpdateVisitBody,
+} from "@/lib/types/visit-form.types";
 
 export async function submitVisitForm(
   method: "POST" | "PATCH",

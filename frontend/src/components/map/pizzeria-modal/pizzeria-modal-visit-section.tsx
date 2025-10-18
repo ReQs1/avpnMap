@@ -1,7 +1,7 @@
 import RatingSection from "@/components/map/pizzeria-modal/visit-section/rating-section";
 import ReviewSection from "@/components/map/pizzeria-modal/visit-section/review-section";
 import VisitStatusHeader from "@/components/map/pizzeria-modal/visit-section/visit-status-header";
-import type { VisitedPizzeria } from "@/lib/types";
+import type { VisitedPizzeria } from "@/lib/types/pizzeria.types";
 
 export default function PizzeriaModalVisitSection({
   visitedPizzeria,

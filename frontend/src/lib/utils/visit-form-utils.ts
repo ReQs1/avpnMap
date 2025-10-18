@@ -1,12 +1,13 @@
 import type { Pizzeria } from "@/lib/api/query-options/pizza-query-options";
 import { submitVisitForm } from "@/lib/api/submit-visit-form";
+
+import type { QueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import type { VisitedPizzeria } from "@/lib/types/pizzeria.types";
 import type {
   CreateVisitBody,
   UpdateVisitBody,
-  VisitedPizzeria,
-} from "@/lib/types";
-import type { QueryClient } from "@tanstack/react-query";
-import toast from "react-hot-toast";
+} from "../types/visit-form.types";
 
 type VisitFormValues = {
   visitedAt: string;
