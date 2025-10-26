@@ -6,8 +6,10 @@ import { type RefObject } from "react";
 
 export default function MobileNavigation({
   ref,
+  onClose,
 }: {
   ref: RefObject<HTMLDivElement | null>;
+  onClose: () => void;
 }) {
   const { user, isLoading } = useAuth();
 
@@ -19,7 +21,7 @@ export default function MobileNavigation({
       role="navigation"
       aria-label="Main navigation"
     >
-      <NavigationLinks user={user} />
+      <NavigationLinks user={user} onClose={onClose} />
 
       <div className="flex items-center">
         {isLoading ? (

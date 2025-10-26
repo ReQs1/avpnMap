@@ -7,9 +7,9 @@ import { Map } from "@vis.gl/react-maplibre";
 import "maplibre-gl/dist/maplibre-gl.css";
 
 export const Route = createFileRoute("/(app)/map")({
-  loader: (ctx) => {
+  loader: async (ctx) => {
     const { context } = ctx;
-    context.queryClient.ensureQueryData(pizzeriasQuery);
+    await context.queryClient.ensureQueryData(pizzeriasQuery);
   },
   component: MapPage,
 });

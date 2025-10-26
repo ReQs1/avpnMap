@@ -5,8 +5,14 @@ import { useMobileNavigation } from "@/hooks/useMobileNavigation";
 import Logo from "@/components/common/logo";
 
 function Header() {
-  const { isOpen, toggleMenu, mobileNavRef, burgerButtonRef, headerRef } =
-    useMobileNavigation();
+  const {
+    isOpen,
+    toggleMenu,
+    mobileNavRef,
+    burgerButtonRef,
+    headerRef,
+    closeMenu,
+  } = useMobileNavigation();
 
   return (
     <header
@@ -23,10 +29,10 @@ function Header() {
             open={isOpen}
             toggleMenu={toggleMenu}
           />
-          <DesktopNavigation />
+          <DesktopNavigation onClose={closeMenu} />
         </div>
 
-        {isOpen && <MobileNavigation ref={mobileNavRef} />}
+        {isOpen && <MobileNavigation ref={mobileNavRef} onClose={closeMenu} />}
       </div>
     </header>
   );

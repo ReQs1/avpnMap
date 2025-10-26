@@ -6,10 +6,8 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const formatDate = (date: Date, timeZone: string) => {
-  return new Intl.DateTimeFormat("en-CA", {
+  return new Intl.DateTimeFormat(navigator.language, {
     timeZone,
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
+    dateStyle: "short",
   }).format(date);
 };
