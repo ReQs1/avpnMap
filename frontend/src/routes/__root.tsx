@@ -18,8 +18,8 @@ const RootLayout = () => (
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   {
     component: RootLayout,
-    loader: (ctx) => {
-      ctx.context.queryClient.ensureQueryData(authQueryOptions);
+    beforeLoad: async (ctx) => {
+      await ctx.context.queryClient.ensureQueryData(authQueryOptions);
     },
     notFoundComponent: GlobalNotFound,
   },
