@@ -1,10 +1,9 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useLocation } from "@tanstack/react-router";
 import toast from "react-hot-toast";
 
 export function useLogout() {
   const location = useLocation();
-  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async () => {
@@ -20,7 +19,6 @@ export function useLogout() {
       return response;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["auth"] });
       window.location.href = location.pathname;
     },
     onError: (error: Error) => {

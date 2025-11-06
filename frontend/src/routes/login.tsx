@@ -17,8 +17,17 @@ export const Route = createFileRoute("/login")({
           to: "/map",
         });
       }
-    } catch {
-      // Silently ignore auth failures - user is not logged in, show login page
+    } catch (error: unknown) {
+      // Rethrow redirects
+      if (
+        error &&
+        typeof error === "object" &&
+        "status" in error &&
+        error.status === 307
+      ) {
+        throw error;
+      }
+      console.error("Auth check failed:", error);
     }
   },
 });

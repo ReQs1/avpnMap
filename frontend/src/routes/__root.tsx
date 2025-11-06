@@ -19,7 +19,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   {
     component: RootLayout,
     beforeLoad: async (ctx) => {
-      await ctx.context.queryClient.ensureQueryData(authQueryOptions);
+      try {
+        await ctx.context.queryClient.ensureQueryData(authQueryOptions);
+      } catch (error) {}
     },
     notFoundComponent: GlobalNotFound,
   },

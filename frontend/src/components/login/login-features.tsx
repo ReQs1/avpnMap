@@ -8,7 +8,7 @@ export default function LoginFeatures() {
         const Icon = feature.icon;
 
         return (
-          <div className="inline-flex items-center gap-2">
+          <div key={feature.text} className="inline-flex items-center gap-2">
             <div
               className={cn(
                 "flex h-10 w-10 items-center justify-center rounded-lg px-2 sm:h-12 sm:w-12",

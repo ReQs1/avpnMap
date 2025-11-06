@@ -6,6 +6,8 @@ export default function UserInformation({
 }: {
   user: Exclude<UserSummary, undefined | null>;
 }) {
+  const firstName = user.username.split(" ")[0];
+
   return (
     <div
       className="grid w-full gap-4 lg:flex lg:w-auto lg:items-center lg:gap-4"
@@ -19,7 +21,11 @@ export default function UserInformation({
           referrerPolicy="no-referrer"
         />
         <div>
-          <p className="font-medium text-gray-800">{user.username}</p>
+          <p className="font-medium text-gray-800">
+            {firstName.length <= 16
+              ? firstName
+              : firstName.slice(0, 16) + "..."}
+          </p>
           <p className="text-sm text-gray-500">{user.rank.name}</p>
         </div>
       </div>
