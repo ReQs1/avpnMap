@@ -1,4 +1,4 @@
-import type { UserSummary } from "@/hooks/useAuth";
+import type { UserSummary } from "@/lib/types/user.types";
 import { Link } from "@tanstack/react-router";
 import { MapPin, Trophy, User } from "lucide-react";
 
