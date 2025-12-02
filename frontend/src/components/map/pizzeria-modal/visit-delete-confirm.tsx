@@ -3,6 +3,7 @@ import type { VisitedPizzeria } from "@/lib/types/pizzeria.types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AlertCircle } from "lucide-react";
 import toast from "react-hot-toast";
+import { useAuth } from "@/hooks/useAuth";
 
 type Props = {
   visitedPizzeria: VisitedPizzeria;
@@ -16,10 +17,14 @@ export default function VisitDeleteConfirm({
   onDeleted,
 }: Props) {
   const queryClient = useQueryClient();
+  const { user } = useAuth();
   const { mutate, isPending } = useMutation({
     mutationFn: (pizzeriaId: number) => deleteVisit(pizzeriaId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["pizzerias"] });
+      if (user) {
+        queryClient.invalidateQueries({ queryKey: ["profile", user.id] });
+      }
       onDeleted();
     },
     onError: () => {

@@ -65,8 +65,8 @@ export class VisitsService {
     const updateData: {
       visitedAt?: Date;
       timeZone?: string;
-      description?: string;
-      rating?: number;
+      description?: string | null;
+      rating?: number | null;
     } = { ...rest };
 
     if (visitedAt) {

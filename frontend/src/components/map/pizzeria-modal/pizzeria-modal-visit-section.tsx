@@ -19,8 +19,8 @@ export default function PizzeriaModalVisitSection({
         onEdit={onEdit}
         onDelete={onDelete}
       />
-      <RatingSection visitedPizzeria={visitedPizzeria} />
-      <ReviewSection visitedPizzeria={visitedPizzeria} />
+      <RatingSection visitedPizzeria={visitedPizzeria} onEdit={onEdit} />
+      <ReviewSection visitedPizzeria={visitedPizzeria} onEdit={onEdit} />
     </section>
   );
 }

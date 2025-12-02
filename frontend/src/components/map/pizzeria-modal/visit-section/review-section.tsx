@@ -9,15 +9,17 @@ type VisitedPizzeria = PizzeriaWithVisit & {
 
 export default function ReviewSection({
   visitedPizzeria,
+  onEdit,
 }: {
   visitedPizzeria: VisitedPizzeria;
+  onEdit: () => void;
 }) {
   return (
     <div>
       {visitedPizzeria.description ? (
         <ReviewDisplay description={visitedPizzeria.description} />
       ) : (
-        <NoReviewDisplay />
+        <NoReviewDisplay onEdit={onEdit} />
       )}
     </div>
   );

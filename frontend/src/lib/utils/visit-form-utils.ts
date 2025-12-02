@@ -15,6 +15,16 @@ type VisitFormValues = {
   description: string;
 };
 
+type HandleVisitFormSubmitParams = {
+  value: VisitFormValues;
+  isEditing: boolean;
+  pizzeria: Pizzeria;
+  visitedPizzeria: VisitedPizzeria | null;
+  queryClient: QueryClient;
+  onCloseEdit: () => void;
+  userId?: number;
+};
+
 export async function handleVisitFormSubmit({
   value,
   isEditing,
@@ -22,14 +32,8 @@ export async function handleVisitFormSubmit({
   visitedPizzeria,
   queryClient,
   onCloseEdit,
-}: {
-  value: VisitFormValues;
-  isEditing: boolean;
-  pizzeria: Pizzeria;
-  visitedPizzeria: VisitedPizzeria | null;
-  queryClient: QueryClient;
-  onCloseEdit: () => void;
-}) {
+  userId,
+}: HandleVisitFormSubmitParams) {
   try {
     const method: "POST" | "PATCH" = isEditing ? "PATCH" : "POST";
     const url = isEditing
@@ -84,11 +88,18 @@ export async function handleVisitFormSubmit({
         reqBody.timeZone = timeZone;
       }
 
+      if (Object.keys(reqBody).length === 0) {
+        return;
+      }
+
       await submitVisitForm(method, url, reqBody);
     }
 
-    // Success: invalidate query and close form
+    // Success: invalidate queries and close form
     await queryClient.invalidateQueries({ queryKey: ["pizzerias"] });
+    if (userId) {
+      await queryClient.invalidateQueries({ queryKey: ["profile", userId] });
+    }
     onCloseEdit();
   } catch (error) {
     console.error("Failed to submit visit:", error);

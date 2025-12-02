@@ -17,13 +17,13 @@ export class UpdateVisitDto {
   @IsInt({ message: 'Rating must be an integer' })
   @Min(1, { message: 'Rating must be at least 1' })
   @Max(5, { message: 'Rating must be at most 5' })
-  rating?: number;
+  rating?: number | null;
 
   @IsOptional()
   @IsString({ message: 'Description must be a string' })
   @MaxLength(500, { message: 'Description cannot exceed 500 characters' })
-  @Transform(({ value }) => value?.trim())
-  description?: string;
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
+  description?: string | null;
 
   @IsOptional()
   @IsDateString()

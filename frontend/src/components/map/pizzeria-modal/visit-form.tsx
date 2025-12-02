@@ -2,6 +2,7 @@ import VisitDateField from "@/components/map/pizzeria-modal/visit-form/visit-dat
 import VisitDescriptionField from "@/components/map/pizzeria-modal/visit-form/visit-description-field";
 import VisitFormButtons from "@/components/map/pizzeria-modal/visit-form/visit-form-buttons";
 import VisitRatingField from "@/components/map/pizzeria-modal/visit-form/visit-rating-field";
+import { useAuth } from "@/hooks/useAuth";
 import type { Pizzeria } from "@/lib/api/query-options/pizza-query-options";
 import type { VisitedPizzeria } from "@/lib/types/pizzeria.types";
 import { handleVisitFormSubmit } from "@/lib/utils/visit-form-utils";
@@ -21,6 +22,7 @@ export default function VisitForm({
   onCloseEdit: () => void;
 }) {
   const queryClient = useQueryClient();
+  const { user } = useAuth();
 
   const form = useForm({
     defaultValues: {
@@ -38,6 +40,7 @@ export default function VisitForm({
         visitedPizzeria,
         queryClient,
         onCloseEdit,
+        userId: user?.id,
       });
     },
   });

@@ -9,15 +9,17 @@ type VisitedPizzeria = PizzeriaWithVisit & {
 
 export default function RatingSection({
   visitedPizzeria,
+  onEdit,
 }: {
   visitedPizzeria: VisitedPizzeria;
+  onEdit: () => void;
 }) {
   return (
     <div>
       {visitedPizzeria.rating ? (
         <StarRating rating={visitedPizzeria.rating} />
       ) : (
-        <NoRatingDisplay />
+        <NoRatingDisplay onEdit={onEdit} />
       )}
     </div>
   );

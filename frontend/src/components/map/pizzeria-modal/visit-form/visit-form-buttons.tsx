@@ -19,11 +19,19 @@ export default function VisitFormButtons({
       <div className="flex gap-3">
         <form.Subscribe
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          selector={(state: any) => [state.canSubmit, state.isSubmitting]}
-          children={([canSubmit, isSubmitting]: [boolean, boolean]) => (
+          selector={(state: any) => [
+            state.canSubmit,
+            state.isSubmitting,
+            state.isDefaultValue,
+          ]}
+          children={([canSubmit, isSubmitting, isDefaultValue]: [
+            boolean,
+            boolean,
+            boolean,
+          ]) => (
             <button
               type="submit"
-              disabled={!canSubmit || isSubmitting}
+              disabled={!canSubmit || isSubmitting || isDefaultValue}
               className="inline-flex h-10 flex-1 items-center justify-center gap-2 rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white shadow-lg transition-colors hover:bg-red-700 disabled:opacity-50"
             >
               <span>{isSubmitting ? "Updating..." : "Update Visit"}</span>
