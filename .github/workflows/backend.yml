@@ -34,7 +34,7 @@ jobs:
 
       - name: Generate Prisma Client
         working-directory: ./backend
-        run: pnpx prisma generate
+        run: pnpm exec prisma generate
 
       - name: Build project
         working-directory: ./backend
