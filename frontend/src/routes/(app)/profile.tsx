@@ -1,8 +1,11 @@
+import errorImage from "@/assets/profile-error.webp";
+import ProfileCard from "@/components/profile/profile-card";
+import ProfileCardSkeleton from "@/components/profile/profile-card-skeleton";
 import { authQueryOptions } from "@/lib/api/query-options/auth-query-options";
 import { profileQueryOptions } from "@/lib/api/query-options/profile-query-options";
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import type { UserProfile } from "@/lib/types/user.types";
 import { useQuery } from "@tanstack/react-query";
-import ProfileCard from "@/components/profile/profile-card";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/(app)/profile")({
   component: RouteComponent,
@@ -50,14 +53,42 @@ export const Route = createFileRoute("/(app)/profile")({
 
 function RouteComponent() {
   const { user } = Route.useRouteContext();
-  const { data: profile } = useQuery(profileQueryOptions(user.id));
+  const {
+    data: profile,
+    isLoading,
+    error,
+  } = useQuery(profileQueryOptions(user.id));
 
-  if (!profile) return null;
+  if (error) {
+    return (
+      <main className="grow bg-gray-50 px-4 py-8">
+        <div className="mx-auto max-w-6xl">
+          <div className="flex flex-col items-center rounded-2xl bg-white px-6 py-12 shadow-sm">
+            <img
+              src={errorImage}
+              alt="Error loading profile"
+              className="mb-6 h-48 w-48 object-contain"
+            />
+            <h2 className="mb-2 text-xl font-bold text-gray-900">
+              Failed to load profile
+            </h2>
+            <p className="text-gray-500">
+              {error.message || "Something went wrong. Please try again later."}
+            </p>
+          </div>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="grow bg-gray-50 px-4 py-8">
       <div className="mx-auto max-w-6xl">
-        <ProfileCard profile={profile} />
+        {isLoading ? (
+          <ProfileCardSkeleton />
+        ) : (
+          <ProfileCard profile={profile as UserProfile} />
+        )}
       </div>
     </main>
   );
