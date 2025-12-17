@@ -1,9 +1,19 @@
 import { Star } from "lucide-react";
 
-export default function StarRating({ rating }: { rating: number }) {
+type StarRatingProps = {
+  rating: number;
+  showLabel?: boolean;
+};
+
+export default function StarRating({
+  rating,
+  showLabel = true,
+}: StarRatingProps) {
   return (
     <div className="flex items-center gap-2">
-      <p className="text-sm font-medium text-gray-800">Your Rating:</p>
+      {showLabel && (
+        <p className="text-sm font-medium text-gray-800">Your Rating:</p>
+      )}
       <div
         className="flex items-center gap-1"
         aria-label={`${rating} out of 5 stars`}

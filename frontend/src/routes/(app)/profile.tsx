@@ -1,3 +1,6 @@
+import NoVisitsMessage from "@/components/profile/history/no-visits-message";
+import PizzaJourney from "@/components/profile/history/pizza-journey";
+import PizzaJourneySkeleton from "@/components/profile/history/pizza-journey-skeleton";
 import ProfileCard from "@/components/profile/profile-card/profile-card";
 import ProfileCardSkeleton from "@/components/profile/profile-card/profile-card-skeleton";
 import ProfileError from "@/components/profile/profile-error";
@@ -42,6 +45,16 @@ function RouteComponent() {
         ) : (
           <ProfileCard profile={profile as UserProfile} />
         )}
+        <div>
+          {/* visits history */}
+          {isLoading ? (
+            <PizzaJourneySkeleton />
+          ) : profile!.visits.length > 0 ? (
+            <PizzaJourney visits={profile!.visits} />
+          ) : (
+            <NoVisitsMessage />
+          )}
+        </div>
       </div>
     </main>
   );

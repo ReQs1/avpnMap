@@ -1,5 +1,5 @@
+import StarRating from "@/components/common/star-rating";
 import NoRatingDisplay from "@/components/map/pizzeria-modal/visit-section/no-rating-display";
-import StarRating from "@/components/map/pizzeria-modal/visit-section/star-rating";
 import type { PizzeriaWithVisit } from "@/lib/api/query-options/pizza-query-options";
 
 type VisitedPizzeria = PizzeriaWithVisit & {
