@@ -1,7 +1,7 @@
-import PizzeriasMarkers from "@/components/map/pizzerias-markers";
-import YouAreHere from "@/components/map/you-are-here";
-import { pizzeriasQuery } from "@/lib/api/query-options/pizza-query-options";
-import { naplesCoordinates } from "@/lib/constants";
+import PizzeriasMarkers from "@/features/map/components/markers/pizzerias-markers";
+import YouAreHere from "@/features/map/components/markers/you-are-here";
+import { pizzeriasQuery } from "@/features/map/api/pizza-query-options";
+import { naplesCoordinates } from "@/shared/constants";
 import { createFileRoute } from "@tanstack/react-router";
 import { Map } from "@vis.gl/react-maplibre";
 import "maplibre-gl/dist/maplibre-gl.css";

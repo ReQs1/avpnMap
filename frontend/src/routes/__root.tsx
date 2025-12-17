@@ -1,5 +1,5 @@
-import GlobalNotFound from "@/components/global-not-found/global-not-found";
-import { authQueryOptions } from "@/lib/api/query-options/auth-query-options";
+import GlobalNotFound from "@/features/not-found/components/global-not-found";
+import { authQueryOptions } from "@/features/auth/api/auth-query-options";
 import type { QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";

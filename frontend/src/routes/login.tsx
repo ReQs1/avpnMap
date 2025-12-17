@@ -1,9 +1,9 @@
-import MinimalHeader from "@/components/common/minimal-header";
-import JoinCommunity from "@/components/login/join-community";
-import LoginCard from "@/components/login/login-card";
-import LoginFeatures from "@/components/login/login-features";
-import LoginTitle from "@/components/login/login-title";
-import { authQueryOptions } from "@/lib/api/query-options/auth-query-options";
+import MinimalHeader from "@/features/layout/components/minimal-header";
+import JoinCommunity from "@/features/login/components/join-community";
+import LoginCard from "@/features/login/components/login-card";
+import LoginFeatures from "@/features/login/components/login-features";
+import LoginTitle from "@/features/login/components/login-title";
+import { authQueryOptions } from "@/features/auth/api/auth-query-options";
 import { createFileRoute, redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/login")({

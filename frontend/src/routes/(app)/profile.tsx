@@ -1,12 +1,12 @@
-import NoVisitsMessage from "@/components/profile/history/no-visits-message";
-import PizzaJourney from "@/components/profile/history/pizza-journey";
-import PizzaJourneySkeleton from "@/components/profile/history/pizza-journey-skeleton";
-import ProfileCard from "@/components/profile/profile-card/profile-card";
-import ProfileCardSkeleton from "@/components/profile/profile-card/profile-card-skeleton";
-import ProfileError from "@/components/profile/profile-error";
-import { authQueryOptions } from "@/lib/api/query-options/auth-query-options";
-import { profileQueryOptions } from "@/lib/api/query-options/profile-query-options";
-import type { UserProfile } from "@/lib/types/user.types";
+import NoVisitsMessage from "@/features/profile/components/history/no-visits-message";
+import PizzaJourney from "@/features/profile/components/history/pizza-journey";
+import PizzaJourneySkeleton from "@/features/profile/components/history/pizza-journey-skeleton";
+import ProfileCard from "@/features/profile/components/profile-card/profile-card";
+import ProfileCardSkeleton from "@/features/profile/components/profile-card/profile-card-skeleton";
+import ProfileError from "@/features/profile/components/profile-error";
+import { authQueryOptions } from "@/features/auth/api/auth-query-options";
+import { profileQueryOptions } from "@/features/profile/api/profile-query-options";
+import type { UserProfile } from "@/features/auth/types/user.types";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, redirect } from "@tanstack/react-router";
 
