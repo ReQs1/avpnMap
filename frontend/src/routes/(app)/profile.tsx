@@ -9,6 +9,8 @@ import { profileQueryOptions } from "@/features/profile/api/profile-query-option
 import type { UserProfile } from "@/features/auth/types/user.types";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, redirect } from "@tanstack/react-router";
+import AchievementsSkeleton from "@/features/profile/components/achievements/achievements-skeleton";
+import Achievements from "@/features/profile/components/achievements/achievements";
 
 export const Route = createFileRoute("/(app)/profile")({
   component: RouteComponent,
@@ -45,7 +47,7 @@ function RouteComponent() {
         ) : (
           <ProfileCard profile={profile as UserProfile} />
         )}
-        <div>
+        <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-[2fr_1fr]">
           {/* visits history */}
           {isLoading ? (
             <PizzaJourneySkeleton />
@@ -53,6 +55,13 @@ function RouteComponent() {
             <PizzaJourney visits={profile!.visits} />
           ) : (
             <NoVisitsMessage />
+          )}
+
+          {/* achievements */}
+          {isLoading ? (
+            <AchievementsSkeleton />
+          ) : (
+            <Achievements achievements={profile!.achievements} />
           )}
         </div>
       </div>

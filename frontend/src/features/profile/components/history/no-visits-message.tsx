@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 
 function NoVisitsMessage() {
   return (
-    <div className="mt-6 rounded-2xl bg-white px-6 py-8 shadow-sm">
+    <div className="h-fit rounded-2xl bg-white px-6 py-8 shadow-sm">
       <div className="flex items-center gap-2">
         <MapPin size={20} className="text-gray-600" aria-hidden="true" />
         <h2 className="text-lg font-semibold text-gray-900">

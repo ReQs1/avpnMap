@@ -41,7 +41,7 @@ function VisitCardSkeleton() {
 
 function PizzaJourneySkeleton() {
   return (
-    <div className="mt-6 rounded-2xl bg-white px-6 py-8 shadow-sm">
+    <div className="rounded-2xl bg-white px-6 py-8 shadow-sm">
       {/* Header */}
       <div className="flex items-center gap-2">
         <MapPin size={20} className="text-gray-600" aria-hidden="true" />
