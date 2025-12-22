@@ -2,8 +2,10 @@ import DeleteVisitModal from "@/features/profile/components/history/visit-delete
 import { useDeleteVisit } from "@/features/visits/hooks/useDeleteVisit";
 import StarRating from "@/shared/components/star-rating";
 import { formatDate } from "@/shared/utils/utils";
-import { Calendar, Pencil, X } from "lucide-react";
+import { Calendar } from "lucide-react";
 import { useState } from "react";
+import VisitCardButtons from "@/features/profile/components/history/visit-card-buttons";
+import EditVisitModal from "@/features/profile/components/history/visit-edit-modal/visit-edit-modal";
 
 type VisitCardProps = {
   visit: {
@@ -25,6 +27,7 @@ type VisitCardProps = {
 function VisitCard({ visit }: VisitCardProps) {
   const { pizzeria, visitedAt, timeZone, rating, description } = visit;
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   const { mutate: deleteVisit, isPending: isDeletePending } = useDeleteVisit({
     onSuccess: () => setIsDeleting(false),
@@ -58,6 +61,7 @@ function VisitCard({ visit }: VisitCardProps) {
 
           <VisitCardButtons
             pizzeriaName={pizzeria.name}
+            onEdit={() => setIsEditing(true)}
             onDelete={() => setIsDeleting(true)}
           />
         </div>
@@ -71,36 +75,16 @@ function VisitCard({ visit }: VisitCardProps) {
           onConfirm={() => deleteVisit(pizzeria.id)}
         />
       )}
+
+      {isEditing && (
+        <EditVisitModal
+          visit={visit}
+          onCancel={() => setIsEditing(false)}
+          onSuccess={() => setIsEditing(false)}
+        />
+      )}
     </>
   );
 }
 
 export default VisitCard;
-
-function VisitCardButtons({
-  pizzeriaName,
-  onDelete,
-}: {
-  pizzeriaName: string;
-  onDelete: () => void;
-}) {
-  return (
-    <div className="flex items-center gap-2">
-      {/* TODO: add mutate functionality to buttons */}
-      <button
-        className="rounded p-1.5 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600"
-        aria-label={`Edit visit to ${pizzeriaName}`}
-      >
-        <Pencil size={16} aria-hidden="true" />
-      </button>
-
-      <button
-        className="rounded p-1.5 text-red-400 transition-colors hover:bg-red-50 hover:text-red-600"
-        aria-label={`Delete visit to ${pizzeriaName}`}
-        onClick={onDelete}
-      >
-        <X size={16} aria-hidden="true" />
-      </button>
-    </div>
-  );
-}

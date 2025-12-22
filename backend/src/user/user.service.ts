@@ -57,9 +57,7 @@ export class UserService {
             },
           },
           visits: {
-            orderBy: {
-              visitedAt: 'desc',
-            },
+            orderBy: [{ visitedAt: 'desc' }, { id: 'asc' }],
             select: {
               id: true,
               description: true,
