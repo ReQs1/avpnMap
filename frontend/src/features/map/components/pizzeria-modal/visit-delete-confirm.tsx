@@ -1,9 +1,6 @@
-import { deleteVisit } from "@/features/visits/api/delete-visit";
 import type { VisitedPizzeria } from "@/features/map/types/pizzeria.types";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useDeleteVisit } from "@/features/visits/hooks/useDeleteVisit";
 import { AlertCircle } from "lucide-react";
-import toast from "react-hot-toast";
-import { useAuth } from "@/features/auth/hooks/useAuth";
 
 type Props = {
   visitedPizzeria: VisitedPizzeria;
@@ -16,22 +13,8 @@ export default function VisitDeleteConfirm({
   onCancel,
   onDeleted,
 }: Props) {
-  const queryClient = useQueryClient();
-  const { user } = useAuth();
-  const { mutate, isPending } = useMutation({
-    mutationFn: (pizzeriaId: number) => deleteVisit(pizzeriaId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["pizzerias"] });
-      if (user) {
-        queryClient.invalidateQueries({ queryKey: ["profile", user.id] });
-      }
-      onDeleted();
-    },
-    onError: () => {
-      toast.error("Failed to delete visit. Please try again.", {
-        position: "bottom-center",
-      });
-    },
+  const { mutate: deleteVisit, isPending: isDeleting } = useDeleteVisit({
+    onSuccess: onDeleted,
   });
 
   return (
@@ -48,15 +31,15 @@ export default function VisitDeleteConfirm({
       </div>
       <div className="mt-2 flex w-full gap-3">
         <button
-          onClick={() => mutate(visitedPizzeria.id)}
-          disabled={isPending}
+          onClick={() => deleteVisit(visitedPizzeria.id)}
+          disabled={isDeleting}
           className="inline-flex h-10 flex-1 items-center justify-center rounded-md bg-red-600 px-4 text-sm font-medium text-white shadow-sm transition-colors hover:bg-red-700 disabled:opacity-50"
         >
-          {isPending ? "Removing..." : "Remove"}
+          {isDeleting ? "Removing..." : "Remove"}
         </button>
         <button
           onClick={onCancel}
-          disabled={isPending}
+          disabled={isDeleting}
           className="inline-flex h-10 flex-1 items-center justify-center rounded-md border border-gray-300 bg-white px-4 text-sm font-medium text-gray-900 transition-colors hover:bg-gray-50 disabled:opacity-50"
         >
           Cancel
