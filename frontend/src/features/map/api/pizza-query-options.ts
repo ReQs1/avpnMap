@@ -23,9 +23,10 @@ export const pizzeriasQuery = queryOptions({
   staleTime: Infinity,
   refetchOnWindowFocus: false,
   retry: false,
-  queryFn: async () => {
+  queryFn: async ({ signal }) => {
     const res = await fetch("/api/pizzerias", {
       credentials: "include",
+      signal,
     });
     if (!res.ok) {
       throw new Error("Failed to fetch pizzerias");

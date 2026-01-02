@@ -9,8 +9,10 @@ export default function YouAreHere() {
   useEffect(() => {
     if (!map) return;
 
+    const controller = new AbortController();
+
     (async () => {
-      const location = await getLocation();
+      const location = await getLocation(controller.signal);
 
       if (location && location !== naplesCoordinates) {
         map.flyTo({
@@ -20,6 +22,8 @@ export default function YouAreHere() {
         });
       }
     })();
+
+    return () => controller.abort();
   }, [map]);
 
   return null;

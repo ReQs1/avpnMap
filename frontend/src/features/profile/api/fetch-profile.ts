@@ -1,7 +1,12 @@
 import type { UserProfile } from "@/features/auth/types/user.types";
 
-export const fetchUserProfile = async (profileId: number) => {
-  const res = await fetch(`/api/user/${profileId}`);
+export const fetchUserProfile = async (
+  profileId: number,
+  abortSignal?: AbortSignal,
+) => {
+  const res = await fetch(`/api/user/${profileId}`, {
+    signal: abortSignal,
+  });
 
   if (res.status === 404) {
     return null;
