@@ -1,10 +1,10 @@
 import PizzeriasMarkers from "@/features/map/components/markers/pizzerias-markers";
 import YouAreHere from "@/features/map/components/markers/you-are-here";
 import { pizzeriasQuery } from "@/features/map/api/pizza-query-options";
-import { naplesCoordinates } from "@/shared/constants";
 import { createFileRoute } from "@tanstack/react-router";
 import { Map } from "@vis.gl/react-maplibre";
 import "maplibre-gl/dist/maplibre-gl.css";
+import { useMapCoordsStore } from "@/features/map/store/map-coords-store";
 
 export const Route = createFileRoute("/(app)/map")({
   loader: (ctx) => {
@@ -15,17 +15,24 @@ export const Route = createFileRoute("/(app)/map")({
 });
 
 function MapPage() {
+  const { latitude, longitude, zoom, setCoords, hasUserMoved } =
+    useMapCoordsStore();
+
   return (
     <div className="w-full">
       <Map
         initialViewState={{
-          longitude: naplesCoordinates.lon,
-          latitude: naplesCoordinates.lat,
-          zoom: 6,
+          longitude,
+          latitude,
+          zoom,
         }}
         mapStyle="https://tiles.openfreemap.org/styles/liberty"
+        onMove={(state) => {
+          const { latitude, longitude, zoom } = state.viewState;
+          setCoords(longitude, latitude, zoom);
+        }}
       >
-        <YouAreHere />
+        {!hasUserMoved && <YouAreHere />}
         <PizzeriasMarkers />
       </Map>
     </div>
