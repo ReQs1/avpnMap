@@ -1,11 +1,11 @@
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
 }
 
 generator client {
   provider = "prisma-client"
   output   = "./generated/client"
+  moduleFormat = "cjs"
 }
 
 model User {
@@ -17,7 +17,7 @@ model User {
   visits       Visit[]
   achievements UserAchievement[]
   rank         Rank       @relation(fields: [rankId], references: [id])
-  rankId       Int        @default(1)  @map("rank_id")  
+  rankId       Int        @default(1)  @map("rank_id")
 }
 
 model Pizzeria {
@@ -61,7 +61,7 @@ model UserAchievement {
   achievement Achievement @relation(fields: [achievementId], references: [id])
   achievementId Int @map("achievement_id")
   unlockedAt  DateTime @default(now()) @map("unlocked_at") @db.Timestamptz()
-  
+
   @@id([userId, achievementId])
 }
 
