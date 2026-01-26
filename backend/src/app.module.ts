@@ -8,6 +8,8 @@ import { PrismaModule } from './prisma/prisma.module';
 import { RanksModule } from './ranks/ranks.module';
 import { UserModule } from './user/user.module';
 import { VisitsModule } from './visits/visits.module';
+import { RedisModule } from './redis/redis.module';
+import { LeaderboardModule } from './leaderboard/leaderboard.module';
 
 @Module({
   imports: [
@@ -32,6 +34,8 @@ import { VisitsModule } from './visits/visits.module';
     VisitsModule,
     AchievementsModule,
     RanksModule,
+    RedisModule,
+    LeaderboardModule,
   ],
 })
 export class AppModule {}
