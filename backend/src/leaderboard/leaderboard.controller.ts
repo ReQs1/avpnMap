@@ -1,8 +1,18 @@
-import { Controller, Inject } from '@nestjs/common';
-import Redis from 'ioredis';
-import { REDIS_CLIENT } from 'src/redis/constants/redis.constants';
+import { Controller, Get, Query } from '@nestjs/common';
+import { PaginationDto } from './dto/pagination.dto';
+import { LeaderboardService } from './leaderboard.service';
 
 @Controller('leaderboard')
 export class LeaderboardController {
-  constructor(@Inject(REDIS_CLIENT) private redis: Redis) {}
+  constructor(private readonly leaderboardService: LeaderboardService) {}
+
+  @Get('users')
+  async getUsersLeaderboard(@Query() query: PaginationDto) {
+    return await this.leaderboardService.getUsersLeaderboard(query);
+  }
+
+  @Get('pizzerias')
+  async getPizzeriasLeaderboard(@Query() query: PaginationDto) {
+    return await this.leaderboardService.getPizzeriasLeaderboard(query);
+  }
 }

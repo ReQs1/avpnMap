@@ -1,8 +1,15 @@
-import { Inject, Injectable, Logger, OnModuleInit } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+  OnModuleInit,
+} from '@nestjs/common';
 import Redis from 'ioredis';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { REDIS_CLIENT } from 'src/redis/constants/redis.constants';
 import { LB_REDIS_KEYS } from './constants/leaderboards.constants';
+import { PaginationDto } from './dto/pagination.dto';
 
 @Injectable()
 export class LeaderboardService implements OnModuleInit {
@@ -258,6 +265,104 @@ export class LeaderboardService implements OnModuleInit {
       await pipeline.exec();
       cursorId = pizzerias[pizzerias.length - 1].id;
       if (pizzerias.length < this.BATCH_SIZE) hasMore = false;
+    }
+  }
+
+  async getUsersLeaderboard(query: PaginationDto) {
+    const { limit, page } = query;
+
+    const startIndex = (page - 1) * limit;
+    const endIndex = startIndex + limit - 1;
+
+    try {
+      const pipeline = this.redis.pipeline();
+      pipeline.zrevrange(LB_REDIS_KEYS.USERS.CURRENT, startIndex, endIndex);
+      pipeline.zcard(LB_REDIS_KEYS.USERS.CURRENT);
+      pipeline.hgetall(LB_REDIS_KEYS.META);
+
+      const results = await pipeline.exec();
+
+      if (!results) {
+        throw new Error('Pipeline execution returned null');
+      }
+
+      const rawUsersData = results[0][1] as string[];
+      const totalCount = results[1][1] as number;
+      const metaData = results[2][1] as Record<string, string>;
+
+      const data = rawUsersData.map((user, idx) => {
+        const parsed = JSON.parse(user);
+
+        return {
+          position: startIndex + idx + 1,
+          ...parsed,
+        };
+      });
+
+      return {
+        data,
+        meta: {
+          totalCount,
+          page,
+          limit,
+          totalPages: Math.ceil(totalCount / limit),
+          ...metaData,
+        },
+      };
+    } catch (error) {
+      this.logger.error('Failed to fetch users leaderboard', error);
+      throw new InternalServerErrorException(
+        'Failed to fetch users leaderboard',
+      );
+    }
+  }
+
+  async getPizzeriasLeaderboard(query: PaginationDto) {
+    const { limit, page } = query;
+
+    const startIndex = (page - 1) * limit;
+    const endIndex = startIndex + limit - 1;
+
+    try {
+      const pipeline = this.redis.pipeline();
+      pipeline.zrevrange(LB_REDIS_KEYS.PIZZERIAS.CURRENT, startIndex, endIndex);
+      pipeline.zcard(LB_REDIS_KEYS.PIZZERIAS.CURRENT);
+      pipeline.hgetall(LB_REDIS_KEYS.META);
+
+      const results = await pipeline.exec();
+
+      if (!results) {
+        throw new Error('Pipeline execution returned null');
+      }
+
+      const rawPizzeriasData = results[0][1] as string[];
+      const totalCount = results[1][1] as number;
+      const metaData = results[2][1] as Record<string, string>;
+
+      const data = rawPizzeriasData.map((pizzeria, idx) => {
+        const parsed = JSON.parse(pizzeria);
+
+        return {
+          position: startIndex + idx + 1,
+          ...parsed,
+        };
+      });
+
+      return {
+        data,
+        meta: {
+          totalCount,
+          page,
+          limit,
+          totalPages: Math.ceil(totalCount / limit),
+          ...metaData,
+        },
+      };
+    } catch (error) {
+      this.logger.error('Failed to fetch pizzerias leaderboard', error);
+      throw new InternalServerErrorException(
+        'Failed to fetch pizzerias leaderboard',
+      );
     }
   }
 }
