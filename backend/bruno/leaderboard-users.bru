@@ -1,0 +1,16 @@
+meta {
+  name: leaderboard/users
+  type: http
+  seq: 9
+}
+
+get {
+  url: http://localhost:3000/leaderboard/users
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -1,0 +1,15 @@
+meta {
+  name: leaderboard/pizzerias
+  type: http
+  seq: 10
+}
+
+get {
+  url: http://localhost:3000/leaderboard/pizzerias
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}
