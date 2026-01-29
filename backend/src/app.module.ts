@@ -10,6 +10,7 @@ import { UserModule } from './user/user.module';
 import { VisitsModule } from './visits/visits.module';
 import { RedisModule } from './redis/redis.module';
 import { LeaderboardModule } from './leaderboard/leaderboard.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { LeaderboardModule } from './leaderboard/leaderboard.module';
     RanksModule,
     RedisModule,
     LeaderboardModule,
+    ScheduleModule.forRoot(),
   ],
 })
 export class AppModule {}
