@@ -14,6 +14,7 @@ import { Route as appRouteRouteImport } from './routes/(app)/route'
 import { Route as appIndexRouteImport } from './routes/(app)/index'
 import { Route as appProfileRouteImport } from './routes/(app)/profile'
 import { Route as appMapRouteImport } from './routes/(app)/map'
+import { Route as appLeaderboardRouteImport } from './routes/(app)/leaderboard'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -39,15 +40,22 @@ const appMapRoute = appMapRouteImport.update({
   path: '/map',
   getParentRoute: () => appRouteRoute,
 } as any)
+const appLeaderboardRoute = appLeaderboardRouteImport.update({
+  id: '/leaderboard',
+  path: '/leaderboard',
+  getParentRoute: () => appRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof appIndexRoute
   '/login': typeof LoginRoute
+  '/leaderboard': typeof appLeaderboardRoute
   '/map': typeof appMapRoute
   '/profile': typeof appProfileRoute
 }
 export interface FileRoutesByTo {
   '/login': typeof LoginRoute
+  '/leaderboard': typeof appLeaderboardRoute
   '/map': typeof appMapRoute
   '/profile': typeof appProfileRoute
   '/': typeof appIndexRoute
@@ -56,19 +64,21 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/(app)': typeof appRouteRouteWithChildren
   '/login': typeof LoginRoute
+  '/(app)/leaderboard': typeof appLeaderboardRoute
   '/(app)/map': typeof appMapRoute
   '/(app)/profile': typeof appProfileRoute
   '/(app)/': typeof appIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/map' | '/profile'
+  fullPaths: '/' | '/login' | '/leaderboard' | '/map' | '/profile'
   fileRoutesByTo: FileRoutesByTo
-  to: '/login' | '/map' | '/profile' | '/'
+  to: '/login' | '/leaderboard' | '/map' | '/profile' | '/'
   id:
     | '__root__'
     | '/(app)'
     | '/login'
+    | '/(app)/leaderboard'
     | '/(app)/map'
     | '/(app)/profile'
     | '/(app)/'
@@ -116,16 +126,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof appMapRouteImport
       parentRoute: typeof appRouteRoute
     }
+    '/(app)/leaderboard': {
+      id: '/(app)/leaderboard'
+      path: '/leaderboard'
+      fullPath: '/leaderboard'
+      preLoaderRoute: typeof appLeaderboardRouteImport
+      parentRoute: typeof appRouteRoute
+    }
   }
 }
 
 interface appRouteRouteChildren {
+  appLeaderboardRoute: typeof appLeaderboardRoute
   appMapRoute: typeof appMapRoute
   appProfileRoute: typeof appProfileRoute
   appIndexRoute: typeof appIndexRoute
 }
 
 const appRouteRouteChildren: appRouteRouteChildren = {
+  appLeaderboardRoute: appLeaderboardRoute,
   appMapRoute: appMapRoute,
   appProfileRoute: appProfileRoute,
   appIndexRoute: appIndexRoute,

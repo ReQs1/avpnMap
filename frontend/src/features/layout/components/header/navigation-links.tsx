@@ -52,7 +52,7 @@ export default function NavigationLinks({
         </li>
         <li>
           <Link
-            to="/"
+            to="/leaderboard"
             onClick={onClose}
             className="flex items-center gap-2 rounded-sm p-2 font-semibold transition lg:rounded-none lg:p-0 lg:pb-2 lg:focus-visible:outline-offset-8"
             activeProps={{
