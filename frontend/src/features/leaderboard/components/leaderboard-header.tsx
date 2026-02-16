@@ -20,7 +20,7 @@ export default function LeaderboardHeader() {
           </p>
         </div>
         <div className="flex items-center gap-4">
-          <div className="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 px-3 py-2 shadow">
+          <div className="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-3 py-2 shadow">
             <Clock className="text-gray-500" size={ICON_SIZE} />
             <p className="inline-flex gap-1.5 text-sm text-gray-600 lg:text-base">
               Resets in
@@ -32,7 +32,7 @@ export default function LeaderboardHeader() {
           <button
             onClick={() => setIsModalOpen(true)}
             aria-label="How rankings works"
-            className="inline-flex h-[38px] w-[38px] items-center justify-center rounded-lg border border-gray-200 text-gray-500 shadow transition-colors duration-200 hover:border-gray-400 hover:text-gray-700 lg:h-[42px] lg:w-[42px]"
+            className="inline-flex h-[38px] w-[38px] items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-500 shadow transition-colors duration-200 hover:border-gray-400 hover:text-gray-700 lg:h-[42px] lg:w-[42px]"
           >
             <CircleQuestionMark size={ICON_SIZE} />
           </button>
