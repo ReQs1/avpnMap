@@ -8,7 +8,7 @@ function Logo({ className }: { className?: string }) {
         <PizzaIcon color="white" />
       </div>
       <div>
-        <h1 className="text-lg font-bold md:text-xl">Pizza Tracker</h1>
+        <span className="text-lg font-bold md:text-xl">Pizza Tracker</span>
         <p className="hidden text-xs text-gray-500 md:block">
           AVPN Pizzerias Worldwide
         </p>
