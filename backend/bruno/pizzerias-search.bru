@@ -1,0 +1,21 @@
+meta {
+  name: pizzerias/search
+  type: http
+  seq: 12
+}
+
+get {
+  url: http://localhost:3000/pizzerias/search?q=s&limit=15
+  body: none
+  auth: inherit
+}
+
+params:query {
+  q: s
+  limit: 15
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

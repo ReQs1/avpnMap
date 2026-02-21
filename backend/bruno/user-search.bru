@@ -1,0 +1,20 @@
+meta {
+  name: user/search
+  type: http
+  seq: 11
+}
+
+get {
+  url: http://localhost:3000/user/search?q=s
+  body: none
+  auth: inherit
+}
+
+params:query {
+  q: s
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

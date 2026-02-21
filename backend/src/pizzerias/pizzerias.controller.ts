@@ -1,11 +1,17 @@
-import { Controller, Get, Req, UseGuards } from '@nestjs/common';
+import { Controller, Get, Query, Req, UseGuards } from '@nestjs/common';
 import { OptionalAuthGuard } from 'src/auth/guards/optional-auth/optional-auth.guard';
 import { PizzeriasService } from './pizzerias.service';
+import { SearchQueryDto } from './dto/search-query.dto';
 import { OptionalJwtPayloadRequest } from 'src/auth/interfaces/interfaces';
 
 @Controller('pizzerias')
 export class PizzeriasController {
   constructor(private pizzeriasService: PizzeriasService) {}
+
+  @Get('search')
+  async search(@Query() query: SearchQueryDto) {
+    return await this.pizzeriasService.searchByName(query);
+  }
 
   @UseGuards(OptionalAuthGuard)
   @Get()

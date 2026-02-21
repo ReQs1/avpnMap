@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma } from 'prisma/generated/client/client';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { SearchQueryDto } from './dto/search-query.dto';
 
 @Injectable()
 export class UserService {
@@ -16,6 +17,54 @@ export class UserService {
     return await this.prisma.user.create({
       data: user,
     });
+  }
+
+  async searchByName({ q, limit }: SearchQueryDto) {
+    const where = {
+      username: {
+        contains: q,
+        mode: 'insensitive' as const,
+      },
+    };
+
+    const [users, totalCount] = await Promise.all([
+      this.prisma.user.findMany({
+        where,
+        take: limit,
+        select: {
+          id: true,
+          username: true,
+          avatarURL: true,
+          visits: {
+            select: { rating: true },
+          },
+        },
+      }),
+      this.prisma.user.count({ where }),
+    ]);
+
+    const data = users.map((user) => {
+      const visitsCount = user.visits.length;
+      const ratedVisits = user.visits.filter((v) => v.rating !== null);
+      const avgRating =
+        ratedVisits.length > 0
+          ? Math.round(
+              (ratedVisits.reduce((sum, v) => sum + v.rating!, 0) /
+                ratedVisits.length) *
+                100,
+            ) / 100
+          : 0;
+
+      return {
+        id: user.id,
+        avatarURL: user.avatarURL,
+        name: user.username,
+        visits: visitsCount,
+        avgRating,
+      };
+    });
+
+    return { data, totalCount };
   }
 
   async findUserSummaryById(userId: number) {
