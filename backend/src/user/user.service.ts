@@ -21,7 +21,7 @@ export class UserService {
 
   async searchByName({ q, limit }: SearchQueryDto) {
     const where = {
-      username: {
+      firstName: {
         contains: q,
         mode: 'insensitive' as const,
       },
@@ -33,7 +33,7 @@ export class UserService {
         take: limit,
         select: {
           id: true,
-          username: true,
+          firstName: true,
           avatarURL: true,
           visits: {
             select: { rating: true },
@@ -58,7 +58,7 @@ export class UserService {
       return {
         id: user.id,
         avatarURL: user.avatarURL,
-        name: user.username,
+        name: user.firstName,
         visits: visitsCount,
         avgRating,
       };
@@ -68,13 +68,13 @@ export class UserService {
   }
 
   async findUserSummaryById(userId: number) {
-    return await this.prisma.user.findFirst({
+    const user = await this.prisma.user.findFirst({
       where: {
         id: userId,
       },
       select: {
         id: true,
-        username: true,
+        firstName: true,
         avatarURL: true,
         rank: {
           select: {
@@ -83,6 +83,11 @@ export class UserService {
         },
       },
     });
+
+    if (!user) return null;
+
+    const { firstName, ...rest } = user;
+    return { ...rest, username: firstName };
   }
 
   async findUserProfileById(userId: number) {
@@ -95,7 +100,7 @@ export class UserService {
         where: { id: userId },
         select: {
           id: true,
-          username: true,
+          firstName: true,
           avatarURL: true,
           joinedAt: true,
           rank: {
@@ -154,10 +159,11 @@ export class UserService {
     // });
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { achievements, ...restOfProfile } = userProfile;
+    const { achievements, firstName, ...restOfProfile } = userProfile;
 
     return {
       ...restOfProfile,
+      username: firstName,
       achievements: processedAchievements,
     };
   }

@@ -113,7 +113,7 @@ export class LeaderboardService implements OnModuleInit {
         orderBy: { id: 'asc' },
         select: {
           id: true,
-          username: true,
+          firstName: true,
           avatarURL: true,
           rank: {
             select: { name: true, color: true, icon: true },
@@ -177,7 +177,7 @@ export class LeaderboardService implements OnModuleInit {
         // --- redis payload ---
         const memberData = JSON.stringify({
           userId: user.id,
-          username: user.username,
+          username: user.firstName,
           avatarURL: user.avatarURL,
           userRank: {
             name: user.rank.name,

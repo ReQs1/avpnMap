@@ -10,7 +10,8 @@ generator client {
 
 model User {
   id           Int          @id @default(autoincrement())
-  username     String
+  firstName    String       @map("first_name")
+  lastName     String?      @map("last_name")
   email        String       @unique
   avatarURL    String       @map("avatar_url")
   joinedAt     DateTime    @default(now()) @map("joined_at") @db.Timestamptz()

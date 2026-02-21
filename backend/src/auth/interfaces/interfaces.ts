@@ -3,7 +3,7 @@ import { Request } from 'express';
 export interface AuthRequest extends Request {
   user: {
     id: number;
-    username: string;
+    firstName: string;
     email: string;
     avatarURL: string;
   };
