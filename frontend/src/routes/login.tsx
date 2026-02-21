@@ -8,26 +8,14 @@ import { createFileRoute, redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/login")({
   component: RouteComponent,
-  beforeLoad: async (ctx) => {
-    const { context } = ctx;
-    try {
-      const user = await context.queryClient.ensureQueryData(authQueryOptions);
-      if (user) {
-        throw redirect({
-          to: "/map",
-        });
-      }
-    } catch (error: unknown) {
-      // Rethrow redirects
-      if (
-        error &&
-        typeof error === "object" &&
-        "status" in error &&
-        error.status === 307
-      ) {
-        throw error;
-      }
-      console.error("Auth check failed:", error);
+  beforeLoad: (ctx) => {
+    const user = ctx.context.queryClient.getQueryData(
+      authQueryOptions.queryKey,
+    );
+    if (user) {
+      throw redirect({
+        to: "/map",
+      });
     }
   },
 });
