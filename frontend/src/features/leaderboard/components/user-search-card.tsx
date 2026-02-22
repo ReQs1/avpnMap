@@ -1,4 +1,4 @@
-import { type SearchUser } from "./search-bar";
+import type { SearchUser } from "../types/search.types";
 import SearchCard from "./search-card";
 
 export default function UserSearchCard({ user }: { user: SearchUser }) {

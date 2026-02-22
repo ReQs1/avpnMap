@@ -1,6 +1,6 @@
 import avpnLogo from "@/assets/AVPN-Logo.webp";
-import { type SearchPizzeria } from "./search-bar";
 import SearchCard from "./search-card";
+import type { SearchPizzeria } from "../types/search.types";
 
 export default function PizzeriaSearchCard({
   pizzeria,
