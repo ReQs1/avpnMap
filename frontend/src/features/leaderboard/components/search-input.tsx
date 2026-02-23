@@ -25,6 +25,7 @@ export default function SearchInput({
       </label>
       <input
         value={query}
+        autoComplete="off"
         onChange={(e) => setQuery(e.target.value)}
         onKeyDown={(e) => {
           if (e.key === "Escape") {

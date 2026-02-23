@@ -21,6 +21,9 @@ export const searchOptions = (queryOpt: QueryOpt, query: string) => {
       previousData: SearchResponse<SearchUser | SearchPizzeria> | undefined,
       previousQuery,
     ) => {
+      if (query.trim().length <= 1) {
+        return undefined;
+      }
       if (previousQuery?.queryKey[1] === queryOpt) {
         return previousData;
       }
