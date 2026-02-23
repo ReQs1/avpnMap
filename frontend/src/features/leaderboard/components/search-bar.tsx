@@ -24,36 +24,44 @@ export default function SearchBar() {
     setQueryOpt(queryOpt);
   };
 
-  return (
-    <div className="flex flex-col gap-3 rounded-lg border border-gray-200 bg-white p-4 shadow sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
-      <SearchInput
-        query={query}
-        setQuery={setQuery}
-        queryOpt={queryOpt}
-        isFetching={isFetching}
-      />
+  const showResults = isError || !!queryResponse;
 
-      {/* Query Switch (between pizzerias and users) */}
-      <div className="flex w-fit gap-2 rounded-md bg-gray-100 p-1">
-        <TabButton
-          icon={Users}
-          label="Users"
-          isActive={queryOpt === "users"}
-          onClick={() => onQueryOptChange("users")}
+  return (
+    <div className="relative">
+      <div className="flex flex-col gap-3 rounded-lg border border-gray-200 bg-white p-4 shadow sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
+        <SearchInput
+          query={query}
+          setQuery={setQuery}
+          queryOpt={queryOpt}
+          isFetching={isFetching}
         />
-        <TabButton
-          icon={Store}
-          label="Pizzerias"
-          isActive={queryOpt === "pizzerias"}
-          onClick={() => onQueryOptChange("pizzerias")}
-        />
+
+        {/* Query Switch (between pizzerias and users) */}
+        <div className="flex w-fit gap-2 rounded-md bg-gray-100 p-1">
+          <TabButton
+            icon={Users}
+            label="Users"
+            isActive={queryOpt === "users"}
+            onClick={() => onQueryOptChange("users")}
+          />
+          <TabButton
+            icon={Store}
+            label="Pizzerias"
+            isActive={queryOpt === "pizzerias"}
+            onClick={() => onQueryOptChange("pizzerias")}
+          />
+        </div>
       </div>
 
-      <SearchResults
-        queryResponse={queryResponse}
-        queryOpt={queryOpt}
-        isError={isError}
-      />
+      {showResults && (
+        <div className="absolute top-full right-0 left-0 z-50 w-full translate-y-2 overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg">
+          <SearchResults
+            queryResponse={queryResponse}
+            queryOpt={queryOpt}
+            isError={isError}
+          />
+        </div>
+      )}
     </div>
   );
 }
