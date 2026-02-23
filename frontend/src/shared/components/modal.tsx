@@ -58,7 +58,7 @@ export default function Modal({
             data-autofocus
             aria-label="Close modal"
             onClick={onClose}
-            className="absolute top-4 right-4 p-1 text-gray-400 transition-colors duration-[100000] hover:text-gray-600 focus:text-gray-600 focus:outline-2! focus:outline-black!"
+            className="absolute top-4 right-4 p-1 text-gray-400 transition-colors hover:text-gray-600 focus:text-gray-600 focus:outline-2! focus:outline-black!"
           >
             <X size={20} />
           </button>

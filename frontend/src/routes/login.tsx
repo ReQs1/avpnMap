@@ -9,10 +9,10 @@ import { createFileRoute, redirect } from "@tanstack/react-router";
 export const Route = createFileRoute("/login")({
   component: RouteComponent,
   beforeLoad: (ctx) => {
-    const user = ctx.context.queryClient.getQueryData(
+    const data = ctx.context.queryClient.getQueryData(
       authQueryOptions.queryKey,
     );
-    if (user) {
+    if (data?.user) {
       throw redirect({
         to: "/map",
       });

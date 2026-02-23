@@ -1,4 +1,4 @@
-import type { UserSummary } from "@/features/auth/types/user.types";
+import type { User as UserType } from "@/features/auth/types/user.types";
 import { Link } from "@tanstack/react-router";
 import { MapPin, Trophy, User } from "lucide-react";
 
@@ -6,7 +6,7 @@ export default function NavigationLinks({
   user,
   onClose,
 }: {
-  user: UserSummary;
+  user: UserType | null;
   onClose: () => void;
 }) {
   return (
@@ -30,8 +30,8 @@ export default function NavigationLinks({
             <span>Map</span>
           </Link>
         </li>
-        <li>
-          {user && (
+        {user && (
+          <li>
             <Link
               to="/profile"
               onClick={onClose}
@@ -48,8 +48,8 @@ export default function NavigationLinks({
               <User size={20} aria-hidden="true" />
               <span>My Profile</span>
             </Link>
-          )}
-        </li>
+          </li>
+        )}
         <li>
           <Link
             to="/leaderboard"

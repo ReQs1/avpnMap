@@ -1,4 +1,5 @@
 import { authQueryOptions } from "@/features/auth/api/auth-query-options";
+import type { AuthResult } from "@/features/auth/types/user.types";
 import { profileQueryOptions } from "@/features/profile/api/profile-query-options";
 import Achievements from "@/features/profile/components/achievements/achievements";
 import NoVisitsMessage from "@/features/profile/components/history/no-visits-message";
@@ -13,16 +14,23 @@ export const Route = createFileRoute("/(app)/profile")({
   component: RouteComponent,
   errorComponent: ProfileError,
   pendingComponent: PendingComponent,
-  beforeLoad: async (ctx) => {
+  beforeLoad: (ctx) => {
     const { context } = ctx;
-    const user = await context.queryClient.fetchQuery(authQueryOptions);
-    if (!user) {
-      throw redirect({
-        to: "/login",
-      });
+    const data = context.queryClient.getQueryData<AuthResult>(
+      authQueryOptions.queryKey,
+    );
+
+    // API failure (network error, 500, etc.)
+    if (data?.error) {
+      throw data.error;
     }
 
-    return { user };
+    // Not authenticated — redirect to login
+    if (!data?.user) {
+      throw redirect({ to: "/login" });
+    }
+
+    return { user: data.user };
   },
   loader: async (ctx) => {
     const { context } = ctx;

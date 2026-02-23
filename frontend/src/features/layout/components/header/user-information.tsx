@@ -1,11 +1,7 @@
 import SignOutButton from "@/features/layout/components/header/sign-out-btn";
-import type { UserSummary } from "@/features/auth/types/user.types";
+import type { User } from "@/features/auth/types/user.types";
 
-export default function UserInformation({
-  user,
-}: {
-  user: Exclude<UserSummary, undefined | null>;
-}) {
+export default function UserInformation({ user }: { user: User }) {
   const firstName = user.username.split(" ")[0];
 
   return (

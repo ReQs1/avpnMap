@@ -4,7 +4,7 @@ import type { QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 const RootLayout = () => (
   <>
@@ -19,9 +19,19 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   {
     component: RootLayout,
     beforeLoad: async (ctx) => {
-      try {
+      const data =
         await ctx.context.queryClient.ensureQueryData(authQueryOptions);
-      } catch (error) {}
+
+      if (data.error) {
+        toast.error(
+          "Unable to connect to server. Some features may be unavailable.",
+          {
+            id: "api-down",
+            duration: 5000,
+            position: "bottom-center",
+          },
+        );
+      }
     },
     notFoundComponent: GlobalNotFound,
   },

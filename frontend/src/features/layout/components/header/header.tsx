@@ -1,3 +1,4 @@
+import ApiStatusIndicator from "@/features/layout/components/header/api-status-indicator";
 import BurgerButton from "@/features/layout/components/header/burger-btn";
 import DesktopNavigation from "@/features/layout/components/header/desktop-navigation";
 import MobileNavigation from "@/features/layout/components/header/mobile-navigation";
@@ -21,7 +22,10 @@ function Header() {
     >
       <div className="mx-auto max-w-[600px] lg:max-w-[1400px]">
         <div className="flex items-center justify-between">
-          <Logo className="md:grow" />
+          <div className="flex items-center gap-3 md:grow">
+            <Logo />
+            <ApiStatusIndicator />
+          </div>
 
           {/* only burger button OR desktop navigation is visible at a time */}
           <BurgerButton

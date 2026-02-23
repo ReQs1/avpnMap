@@ -1,14 +1,16 @@
-export type UserSummary =
-  | {
-      id: number;
-      username: string;
-      avatarURL: string;
-      rank: {
-        name: string;
-      };
-    }
-  | undefined
-  | null;
+export type User = {
+  id: number;
+  username: string;
+  avatarURL: string;
+  rank: {
+    name: string;
+  };
+};
+
+export type AuthResult = {
+  user: User | null;
+  error: Error | null;
+};
 
 export type UserProfile = {
   achievements: {

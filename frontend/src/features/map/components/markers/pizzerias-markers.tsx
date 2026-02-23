@@ -4,7 +4,6 @@ import { pizzeriasQuery } from "@/features/map/api/pizza-query-options";
 import { useQuery } from "@tanstack/react-query";
 import { useMap } from "@vis.gl/react-maplibre";
 import { useEffect, useMemo, useState } from "react";
-import toast from "react-hot-toast";
 import useSupercluster from "use-supercluster";
 
 function PizzeriasMarkers() {
@@ -15,7 +14,7 @@ function PizzeriasMarkers() {
     [number, number, number, number] | undefined
   >(undefined);
   const [mapZoom, setMapZoom] = useState<number>(0);
-  const { data: pizzerias, error } = useQuery(pizzeriasQuery);
+  const { data: pizzerias } = useQuery(pizzeriasQuery);
   const { current: map } = useMap();
 
   // Update bounds and zoom when map moves
@@ -38,11 +37,9 @@ function PizzeriasMarkers() {
 
     // Listen to map events
     map.on("move", updateMapState);
-    map.on("zoom", updateMapState);
 
     return () => {
       map.off("move", updateMapState);
-      map.off("zoom", updateMapState);
     };
   }, [map]);
 
@@ -67,14 +64,6 @@ function PizzeriasMarkers() {
     zoom: mapZoom,
     options: { radius: 75, maxZoom: 20 },
   });
-
-  if (error) {
-    toast.error("Unable to load pizzeria locations.", {
-      id: "pizzerias-error",
-      position: "bottom-center",
-    });
-    return null;
-  }
 
   const handleCurrentOpenPizzeriaId = (targetId: number | null) => {
     if (currentOpenPizzeriaId === targetId) {
