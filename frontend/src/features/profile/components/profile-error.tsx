@@ -2,7 +2,7 @@ import errorImage from "@/assets/profile-error.webp";
 
 export default function ProfileError() {
   return (
-    <main className="grow bg-gray-50 px-4 py-8">
+    <div className="grow bg-gray-50 px-4 py-8">
       <div className="mx-auto max-w-6xl">
         <div className="flex flex-col items-center rounded-2xl bg-white px-6 py-12 shadow-sm">
           <img
@@ -18,6 +18,6 @@ export default function ProfileError() {
           </p>
         </div>
       </div>
-    </main>
+    </div>
   );
 }
