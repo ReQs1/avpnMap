@@ -21,13 +21,13 @@ export default function MobileNavigation({
       role="navigation"
       aria-label="Main navigation"
     >
-      <NavigationLinks user={user} onClose={onClose} />
+      <NavigationLinks onClose={onClose} />
 
       <div className="flex items-center">
         {isLoading ? (
           <div className="h-8 w-24 animate-pulse rounded bg-gray-200" />
         ) : user ? (
-          <UserInformation user={user} />
+          <UserInformation user={user} onClose={onClose} />
         ) : (
           <SignInButton />
         )}

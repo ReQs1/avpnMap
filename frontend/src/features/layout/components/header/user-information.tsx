@@ -1,7 +1,14 @@
 import SignOutButton from "@/features/layout/components/header/sign-out-btn";
 import type { User } from "@/features/auth/types/user.types";
+import { Link } from "@tanstack/react-router";
 
-export default function UserInformation({ user }: { user: User }) {
+export default function UserInformation({
+  user,
+  onClose,
+}: {
+  user: User;
+  onClose?: () => void;
+}) {
   const firstName = user.username.split(" ")[0];
 
   return (
@@ -9,22 +16,24 @@ export default function UserInformation({ user }: { user: User }) {
       className="grid w-full gap-4 lg:flex lg:w-auto lg:items-center lg:gap-4"
       aria-label="User information"
     >
-      <div className="flex items-center gap-3">
-        <img
-          src={user.avatarURL}
-          alt={`${user.username} avatar`}
-          className="h-10 w-10 rounded-full object-cover"
-          referrerPolicy="no-referrer"
-        />
-        <div>
-          <p className="font-medium text-gray-800">
-            {firstName.length <= 16
-              ? firstName
-              : firstName.slice(0, 16) + "..."}
-          </p>
-          <p className="text-sm text-gray-500">{user.rank.name}</p>
+      <Link to="/profile" onClick={onClose ? onClose : undefined}>
+        <div className="flex items-center gap-3">
+          <img
+            src={user.avatarURL}
+            alt={`${user.username} avatar`}
+            className="h-10 w-10 rounded-full object-cover"
+            referrerPolicy="no-referrer"
+          />
+          <div>
+            <p className="font-medium text-gray-800">
+              {firstName.length <= 16
+                ? firstName
+                : firstName.slice(0, 16) + "..."}
+            </p>
+            <p className="text-sm text-gray-500">{user.rank.name}</p>
+          </div>
         </div>
-      </div>
+      </Link>
       <SignOutButton />
     </div>
   );

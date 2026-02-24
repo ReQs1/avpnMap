@@ -11,8 +11,8 @@ export default function DesktopNavigation({
   const { user, isLoading } = useAuth();
 
   return (
-    <div className="hidden lg:flex lg:grow lg:items-center lg:justify-between lg:gap-6">
-      <NavigationLinks user={user} onClose={onClose} />
+    <div className="hidden lg:flex lg:grow lg:items-center lg:justify-end lg:gap-6">
+      <NavigationLinks onClose={onClose} />
 
       {isLoading ? (
         <div className="h-8 w-20 animate-pulse rounded bg-gray-200" />
