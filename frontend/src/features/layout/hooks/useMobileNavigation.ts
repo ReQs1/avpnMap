@@ -101,7 +101,7 @@ export function useMobileNavigation() {
     // Click outside to close menu
     const handleClickOutside = (e: MouseEvent) => {
       const header = headerRef.current;
-      if (header && !header.contains(e.target as Node)) {
+      if (header && e.button == 0 && !header.contains(e.target as Node)) {
         setIsOpen(false);
       }
     };
