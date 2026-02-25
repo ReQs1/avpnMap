@@ -1,37 +1,46 @@
 import GlobalNotFound from "@/features/not-found/components/global-not-found";
 import { authQueryOptions } from "@/features/auth/api/auth-query-options";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 import type { QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+import { useEffect, useRef } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
-const RootLayout = () => (
-  <>
-    <Outlet />
-    <Toaster />
-    <TanStackRouterDevtools />
-    <ReactQueryDevtools initialIsOpen={false} />
-  </>
-);
+const RootLayout = () => {
+  const { error } = useAuth();
+  const hasShownToast = useRef(false);
+
+  useEffect(() => {
+    if (error && !hasShownToast.current) {
+      hasShownToast.current = true;
+      toast.error(
+        "Unable to connect to server. Some features may be unavailable.",
+        {
+          id: "api-down",
+          duration: 5000,
+          position: "bottom-center",
+        },
+      );
+    }
+  }, [error]);
+
+  return (
+    <>
+      <Outlet />
+      <Toaster />
+      <TanStackRouterDevtools />
+      <ReactQueryDevtools initialIsOpen={false} />
+    </>
+  );
+};
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   {
     component: RootLayout,
     beforeLoad: async (ctx) => {
-      const data =
-        await ctx.context.queryClient.ensureQueryData(authQueryOptions);
-
-      if (data.error) {
-        toast.error(
-          "Unable to connect to server. Some features may be unavailable.",
-          {
-            id: "api-down",
-            duration: 5000,
-            position: "bottom-center",
-          },
-        );
-      }
+      await ctx.context.queryClient.ensureQueryData(authQueryOptions);
     },
     notFoundComponent: GlobalNotFound,
   },
