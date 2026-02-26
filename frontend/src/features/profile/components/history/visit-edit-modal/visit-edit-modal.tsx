@@ -6,12 +6,13 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
 import toast from "react-hot-toast";
-import EditDateField, { validateDateNotFuture } from "./edit-date-field";
+import EditDateField from "./edit-date-field";
 import EditDescriptionField from "./edit-description-field";
 import EditFormButtons from "./edit-form-buttons";
 import EditModalHeader from "./edit-modal-header";
 import EditRatingField from "./edit-rating-field";
 import type { EditVisitModalProps } from "./visit-edit-modal.types";
+import { validateDateNotFuture } from "@/features/profile/utils/validate-date-not-future";
 
 export default function EditVisitModal({
   visit,

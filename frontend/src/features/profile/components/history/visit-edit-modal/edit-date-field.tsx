@@ -1,5 +1,3 @@
-import { isFuture } from "date-fns";
-
 type EditDateFieldProps = {
   field: {
     name: string;
@@ -35,11 +33,4 @@ export default function EditDateField({ field }: EditDateFieldProps) {
       )}
     </div>
   );
-}
-
-export function validateDateNotFuture(value: string): string | undefined {
-  if (isFuture(value)) {
-    return "Future dates are not allowed";
-  }
-  return undefined;
 }
