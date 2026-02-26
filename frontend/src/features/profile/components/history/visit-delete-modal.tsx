@@ -25,7 +25,7 @@ export default function DeleteVisitModal({
     return () => {
       window.removeEventListener("keydown", handleKeyDown, true);
     };
-  }, [onCancel]);
+  }, [onCancel, isDeleting]);
 
   return createPortal(
     <div
