@@ -6,6 +6,7 @@ import { useState } from "react";
 import { searchOptions } from "../api/search-options";
 import SearchInput from "./search-input";
 import SearchResults from "./search-results";
+import { useDebounce } from "@/shared/hooks/use-debounce";
 
 export type QueryOpt = "users" | "pizzerias";
 
@@ -13,11 +14,13 @@ export default function SearchBar() {
   const [query, setQuery] = useState("");
   const [queryOpt, setQueryOpt] = useState<QueryOpt>("users");
 
+  const debouncedQuery = useDebounce(query, 500);
+
   const {
     data: queryResponse,
     isFetching,
     isError,
-  } = useQuery(searchOptions(queryOpt, query));
+  } = useQuery(searchOptions(queryOpt, debouncedQuery));
 
   const onQueryOptChange = (queryOpt: QueryOpt) => {
     setQuery("");

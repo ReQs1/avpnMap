@@ -1,12 +1,12 @@
 import { Loader2, SearchIcon } from "lucide-react";
 import type { QueryOpt } from "./search-bar";
 
-interface SearchInputProps {
+type SearchInputProps = {
   query: string;
   setQuery: (query: string) => void;
   queryOpt: QueryOpt;
   isFetching: boolean;
-}
+};
 
 export default function SearchInput({
   query,
