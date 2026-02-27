@@ -11,7 +11,13 @@ export default function LeaderboardSwitchButtons({
     <div className="grid grid-cols-2 gap-1 rounded-lg border border-gray-200 bg-white p-1">
       <Link
         to="."
-        search={(prev) => ({ ...prev, queryOpt: "users" })}
+        resetScroll={false}
+        search={(prev) => {
+          if (prev.queryOpt !== "users") {
+            return { queryOpt: "users", page: 1 };
+          }
+          return { ...prev };
+        }}
         className={cn(
           "inline-flex items-center justify-center gap-2 rounded-md px-2 py-3 text-sm transition-colors",
           {
@@ -28,7 +34,13 @@ export default function LeaderboardSwitchButtons({
       </Link>
       <Link
         to="."
-        search={(prev) => ({ ...prev, queryOpt: "pizzerias" })}
+        resetScroll={false}
+        search={(prev) => {
+          if (prev.queryOpt !== "pizzerias") {
+            return { queryOpt: "pizzerias", page: 1 };
+          }
+          return { ...prev };
+        }}
         className={cn(
           "inline-flex items-center justify-center gap-2 rounded-md px-2 py-3 text-sm transition-colors",
           {
