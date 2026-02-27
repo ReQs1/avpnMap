@@ -1,12 +1,12 @@
 import { cn } from "@/shared/utils/utils";
-import { getRouteApi, Link } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { Store, Users } from "lucide-react";
 
-const route = getRouteApi("/(app)/leaderboard");
-
-export default function LeaderboardSwitchButtons() {
-  const { queryOpt } = route.useSearch();
-
+export default function LeaderboardSwitchButtons({
+  queryOpt,
+}: {
+  queryOpt: "users" | "pizzerias";
+}) {
   return (
     <div className="grid grid-cols-2 gap-1 rounded-lg border border-gray-200 bg-white p-1">
       <Link
