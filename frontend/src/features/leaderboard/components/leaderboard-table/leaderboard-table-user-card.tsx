@@ -18,6 +18,7 @@ export default function LeaderboardTableUserCard({ user }: Props) {
 
   return (
     <button
+      onClick={() => console.log(user)}
       className={cn(
         "relative z-0 grid grid-cols-[32px_minmax(0,1fr)_50px] items-center gap-3 border-b border-gray-100 px-4 py-3 transition-colors last:border-none last:-outline-offset-2 hover:bg-slate-200 focus-visible:z-10 focus-visible:bg-slate-200 focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:outline-none sm:grid-cols-[48px_3fr_1fr_1fr_50px] sm:gap-4 md:grid-cols-[48px_1fr_1fr_1fr_50px]",
         bgClass,
@@ -49,6 +50,7 @@ export default function LeaderboardTableUserCard({ user }: Props) {
         <img
           src={user.avatarURL}
           alt={user.username}
+          loading="lazy"
           className="h-10 w-10 shrink-0 rounded-full border border-gray-200 bg-white object-cover"
         />
         <div className="flex w-full min-w-0 flex-col">

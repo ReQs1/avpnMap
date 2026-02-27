@@ -2,6 +2,7 @@ import type {
   LeaderboardPizzeria,
   LeaderboardUser,
 } from "../../types/leaderboard.types";
+import type { QueryOpt } from "../search-bar";
 import LeaderboardTableError from "./leaderboard-table-error";
 import LeaderboardTablePizzeriaCard from "./leaderboard-table-pizzeria-card";
 import LeaderboardTablePizzeriasHeader from "./leaderboard-table-pizzerias-header";
@@ -14,11 +15,10 @@ type BaseProps = {
   isError?: boolean;
 };
 
-type LeaderboardProps = BaseProps &
-  (
-    | { queryOpt: "users"; items: LeaderboardUser[] }
-    | { queryOpt: "pizzerias"; items: LeaderboardPizzeria[] }
-  );
+type LeaderboardProps = BaseProps & {
+  queryOpt: QueryOpt;
+  items: LeaderboardPizzeria[] | LeaderboardUser[];
+};
 
 export default function LeaderboardTable(props: LeaderboardProps) {
   const { queryOpt, items, isLoading, isError } = props;
@@ -40,7 +40,7 @@ export default function LeaderboardTable(props: LeaderboardProps) {
   }
 
   return (
-    <div className="mx-auto w-full max-w-5xl overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+    <div className="mx-auto overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
       {queryOpt === "users" ? (
         <LeaderboardTableUsersHeader />
       ) : (

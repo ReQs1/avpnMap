@@ -5,7 +5,7 @@ type Props = {
 
 export default function LeaderboardTableSkeleton({ rows = 10 }: Props) {
   return (
-    <div className="mx-auto w-full max-w-5xl overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+    <div className="mx-auto h-[720px] w-full overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
       {/* Header Skeleton */}
       <div className="grid grid-cols-[32px_minmax(0,1fr)_75px] items-center gap-3 border-b border-gray-200 bg-slate-50 px-4 py-4 sm:grid-cols-[48px_1fr_1fr_1fr_100px] sm:gap-4">
         <div className="mx-auto h-4 w-4 animate-pulse rounded bg-slate-200" />
