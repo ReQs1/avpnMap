@@ -22,6 +22,16 @@ export const Route = createFileRoute("/(app)/leaderboard")({
 
     return { ...search, queryOpt, page };
   },
+  loaderDeps: ({ search }) => ({
+    page: search.page,
+    queryOpt: search.queryOpt,
+  }),
+  loader: (ctx) => {
+    const { context, deps } = ctx;
+    context.queryClient.ensureQueryData(
+      leaderboardOptions(deps.page, deps.queryOpt),
+    );
+  },
 });
 
 function RouteComponent() {
