@@ -1,12 +1,53 @@
 import { CircleQuestionMark, Clock } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RankingsInfoModal } from "@/features/leaderboard/components/rankings-info-modal";
 
 const ICON_SIZE = 20;
 
-export default function LeaderboardHeader() {
-  const [timeRemaining] = useState("00:00:00");
+type Props = {
+  nextRefresh?: string | null;
+  onTimerComplete: () => void;
+};
+
+export default function LeaderboardHeader({
+  nextRefresh,
+  onTimerComplete,
+}: Props) {
+  const [timeRemaining, setTimeRemaining] = useState("00:00:00");
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (!nextRefresh) return;
+
+    const targetTime = new Date(nextRefresh).getTime();
+
+    const intervalId = setInterval(() => {
+      const now = Date.now();
+      const diff = targetTime - now;
+
+      // timer hits 0
+      if (diff <= 0) {
+        clearInterval(intervalId);
+        setTimeRemaining("00:00:00");
+
+        onTimerComplete();
+        return;
+      }
+
+      // Calculate the remaining time
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      const format = (n: number) => n.toString().padStart(2, "0");
+      setTimeRemaining(
+        `${format(hours)}:${format(minutes)}:${format(seconds)}`,
+      );
+    }, 1000);
+
+    // Cleanup
+    return () => clearInterval(intervalId);
+  }, [nextRefresh, onTimerComplete]);
 
   return (
     <>

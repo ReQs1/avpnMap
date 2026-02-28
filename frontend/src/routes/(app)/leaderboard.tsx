@@ -36,7 +36,10 @@ function RouteComponent() {
   return (
     <div className="grow bg-gray-50 px-4 py-8">
       <div className="mx-auto max-w-5xl space-y-6">
-        <LeaderboardHeader />
+        <LeaderboardHeader
+          onTimerComplete={() => console.log("meow")}
+          nextRefresh={response?.meta.nextRefresh}
+        />
         <SearchBar />
         <LeaderboardSwitchButtons queryOpt={queryOpt} />
         <LeaderboardTable
