@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { SearchQueryDto } from './dto/search-query.dto';
 
@@ -31,8 +31,40 @@ export class PizzeriasService {
     return { data, totalCount };
   }
 
+  async getPizzeriaById(id: number) {
+    const pizzeria = await this.prisma.pizzeria.findUnique({
+      where: {
+        id,
+      },
+      omit: {
+        lat: true,
+        lng: true,
+      },
+      include: {
+        visits: {
+          select: {
+            id: true,
+            description: true,
+            rating: true,
+            visitedAt: true,
+            timeZone: true,
+            user: {
+              select: {
+                firstName: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!pizzeria)
+      throw new NotFoundException(`Pizzeria with ID ${id} not found`);
+    return pizzeria;
+  }
+
   async getPizzerias() {
-    return await this.prisma.pizzeria.findMany();
+    return this.prisma.pizzeria.findMany();
   }
 
   async getPizzeriasWithUser(userId: number) {

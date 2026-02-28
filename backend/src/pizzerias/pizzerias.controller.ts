@@ -1,4 +1,12 @@
-import { Controller, Get, Query, Req, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Query,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { OptionalAuthGuard } from 'src/auth/guards/optional-auth/optional-auth.guard';
 import { PizzeriasService } from './pizzerias.service';
 import { SearchQueryDto } from './dto/search-query.dto';
@@ -11,6 +19,11 @@ export class PizzeriasController {
   @Get('search')
   async search(@Query() query: SearchQueryDto) {
     return await this.pizzeriasService.searchByName(query);
+  }
+
+  @Get(':id')
+  async getPizzeriaById(@Param('id', ParseIntPipe) id: number) {
+    return this.pizzeriasService.getPizzeriaById(id);
   }
 
   @UseGuards(OptionalAuthGuard)
