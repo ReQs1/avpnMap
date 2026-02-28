@@ -17,28 +17,29 @@ export default function Modal({
   className = "",
 }: ModalProps) {
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
+    if (!isOpen) return;
+
+    document.body.style.overflow = "hidden";
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
     return () => {
       document.body.style.overflow = "unset";
+      document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isOpen]);
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
   return (
     <FocusLock>
-      <div
-        className="fixed inset-0 z-50 flex items-center justify-center p-4"
-        onKeyDown={(e) => {
-          if (e.key === "Escape") {
-            onClose();
-          }
-        }}
-      >
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
         {/* Backdrop */}
         <div
           className="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity"
