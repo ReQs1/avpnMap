@@ -123,7 +123,7 @@ export default function LeaderboardPizzeriaModal({
       </div>
 
       {/* Reviews Section */}
-      <div className="h-64 overflow-y-auto px-6 pb-6">
+      <div tabIndex={-1} className="h-64 overflow-y-auto px-6 pb-6">
         <div>
           <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-700">
             <Star size={16} className="text-slate-500" /> Recent Reviews

@@ -82,7 +82,7 @@ export default function LeaderboardUserModal({ isOpen, onClose, user }: Props) {
       </div>
 
       {/* Scrollable Body area */}
-      <div className="h-80 overflow-y-auto px-6 pb-6">
+      <div tabIndex={-1} className="h-80 overflow-y-auto px-6 pb-6">
         {/* Recent Visits Section */}
         <div className="mb-6">
           <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-700">
