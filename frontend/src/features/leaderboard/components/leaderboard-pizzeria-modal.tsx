@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { pizzeriaQueryOptions } from "../api/pizzeria-query-options";
 import {
   MapPin,
   Star,
@@ -13,7 +14,6 @@ import {
 import { cn } from "@/shared/utils/utils";
 import Modal from "@/shared/components/modal";
 import type { PizzeriaModalData } from "../types/leaderboard.types";
-import type { PizzeriaDetails } from "@/features/map/types/pizzeria.types";
 
 interface Props {
   isOpen: boolean;
@@ -28,16 +28,9 @@ export default function LeaderboardPizzeriaModal({
 }: Props) {
   const [showAllReviews, setShowAllReviews] = useState(false);
 
-  // Replace with your actual query option hook
-  const { data: details, isLoading } = useQuery<PizzeriaDetails>({
-    queryKey: ["pizzeria", pizzeria.pizzeriaId],
-    queryFn: async () => {
-      const res = await fetch(`/api/pizzerias/${pizzeria.pizzeriaId}`);
-      if (!res.ok) throw new Error("Failed to fetch pizzeria details");
-
-      return res.json();
-    },
-  });
+  const { data: details, isLoading } = useQuery(
+    pizzeriaQueryOptions(pizzeria.pizzeriaId),
+  );
 
   const displayedReviews = showAllReviews
     ? details?.visits
