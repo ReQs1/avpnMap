@@ -1,9 +1,24 @@
 import type { SearchUser } from "../types/search.types";
 import SearchCard from "./search-card";
+import { useLeaderboardModalStore } from "../store/leaderboard-modal-store";
 
 export default function UserSearchCard({ user }: { user: SearchUser }) {
+  const openUserModal = useLeaderboardModalStore((s) => s.openUserModal);
+
   return (
-    <SearchCard>
+    <SearchCard
+      onClick={() =>
+        openUserModal({
+          userId: user.id,
+          username: user.name,
+          avatarURL: user.avatarURL,
+          userRank: user.userRank,
+          avgRating: user.avgRating,
+          visits: user.visits,
+          score: user.score,
+        })
+      }
+    >
       <img
         className="h-10 w-10 rounded-full"
         src={user.avatarURL}

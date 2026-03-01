@@ -1,6 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { SearchQueryDto } from './dto/search-query.dto';
+import {
+  computeAvgRating,
+  computePizzeriaScore,
+} from 'src/leaderboard/utils/scoring.utils';
 
 @Injectable()
 export class PizzeriasService {
@@ -14,7 +18,7 @@ export class PizzeriasService {
       },
     };
 
-    const [data, totalCount] = await Promise.all([
+    const [rawData, totalCount] = await Promise.all([
       this.prisma.pizzeria.findMany({
         where,
         take: limit,
@@ -23,10 +27,28 @@ export class PizzeriasService {
           name: true,
           memberNumber: true,
           nation: true,
+          visits: {
+            select: { rating: true },
+          },
         },
       }),
       this.prisma.pizzeria.count({ where }),
     ]);
+
+    const data = rawData.map((pizz) => {
+      const avgRating = computeAvgRating(pizz.visits);
+      const score = computePizzeriaScore(avgRating, pizz.visits.length);
+
+      return {
+        id: pizz.id,
+        name: pizz.name,
+        memberNumber: pizz.memberNumber,
+        nation: pizz.nation,
+        avgRating,
+        visits: pizz.visits.length,
+        score,
+      };
+    });
 
     return { data, totalCount };
   }

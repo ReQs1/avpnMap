@@ -26,6 +26,25 @@ export type LeaderboardPizzeria = {
   score: number;
 };
 
+export type UserModalData = {
+  userId: number;
+  username: string;
+  avatarURL: string;
+  userRank: UserRank;
+  avgRating: number;
+  visits: number;
+  score: number;
+};
+
+export type PizzeriaModalData = {
+  pizzeriaId: number;
+  name: string;
+  nation: string;
+  avgRating: number;
+  visits: number;
+  score: number;
+};
+
 export type LeaderboardMeta = {
   totalCount: number;
   page: number;

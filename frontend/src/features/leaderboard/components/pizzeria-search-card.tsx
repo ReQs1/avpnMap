@@ -1,14 +1,30 @@
 import avpnLogo from "@/assets/AVPN-Logo.webp";
 import SearchCard from "./search-card";
 import type { SearchPizzeria } from "../types/search.types";
+import { useLeaderboardModalStore } from "../store/leaderboard-modal-store";
 
 export default function PizzeriaSearchCard({
   pizzeria,
 }: {
   pizzeria: SearchPizzeria;
 }) {
+  const openPizzeriaModal = useLeaderboardModalStore(
+    (s) => s.openPizzeriaModal,
+  );
+
   return (
-    <SearchCard>
+    <SearchCard
+      onClick={() =>
+        openPizzeriaModal({
+          pizzeriaId: pizzeria.id,
+          name: pizzeria.name,
+          nation: pizzeria.nation,
+          avgRating: pizzeria.avgRating,
+          visits: pizzeria.visits,
+          score: pizzeria.score,
+        })
+      }
+    >
       <img className="h-10 w-10" src={avpnLogo} alt={"AVPN logo"} />
       <div>
         <p className="font-medium">{pizzeria.name}</p>

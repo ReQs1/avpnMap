@@ -1,5 +1,6 @@
 import { leaderboardOptions } from "@/features/leaderboard/api/leaderboard-options";
 import LeaderboardHeader from "@/features/leaderboard/components/leaderboard-header";
+import LeaderboardModals from "@/features/leaderboard/components/leaderboard-modals";
 import LeaderboardSwitchButtons from "@/features/leaderboard/components/leaderboard-switch-buttons";
 import LeaderboardTable from "@/features/leaderboard/components/leaderboard-table/leaderboard-table";
 import LeaderboardTablePagination from "@/features/leaderboard/components/leaderboard-table/leaderboard-table-pagination";
@@ -44,27 +45,30 @@ function RouteComponent() {
   } = useQuery(leaderboardOptions(page, queryOpt));
 
   return (
-    <div className="grow bg-gray-50 px-4 py-8">
-      <div className="mx-auto max-w-5xl space-y-6">
-        <LeaderboardHeader
-          onTimerComplete={() => console.log("meow")}
-          nextRefresh={response?.meta.nextRefresh}
-        />
-        <SearchBar />
-        <LeaderboardSwitchButtons queryOpt={queryOpt} />
-        <LeaderboardTable
-          items={response?.data || []}
-          queryOpt={queryOpt}
-          isLoading={isLoading}
-          isError={isError}
-        />
-        {response?.meta && (
-          <LeaderboardTablePagination
-            meta={response?.meta}
-            isDisabled={isFetching}
+    <>
+      <div className="grow bg-gray-50 px-4 py-8">
+        <div className="mx-auto max-w-5xl space-y-6">
+          <LeaderboardHeader
+            onTimerComplete={() => console.log("meow")}
+            nextRefresh={response?.meta.nextRefresh}
           />
-        )}
+          <SearchBar />
+          <LeaderboardSwitchButtons queryOpt={queryOpt} />
+          <LeaderboardTable
+            items={response?.data || []}
+            queryOpt={queryOpt}
+            isLoading={isLoading}
+            isError={isError}
+          />
+          {response?.meta && (
+            <LeaderboardTablePagination
+              meta={response?.meta}
+              isDisabled={isFetching}
+            />
+          )}
+        </div>
       </div>
-    </div>
+      <LeaderboardModals />
+    </>
   );
 }

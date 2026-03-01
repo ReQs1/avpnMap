@@ -2,6 +2,10 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma } from 'prisma/generated/client/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { SearchQueryDto } from './dto/search-query.dto';
+import {
+  computeAvgRating,
+  computeUserScore,
+} from 'src/leaderboard/utils/scoring.utils';
 
 @Injectable()
 export class UserService {
@@ -35,8 +39,14 @@ export class UserService {
           id: true,
           firstName: true,
           avatarURL: true,
+          rank: {
+            select: { name: true, color: true, icon: true },
+          },
+          _count: {
+            select: { achievements: true },
+          },
           visits: {
-            select: { rating: true },
+            select: { rating: true, description: true },
           },
         },
       }),
@@ -44,23 +54,21 @@ export class UserService {
     ]);
 
     const data = users.map((user) => {
-      const visitsCount = user.visits.length;
-      const ratedVisits = user.visits.filter((v) => v.rating !== null);
-      const avgRating =
-        ratedVisits.length > 0
-          ? Math.round(
-              (ratedVisits.reduce((sum, v) => sum + v.rating!, 0) /
-                ratedVisits.length) *
-                100,
-            ) / 100
-          : 0;
+      const avgRating = computeAvgRating(user.visits);
+      const score = computeUserScore(user.visits, user._count.achievements);
 
       return {
         id: user.id,
         avatarURL: user.avatarURL,
         name: user.firstName,
-        visits: visitsCount,
+        userRank: {
+          name: user.rank.name,
+          color: user.rank.color,
+          icon: user.rank.icon,
+        },
+        visits: user.visits.length,
         avgRating,
+        score,
       };
     });
 

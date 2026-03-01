@@ -9,7 +9,7 @@ import {
   Info,
 } from "lucide-react";
 import { cn } from "@/shared/utils/utils";
-import type { LeaderboardUser } from "../types/leaderboard.types";
+import type { UserModalData } from "../types/leaderboard.types";
 import { profileQueryOptions } from "@/features/profile/api/profile-query-options";
 import Modal from "@/shared/components/modal";
 import type { UserProfile } from "@/features/auth/types/user.types";
@@ -17,7 +17,7 @@ import type { UserProfile } from "@/features/auth/types/user.types";
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  user: LeaderboardUser;
+  user: UserModalData;
 }
 
 export default function LeaderboardUserModal({ isOpen, onClose, user }: Props) {
@@ -37,7 +37,11 @@ export default function LeaderboardUserModal({ isOpen, onClose, user }: Props) {
     : profile?.visits.slice(0, 3);
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} className="max-w-lg sm:w-full">
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      className="flex max-w-lg flex-col sm:w-full"
+    >
       {/* Header */}
       <div className="flex items-center gap-4 p-6 pb-4">
         <img
@@ -78,7 +82,7 @@ export default function LeaderboardUserModal({ isOpen, onClose, user }: Props) {
       </div>
 
       {/* Scrollable Body area */}
-      <div className="max-h-[55vh] overflow-y-auto px-6 pb-6">
+      <div className="h-80 overflow-y-auto px-6 pb-6">
         {/* Recent Visits Section */}
         <div className="mb-6">
           <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-700">

@@ -1,12 +1,17 @@
 import { Award, Crown, Medal, Store } from "lucide-react";
 import type { LeaderboardPizzeria } from "../../types/leaderboard.types";
 import { cn } from "@/shared/utils/utils";
+import { useLeaderboardModalStore } from "../../store/leaderboard-modal-store";
 
 type Props = {
   pizzeria: LeaderboardPizzeria;
 };
 
 export default function LeaderboardTablePizzeriaCard({ pizzeria }: Props) {
+  const openPizzeriaModal = useLeaderboardModalStore(
+    (s) => s.openPizzeriaModal,
+  );
+
   const isFirst = pizzeria.position === 1;
   const isSecond = pizzeria.position === 2;
   const isThird = pizzeria.position === 3;
@@ -18,7 +23,16 @@ export default function LeaderboardTablePizzeriaCard({ pizzeria }: Props) {
 
   return (
     <button
-      onClick={() => console.log(pizzeria)}
+      onClick={() =>
+        openPizzeriaModal({
+          pizzeriaId: pizzeria.pizzeriaId,
+          name: pizzeria.name,
+          nation: pizzeria.nation,
+          avgRating: pizzeria.avgRating,
+          visits: pizzeria.visits,
+          score: pizzeria.score,
+        })
+      }
       className={cn(
         "relative z-0 grid grid-cols-[32px_minmax(0,1fr)_50px] items-center gap-3 border-b border-gray-100 px-4 py-3 transition-colors last:border-none last:-outline-offset-2 hover:bg-slate-200 focus-visible:z-10 focus-visible:bg-slate-200 focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:outline-none sm:grid-cols-[48px_3fr_1fr_1fr_50px] sm:gap-4 md:grid-cols-[48px_1fr_1fr_1fr_50px]",
         bgClass,

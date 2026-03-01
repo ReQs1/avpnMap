@@ -26,6 +26,7 @@ export default function NavigationLinks({ onClose }: { onClose: () => void }) {
         <li>
           <Link
             to="/leaderboard"
+            search={{ queryOpt: "users", page: 1 }}
             onClick={onClose}
             className="relative flex items-center gap-2 rounded-sm p-2 font-semibold transition lg:rounded-none lg:p-0 lg:focus-visible:outline-offset-8"
             activeProps={{

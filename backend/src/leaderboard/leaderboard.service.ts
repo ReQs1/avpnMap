@@ -10,6 +10,11 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { REDIS_CLIENT } from 'src/redis/constants/redis.constants';
 import { LB_REDIS_KEYS } from './constants/leaderboards.constants';
 import { PaginationDto } from './dto/pagination.dto';
+import {
+  computeAvgRating,
+  computeUserScore,
+  computePizzeriaScore,
+} from './utils/scoring.utils';
 
 @Injectable()
 export class LeaderboardService implements OnModuleInit {
@@ -138,43 +143,9 @@ export class LeaderboardService implements OnModuleInit {
       const pipeline = this.redis.pipeline();
 
       for (const user of users) {
-        const visitsCount = user.visits.length;
-        const achievementsCount = user._count.achievements;
+        const avgRating = computeAvgRating(user.visits);
+        const score = computeUserScore(user.visits, user._count.achievements);
 
-        let textReviewsCount = 0;
-        let ratingSum = 0;
-        let ratedVisitsCount = 0; // Number of times user left a star rating
-
-        for (const visit of user.visits) {
-          // Check for text review (non-empty description)
-          if (visit.description && visit.description.trim().length > 0) {
-            textReviewsCount++;
-          }
-          // Check for valid rating
-          if (visit.rating !== null) {
-            ratingSum += visit.rating;
-            ratedVisitsCount++;
-          }
-        }
-
-        // Calculate Average Rating
-        const rawAvgRating =
-          ratedVisitsCount > 0 ? ratingSum / ratedVisitsCount : 0;
-        const avgRating = Math.round(rawAvgRating * 100) / 100;
-
-        // --- Calculate user's score ---
-        // Formula:
-        // +1 per Visit
-        // +1 per Text Review
-        // +2 per Star Rating
-        // +5 per Achievement
-        const score =
-          visitsCount * 1 +
-          textReviewsCount * 1 +
-          ratedVisitsCount * 2 +
-          achievementsCount * 5;
-
-        // --- redis payload ---
         const memberData = JSON.stringify({
           userId: user.id,
           username: user.firstName,
@@ -184,9 +155,9 @@ export class LeaderboardService implements OnModuleInit {
             color: user.rank.color,
             icon: user.rank.icon,
           },
-          avgRating: avgRating,
-          visits: visitsCount,
-          score: Math.round(score * 100) / 100,
+          avgRating,
+          visits: user.visits.length,
+          score,
         });
 
         pipeline.zadd(LB_REDIS_KEYS.USERS.NEXT, score, memberData);
@@ -227,36 +198,17 @@ export class LeaderboardService implements OnModuleInit {
       const pipeline = this.redis.pipeline();
 
       for (const pizz of pizzerias) {
-        const visitsCount = pizz.visits.length;
+        const avgRating = computeAvgRating(pizz.visits);
+        const score = computePizzeriaScore(avgRating, pizz.visits.length);
 
-        let ratingSum = 0;
-        let ratedVisitsCount = 0;
-
-        for (const v of pizz.visits) {
-          if (v.rating !== null) {
-            ratingSum += v.rating;
-            ratedVisitsCount++;
-          }
-        }
-
-        const rawAvgRating =
-          ratedVisitsCount > 0 ? ratingSum / ratedVisitsCount : 0;
-        const avgRating = Math.round(rawAvgRating * 100) / 100;
-
-        // --- calculate pizzeria's score ---
-        // Formula: AvgRating * log10(Visits + 1) * 10
-        // We use (Visits + 1) to prevent log10(0) issues
-        const score = avgRating * Math.log10(visitsCount + 1) * 10;
-
-        // --- redis payload ---
         const memberData = JSON.stringify({
           pizzeriaId: pizz.id,
           avpnId: pizz.memberNumber,
           name: pizz.name,
           nation: pizz.nation,
-          avgRating: avgRating,
-          visits: visitsCount,
-          score: Math.round(score * 100) / 100,
+          avgRating,
+          visits: pizz.visits.length,
+          score,
         });
 
         pipeline.zadd(LB_REDIS_KEYS.PIZZERIAS.NEXT, score, memberData);
