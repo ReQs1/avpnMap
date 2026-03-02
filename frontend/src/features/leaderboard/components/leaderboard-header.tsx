@@ -1,4 +1,4 @@
-import { CircleQuestionMark, Clock } from "lucide-react";
+import { CircleQuestionMark, Clock, LoaderCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { RankingsInfoModal } from "@/features/leaderboard/components/rankings-info-modal";
 
@@ -7,11 +7,13 @@ const ICON_SIZE = 20;
 type Props = {
   nextRefresh?: string | null;
   onTimerComplete: () => void;
+  isFetching?: boolean;
 };
 
 export default function LeaderboardHeader({
   nextRefresh,
   onTimerComplete,
+  isFetching,
 }: Props) {
   const [timeRemaining, setTimeRemaining] = useState("00:00:00");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -21,20 +23,16 @@ export default function LeaderboardHeader({
 
     const targetTime = new Date(nextRefresh).getTime();
 
-    const intervalId = setInterval(() => {
+    const updateTimer = () => {
       const now = Date.now();
       const diff = targetTime - now;
 
-      // timer hits 0
       if (diff <= 0) {
-        clearInterval(intervalId);
         setTimeRemaining("00:00:00");
-
         onTimerComplete();
-        return;
+        return true; // Signal to stop the interval
       }
 
-      // Calculate the remaining time
       const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
       const minutes = Math.floor((diff / (1000 * 60)) % 60);
       const seconds = Math.floor((diff / 1000) % 60);
@@ -43,12 +41,22 @@ export default function LeaderboardHeader({
       setTimeRemaining(
         `${format(hours)}:${format(minutes)}:${format(seconds)}`,
       );
+      return false;
+    };
+
+    const isFinished = updateTimer();
+
+    if (isFinished) return;
+
+    const intervalId = setInterval(() => {
+      const done = updateTimer();
+      if (done) {
+        clearInterval(intervalId);
+      }
     }, 1000);
 
-    // Cleanup
     return () => clearInterval(intervalId);
   }, [nextRefresh, onTimerComplete]);
-
   return (
     <>
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
@@ -62,7 +70,14 @@ export default function LeaderboardHeader({
         </div>
         <div className="flex items-center gap-4">
           <div className="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-3 py-2 shadow">
-            <Clock className="text-gray-500" size={ICON_SIZE} />
+            {isFetching ? (
+              <LoaderCircle
+                className="animate-spin text-gray-500"
+                size={ICON_SIZE}
+              />
+            ) : (
+              <Clock className="text-gray-500" size={ICON_SIZE} />
+            )}
             <p className="inline-flex gap-1.5 text-sm text-gray-600 lg:text-base">
               Resets in
               <span className="font-mono! font-semibold text-red-600">

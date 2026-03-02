@@ -5,8 +5,9 @@ import LeaderboardSwitchButtons from "@/features/leaderboard/components/leaderbo
 import LeaderboardTable from "@/features/leaderboard/components/leaderboard-table/leaderboard-table";
 import LeaderboardTablePagination from "@/features/leaderboard/components/leaderboard-table/leaderboard-table-pagination";
 import SearchBar from "@/features/leaderboard/components/search-bar";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 
 export const Route = createFileRoute("/(app)/leaderboard")({
   component: RouteComponent,
@@ -36,7 +37,9 @@ export const Route = createFileRoute("/(app)/leaderboard")({
 });
 
 function RouteComponent() {
+  const queryClient = useQueryClient();
   const { page, queryOpt } = Route.useSearch();
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const {
     data: response,
     isError,
@@ -44,20 +47,30 @@ function RouteComponent() {
     isFetching,
   } = useQuery(leaderboardOptions(page, queryOpt));
 
+  async function handleTimerComplete() {
+    setIsRefreshing(true);
+    queryClient
+      .invalidateQueries({ queryKey: ["leaderboard"], refetchType: "all" })
+      .then(() => {
+        setIsRefreshing(false);
+      });
+  }
+
   return (
     <>
       <div className="grow bg-gray-50 px-4 py-8">
         <div className="mx-auto max-w-5xl space-y-6">
           <LeaderboardHeader
-            onTimerComplete={() => console.log("meow")}
+            onTimerComplete={handleTimerComplete}
             nextRefresh={response?.meta.nextRefresh}
+            isFetching={isRefreshing || isLoading}
           />
           <SearchBar />
           <LeaderboardSwitchButtons queryOpt={queryOpt} />
           <LeaderboardTable
             items={response?.data || []}
             queryOpt={queryOpt}
-            isLoading={isLoading}
+            isLoading={isLoading || isRefreshing}
             isError={isError}
           />
           {response?.meta && (
