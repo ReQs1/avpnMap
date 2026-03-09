@@ -7,6 +7,30 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import { useMapCoordsStore } from "@/features/map/store/map-coords-store";
 
 export const Route = createFileRoute("/(app)/map")({
+  head: () => ({
+    meta: [
+      { title: "Map — avpnMap" },
+      {
+        name: "description",
+        content:
+          "Explore a live map of AVPN certified pizzerias near you and around the world.",
+      },
+      { property: "og:title", content: "Map — avpnMap" },
+      {
+        property: "og:description",
+        content:
+          "Explore a live map of AVPN certified pizzerias near you and around the world.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
+      { name: "twitter:title", content: "Map — avpnMap" },
+      {
+        name: "twitter:description",
+        content:
+          "Explore a live map of AVPN certified pizzerias near you and around the world.",
+      },
+    ],
+  }),
   loader: (ctx) => {
     const { context } = ctx;
     context.queryClient.ensureQueryData(pizzeriasQuery);
