@@ -55,6 +55,7 @@ function MapPage() {
           const { latitude, longitude, zoom } = state.viewState;
           setCoords(longitude, latitude, zoom);
         }}
+        renderWorldCopies={false}
       >
         {!hasUserMoved && <YouAreHere />}
         <PizzeriasMarkers />
