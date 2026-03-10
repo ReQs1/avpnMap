@@ -21,6 +21,7 @@ import { AuthRequest, JwtPayloadRequest } from './interfaces/interfaces';
 @Controller('auth')
 export class AuthController {
   private isProd: boolean;
+  private baseOpts: CookieOptions;
   private accessCookieOpts: CookieOptions;
   private refreshCookieOpts: CookieOptions;
   private redirectURL: string;
@@ -31,17 +32,22 @@ export class AuthController {
   ) {
     this.isProd = this.configService.get<string>('NODE_ENV') === 'production';
 
-    this.accessCookieOpts = {
+    const cookieDomain = this.isProd ? '.avpnmap.app' : undefined;
+
+    this.baseOpts = {
       httpOnly: true,
       secure: this.isProd,
       sameSite: this.isProd ? 'none' : 'lax',
+      domain: cookieDomain,
+    };
+
+    this.accessCookieOpts = {
+      ...this.baseOpts,
       maxAge: ACCESS_TOKEN_EXPIRES_IN_MS,
     };
 
     this.refreshCookieOpts = {
-      httpOnly: true,
-      secure: this.isProd,
-      sameSite: this.isProd ? 'none' : 'lax',
+      ...this.baseOpts,
       maxAge: REFRESH_TOKEN_EXPIRES_IN_MS,
     };
 
@@ -51,7 +57,9 @@ export class AuthController {
   @HttpCode(200)
   @Post('logout')
   logout(@Res({ passthrough: true }) res: Response) {
-    res.clearCookie('accessToken').clearCookie('refreshToken');
+    res
+      .clearCookie('accessToken', this.baseOpts)
+      .clearCookie('refreshToken', this.baseOpts);
     return { message: 'Logged out successfully' };
   }
 
