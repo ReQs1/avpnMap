@@ -44,19 +44,7 @@ const RootLayout = () => {
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   {
     component: RootLayout,
-    head: () => ({
-      meta: [
-        { title: "avpnMap" },
-        {
-          name: "description",
-          content:
-            "avpnMap — discover and track Associazione Verace Pizza Napoletana certified pizzerias around the world.",
-        },
-        { property: "og:site_name", content: "avpnMap" },
-        { property: "og:type", content: "website" },
-        { name: "twitter:card", content: "summary" },
-      ],
-    }),
+
     beforeLoad: async (ctx) => {
       await ctx.context.queryClient.ensureQueryData(authQueryOptions);
     },

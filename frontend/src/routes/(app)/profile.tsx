@@ -14,9 +14,7 @@ export const Route = createFileRoute("/(app)/profile")({
   component: RouteComponent,
   errorComponent: ProfileError,
   pendingComponent: PendingComponent,
-  head: () => ({
-    meta: [{ title: "Profile — avpnMap" }],
-  }),
+  head: () => ({ meta: [{ title: "Profile — avpnMap" }] }),
   beforeLoad: (ctx) => {
     const { context } = ctx;
     const data = context.queryClient.getQueryData<AuthResult>(

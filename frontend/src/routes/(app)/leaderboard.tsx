@@ -10,30 +10,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 
 export const Route = createFileRoute("/(app)/leaderboard")({
-  head: () => ({
-    meta: [
-      { title: "Leaderboard — avpnMap" },
-      {
-        name: "description",
-        content:
-          "See who has visited the most AVPN certified pizzerias. Compete with other pizza lovers on the avpnMap leaderboard.",
-      },
-      { property: "og:title", content: "Leaderboard — avpnMap" },
-      {
-        property: "og:description",
-        content:
-          "See who has visited the most AVPN certified pizzerias. Compete with other pizza lovers on the avpnMap leaderboard.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:title", content: "Leaderboard — avpnMap" },
-      {
-        name: "twitter:description",
-        content:
-          "See who has visited the most AVPN certified pizzerias. Compete with other pizza lovers on the avpnMap leaderboard.",
-      },
-    ],
-  }),
+  head: () => ({ meta: [{ title: "Leaderboard — avpnMap" }] }),
   component: RouteComponent,
   validateSearch: (search: Record<string, unknown>) => {
     const validOptions = ["users", "pizzerias"] as const;

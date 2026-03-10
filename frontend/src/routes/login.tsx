@@ -8,30 +8,7 @@ import { createFileRoute, redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/login")({
   component: RouteComponent,
-  head: () => ({
-    meta: [
-      { title: "Sign In — avpnMap" },
-      {
-        name: "description",
-        content:
-          "Sign in to avpnMap to track your visits to AVPN certified pizzerias and climb the leaderboard.",
-      },
-      { property: "og:title", content: "Sign In — avpnMap" },
-      {
-        property: "og:description",
-        content:
-          "Sign in to avpnMap to track your visits to AVPN certified pizzerias and climb the leaderboard.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:title", content: "Sign In — avpnMap" },
-      {
-        name: "twitter:description",
-        content:
-          "Sign in to avpnMap to track your visits to AVPN certified pizzerias and climb the leaderboard.",
-      },
-    ],
-  }),
+  head: () => ({ meta: [{ title: "Sign In — avpnMap" }] }),
   beforeLoad: (ctx) => {
     const data = ctx.context.queryClient.getQueryData(
       authQueryOptions.queryKey,
