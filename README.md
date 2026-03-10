@@ -75,8 +75,4 @@ pnpm run dev
 ---
 
 ## TODO
-
-- Add fun facts array to the 404 page
-- Refactor query-options across the frontend
 - Block map interaction while a visit edit/delete is in progress
-- Dig into offline behaviour / backend-down resilience on the frontend
