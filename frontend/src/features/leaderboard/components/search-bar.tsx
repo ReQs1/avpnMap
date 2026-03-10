@@ -6,6 +6,7 @@ import { useState } from "react";
 import { searchOptions } from "../api/search-options";
 import SearchInput from "./search-input";
 import SearchResults from "./search-results";
+import LiveDataModal from "./live-data-modal";
 import { useDebounce } from "@/shared/hooks/use-debounce";
 
 export type QueryOpt = "users" | "pizzerias";
@@ -13,6 +14,7 @@ export type QueryOpt = "users" | "pizzerias";
 export default function SearchBar() {
   const [query, setQuery] = useState("");
   const [queryOpt, setQueryOpt] = useState<QueryOpt>("users");
+  const [isLiveModalOpen, setIsLiveModalOpen] = useState(false);
 
   const debouncedQuery = useDebounce(query, 500);
 
@@ -30,42 +32,50 @@ export default function SearchBar() {
   const showResults = isError || !!queryResponse;
 
   return (
-    <div className="relative">
-      <div className="flex flex-col gap-3 rounded-lg border border-gray-200 bg-white p-4 shadow sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
-        <SearchInput
-          query={query}
-          setQuery={setQuery}
-          queryOpt={queryOpt}
-          isFetching={isFetching}
-        />
+    <>
+      <div className="relative">
+        <div className="flex flex-col gap-3 rounded-lg border border-gray-200 bg-white p-4 shadow sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
+          <SearchInput
+            query={query}
+            setQuery={setQuery}
+            queryOpt={queryOpt}
+            isFetching={isFetching}
+          />
 
-        {/* Query Switch (between pizzerias and users) */}
-        <div className="flex w-fit gap-2 rounded-md bg-gray-100 p-1">
-          <TabButton
-            icon={Users}
-            label="Users"
-            isActive={queryOpt === "users"}
-            onClick={() => onQueryOptChange("users")}
-          />
-          <TabButton
-            icon={Store}
-            label="Pizzerias"
-            isActive={queryOpt === "pizzerias"}
-            onClick={() => onQueryOptChange("pizzerias")}
-          />
+          {/* Query Switch (between pizzerias and users) */}
+          <div className="flex w-fit gap-2 rounded-md bg-gray-100 p-1">
+            <TabButton
+              icon={Users}
+              label="Users"
+              isActive={queryOpt === "users"}
+              onClick={() => onQueryOptChange("users")}
+            />
+            <TabButton
+              icon={Store}
+              label="Pizzerias"
+              isActive={queryOpt === "pizzerias"}
+              onClick={() => onQueryOptChange("pizzerias")}
+            />
+          </div>
         </div>
+
+        {showResults && (
+          <div className="absolute top-full right-0 left-0 z-50 w-full translate-y-2 overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg">
+            <SearchResults
+              queryResponse={queryResponse}
+              queryOpt={queryOpt}
+              isError={isError}
+              onLiveBadgeClick={() => setIsLiveModalOpen(true)}
+            />
+          </div>
+        )}
       </div>
 
-      {showResults && (
-        <div className="absolute top-full right-0 left-0 z-50 w-full translate-y-2 overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg">
-          <SearchResults
-            queryResponse={queryResponse}
-            queryOpt={queryOpt}
-            isError={isError}
-          />
-        </div>
-      )}
-    </div>
+      <LiveDataModal
+        isOpen={isLiveModalOpen}
+        onClose={() => setIsLiveModalOpen(false)}
+      />
+    </>
   );
 }
 

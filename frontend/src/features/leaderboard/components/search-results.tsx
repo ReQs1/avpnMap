@@ -1,4 +1,4 @@
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, Zap } from "lucide-react";
 import type { QueryOpt } from "./search-bar";
 import type { SearchPizzeria, SearchUser } from "../types/search.types";
 import PizzeriaSearchCard from "./pizzeria-search-card";
@@ -13,10 +13,12 @@ export default function SearchResults({
   queryResponse,
   queryOpt,
   isError,
+  onLiveBadgeClick,
 }: {
   queryResponse: SearchResponse | undefined;
   queryOpt: QueryOpt;
   isError: boolean;
+  onLiveBadgeClick: () => void;
 }) {
   if (isError) {
     return (
@@ -36,9 +38,18 @@ export default function SearchResults({
           {queryResponse.totalCount}{" "}
           {queryResponse.totalCount == 1 ? "result" : "results"} found
         </p>
-        {queryResponse.totalCount > queryResponse.data.length && (
-          <p className="text-xs text-gray-400">Showing first 10</p>
-        )}
+        <div className="flex items-center gap-2">
+          {queryResponse.totalCount > queryResponse.data.length && (
+            <p className="text-xs text-gray-400">Showing first 10</p>
+          )}
+          <button
+            onClick={onLiveBadgeClick}
+            className="inline-flex items-center gap-1 rounded-full bg-green-100 px-2 py-0.5 text-[10px] font-semibold text-green-700 transition-colors hover:bg-green-200"
+          >
+            <Zap size={10} className="fill-green-600 text-green-600" />
+            Live
+          </button>
+        </div>
       </div>
 
       <div>
