@@ -12,7 +12,7 @@ function LoginCard() {
         </p>
       </div>
       <a
-        href={`${BACKEND_URL}auth/google/login`}
+        href={`${BACKEND_URL}/auth/google/login`}
         className="flex w-full items-center justify-center gap-2 rounded-lg border-2 border-red-200 bg-white px-4 py-2 text-sm font-semibold text-gray-700 shadow-md transition-colors hover:bg-gray-50 focus-visible:bg-gray-50"
       >
         <GoogleSvg />
