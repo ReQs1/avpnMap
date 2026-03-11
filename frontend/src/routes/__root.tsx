@@ -1,6 +1,7 @@
-import GlobalNotFound from "@/features/not-found/components/global-not-found";
 import { authQueryOptions } from "@/features/auth/api/auth-query-options";
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import GlobalPending from "@/features/layout/components/global-pending";
+import GlobalNotFound from "@/features/not-found/components/global-not-found";
 import type { QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import {
@@ -44,10 +45,10 @@ const RootLayout = () => {
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   {
     component: RootLayout,
-
     beforeLoad: async (ctx) => {
       await ctx.context.queryClient.ensureQueryData(authQueryOptions);
     },
+    pendingComponent: GlobalPending,
     notFoundComponent: GlobalNotFound,
   },
 );
