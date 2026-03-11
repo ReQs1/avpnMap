@@ -28,7 +28,7 @@ export default function GlobalPending() {
 
       <p className="mt-12 max-w-70 text-sm leading-relaxed text-gray-400">
         Our free-tier servers are waking up to fetch the freshest certified
-        pizzerias. This might take about 30 seconds.
+        pizzerias. This might take 30 seconds to a few minutes.
       </p>
     </div>
   );
