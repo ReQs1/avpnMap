@@ -5,10 +5,13 @@ import type { AuthResult } from "@/features/auth/types/user.types";
 export const authQueryOptions = queryOptions<AuthResult>({
   queryKey: ["auth"],
   staleTime: Infinity,
+  gcTime: Infinity,
+
   retryOnMount: false,
   refetchOnMount: false,
-  gcTime: Infinity,
   refetchOnWindowFocus: false,
+
   retry: false,
-  queryFn: fetchUserSummary,
+
+  queryFn: () => fetchUserSummary(10),
 });
