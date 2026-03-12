@@ -9,5 +9,6 @@ import { LeaderboardScheduler } from './leaderboard.scheduler';
   controllers: [LeaderboardController],
   providers: [LeaderboardService, LeaderboardScheduler],
   imports: [PrismaModule, RedisModule],
+  exports: [LeaderboardService],
 })
 export class LeaderboardModule {}

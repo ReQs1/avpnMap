@@ -10,6 +10,7 @@ import { UserModule } from './user/user.module';
 import { VisitsModule } from './visits/visits.module';
 import { RedisModule } from './redis/redis.module';
 import { LeaderboardModule } from './leaderboard/leaderboard.module';
+import { AdminModule } from './admin/admin.module';
 import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
@@ -37,6 +38,7 @@ import { ScheduleModule } from '@nestjs/schedule';
     RanksModule,
     RedisModule,
     LeaderboardModule,
+    AdminModule,
     ScheduleModule.forRoot(),
   ],
 })
