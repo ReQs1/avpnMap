@@ -10,7 +10,7 @@ const redisOptions = (): RedisOptions => {
     host: process.env.REDIS_HOST,
     port: +(process.env.REDIS_PORT || 6379),
     password: process.env.REDIS_PASSWORD,
-    tls: {},
+    ...(process.env.NODE_ENV === 'production' ? { tls: {} } : {}),
     showFriendlyErrorStack: true,
     lazyConnect: true,
     commandTimeout: 1000,
