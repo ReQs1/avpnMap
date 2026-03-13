@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useThrottle } from "@/shared/hooks/use-throttle";
 import { useQuery } from "@tanstack/react-query";
 import {
   MapPin,
@@ -175,17 +176,23 @@ function AchievementItem({
   achievement: UserProfile["achievements"][number];
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  const { isThrottled, throttledAction: toggleOpen } = useThrottle(() =>
+    setIsOpen(!isOpen),
+  );
 
   return (
     <div
-      className="flex cursor-pointer flex-col overflow-hidden rounded-xl bg-green-50 shadow-sm transition-colors hover:bg-green-100/80"
-      onClick={() => setIsOpen(!isOpen)}
+      className={cn(
+        "flex cursor-pointer flex-col overflow-hidden rounded-xl bg-green-50 shadow-sm transition-colors hover:bg-green-100/80",
+        isThrottled && "pointer-events-none",
+      )}
+      onClick={toggleOpen}
       role="button"
-      tabIndex={0}
+      tabIndex={isThrottled ? -1 : 0}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
-          setIsOpen(!isOpen);
+          toggleOpen();
         }
       }}
     >
