@@ -156,7 +156,7 @@ export default function LeaderboardUserModal({ isOpen, onClose, user }: Props) {
               No achievements unlocked yet.
             </p>
           ) : (
-            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+            <div className="grid grid-cols-1 items-start gap-2 sm:grid-cols-2">
               {unlockedAchievements.map((ach) => (
                 <AchievementItem key={ach.id} achievement={ach} />
               ))}
