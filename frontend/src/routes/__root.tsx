@@ -12,6 +12,7 @@ import {
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { useEffect, useRef } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import { CookieBanner } from "@/features/layout/components/cookie-banner";
 
 const RootLayout = () => {
   const { error } = useAuth();
@@ -38,6 +39,7 @@ const RootLayout = () => {
       <Toaster />
       <TanStackRouterDevtools />
       <ReactQueryDevtools initialIsOpen={false} />
+      <CookieBanner />
     </>
   );
 };
