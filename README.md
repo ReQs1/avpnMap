@@ -79,3 +79,4 @@ pnpm run dev
 ## TODO
 - fix names in db (there are "?" or different chars)
 - Block map interaction while a visit edit/delete is in progress
+- dark mode
