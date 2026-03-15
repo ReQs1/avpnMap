@@ -1,0 +1,13 @@
+name: Wake Up Render Backend
+on:
+  schedule:
+    - cron: "48 23 * * *"
+  workflow_dispatch:
+jobs:
+  ping-server:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Backend
+        run: |
+          curl -I https://api.avpnmap.app/admin/wake \
+            -H "x-admin-key: ${{ secrets.ADMIN_SECRET }}"
