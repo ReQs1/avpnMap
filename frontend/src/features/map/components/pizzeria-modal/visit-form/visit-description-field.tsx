@@ -7,10 +7,12 @@ type VisitDescriptionFieldProps = {
     handleBlur: () => void;
     handleChange: (value: string) => void;
   };
+  isDisabled: boolean;
 };
 
 export default function VisitDescriptionField({
   field,
+  isDisabled,
 }: VisitDescriptionFieldProps) {
   return (
     <div className="flex flex-col gap-2">
@@ -25,6 +27,7 @@ export default function VisitDescriptionField({
         onChange={(e) => field.handleChange(e.target.value)}
         rows={3}
         maxLength={500}
+        disabled={isDisabled}
         placeholder="Share your thoughts about this pizzeria..."
         className="rounded-md border border-gray-300 px-3 py-2 text-sm"
       />

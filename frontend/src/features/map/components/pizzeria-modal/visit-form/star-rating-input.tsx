@@ -10,6 +10,7 @@ type StarRatingInputProps = {
 export default function StarRatingInput({
   value,
   onChange,
+  disabled,
 }: StarRatingInputProps) {
   const [hoverRating, setHoverRating] = useState<number | null>(null);
 
@@ -37,6 +38,7 @@ export default function StarRatingInput({
               onClick={() => handleClick(star)}
               onMouseEnter={() => setHoverRating(star)}
               onMouseLeave={() => setHoverRating(null)}
+              disabled={disabled}
               className="group rounded p-1 transition-transform hover:scale-110 disabled:cursor-not-allowed disabled:opacity-50"
               aria-label={`Rate ${star} star${star !== 1 ? "s" : ""}`}
             >
@@ -51,7 +53,7 @@ export default function StarRatingInput({
           );
         })}
 
-        {value > 0 && (
+        {value > 0 && !disabled && (
           <button
             type="button"
             onClick={() => onChange(0)}

@@ -10,9 +10,13 @@ type VisitDateFieldProps = {
     handleBlur: () => void;
     handleChange: (value: string) => void;
   };
+  isDisabled: boolean;
 };
 
-export default function VisitDateField({ field }: VisitDateFieldProps) {
+export default function VisitDateField({
+  field,
+  isDisabled,
+}: VisitDateFieldProps) {
   return (
     <div className="flex flex-col gap-2">
       <label htmlFor={field.name} className="text-sm font-medium text-gray-700">
@@ -25,6 +29,7 @@ export default function VisitDateField({ field }: VisitDateFieldProps) {
         value={field.state.value}
         onBlur={field.handleBlur}
         onChange={(e) => field.handleChange(e.target.value)}
+        disabled={isDisabled}
         className="rounded-md border border-gray-300 px-3 py-2 text-sm"
       />
       {field.state.meta.errors.length > 0 && field.state.meta.errors[0] && (

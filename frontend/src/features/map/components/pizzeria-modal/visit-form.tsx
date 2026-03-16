@@ -45,6 +45,8 @@ export default function VisitForm({
     },
   });
 
+  const isSubmitting = form.state.isSubmitting;
+
   return (
     <form
       onSubmit={(e) => {
@@ -65,17 +67,23 @@ export default function VisitForm({
             return undefined;
           },
         }}
-        children={(field) => <VisitDateField field={field} />}
+        children={(field) => (
+          <VisitDateField field={field} isDisabled={isSubmitting} />
+        )}
       />
 
       <form.Field
         name="rating"
-        children={(field) => <VisitRatingField field={field} />}
+        children={(field) => (
+          <VisitRatingField field={field} isDisabled={isSubmitting} />
+        )}
       />
 
       <form.Field
         name="description"
-        children={(field) => <VisitDescriptionField field={field} />}
+        children={(field) => (
+          <VisitDescriptionField field={field} isDisabled={isSubmitting} />
+        )}
       />
 
       <VisitFormButtons
