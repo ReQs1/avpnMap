@@ -1,7 +1,7 @@
 name: Wake Up Render Backend
 on:
   schedule:
-    - cron: "48 23 * * *"
+    - cron: "45 23 * * *"
   workflow_dispatch:
 jobs:
   ping-server:
