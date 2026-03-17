@@ -8,7 +8,7 @@ export class LeaderboardScheduler {
 
   constructor(private readonly leaderboardService: LeaderboardService) {}
 
-  @Cron('58 23 * * *', {
+  @Cron('58 3 * * *', {
     name: 'daily_leaderboard_refresh',
     timeZone: 'UTC',
   })
@@ -22,13 +22,12 @@ export class LeaderboardScheduler {
 
       const buildDuration = (Date.now() - buildStart) / 1000;
       this.logger.log(
-        `CRON: Build complete in ${buildDuration}s. Waiting for midnight...`,
+        `CRON: Build complete in ${buildDuration}s. Waiting for 04:00 UTC...`,
       );
 
       const now = new Date();
       const target = new Date(now);
-      target.setUTCDate(target.getDate() + 1);
-      target.setUTCHours(0, 0, 0, 0);
+      target.setUTCHours(4, 0, 0, 0);
 
       const delay = target.getTime() - Date.now();
       if (delay > 0) {
@@ -41,7 +40,7 @@ export class LeaderboardScheduler {
 
       await this.leaderboardService.swapLeaderboards();
     } catch (error) {
-      console.log(error);
+      this.logger.error('CRON: Failed to update leaderboards', error);
     }
   }
 }

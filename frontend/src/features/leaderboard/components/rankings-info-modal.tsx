@@ -33,7 +33,7 @@ export const RankingsInfoModal = ({
                 Daily Refresh
               </h3>
               <p className="text-sm leading-relaxed text-slate-500">
-                Rankings are recalculated and updated every day at 00:00 UTC.
+                Rankings are recalculated and updated every day at 04:00 UTC.
                 Check back after the reset to see the latest standings.
               </p>
             </div>

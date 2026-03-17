@@ -95,7 +95,7 @@ export class LeaderboardService implements OnModuleInit {
     const now = new Date();
     const nextRefresh = new Date(now);
     nextRefresh.setUTCDate(nextRefresh.getUTCDate() + 1);
-    nextRefresh.setUTCHours(0, 0, 0, 0);
+    nextRefresh.setUTCHours(4, 0, 0, 0);
 
     pipeline.hset(LB_REDIS_KEYS.META, {
       lastRefresh: now.toISOString(),
