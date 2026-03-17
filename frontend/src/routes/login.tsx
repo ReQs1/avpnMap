@@ -26,7 +26,7 @@ function RouteComponent() {
     <>
       <MinimalHeader />
 
-      <main className="to-avpn-green/20 h-full grow bg-linear-to-br from-red-300/10 via-orange-50 px-6 py-10 md:px-8">
+      <main className="to-avpn-green/20 h-full grow bg-gray-50 bg-linear-to-br from-red-300/10 via-orange-50 px-6 py-10 md:px-8 dark:bg-none">
         <div className="mx-auto flex max-w-[1300px] flex-col-reverse gap-10 md:flex-row md:justify-between">
           <div className="max-w-[650px] flex-1 space-y-6">
             <LoginTitle />

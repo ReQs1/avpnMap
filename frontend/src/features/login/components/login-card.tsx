@@ -6,7 +6,7 @@ function LoginCard() {
   return (
     <div className="mx-auto h-fit max-w-[460px] flex-1 space-y-6 rounded-lg border border-gray-100 bg-white px-8 py-6 text-center shadow-2xl">
       <div className="space-y-2">
-        <h2 className="text-xl font-bold">Sign in to Track</h2>
+        <h2 className="text-pure-black text-xl font-bold">Sign in to Track</h2>
         <p className="text-sm text-gray-500">
           Login to start tracking your pizza journey and unlock achievements
         </p>

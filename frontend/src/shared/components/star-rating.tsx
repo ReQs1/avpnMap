@@ -22,8 +22,8 @@ export default function StarRating({
           <Star
             key={index}
             size={18}
-            color="#f0b100"
-            fill={index + 1 <= rating ? "#f0b100" : "none"}
+            color="var(--color-custom-yellow)"
+            fill={index + 1 <= rating ? "var(--color-custom-yellow)" : "none"}
             aria-hidden="true"
           />
         ))}

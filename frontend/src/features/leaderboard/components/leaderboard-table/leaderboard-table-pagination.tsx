@@ -95,7 +95,7 @@ export default function LeaderboardTablePagination({
             return isOnlyPage ? (
               <span
                 key={`page-${p}`}
-                className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#1E293B] text-xs font-semibold text-white shadow-sm sm:h-8 sm:w-8 sm:text-sm"
+                className="bg-brand-slate flex h-7 w-7 items-center justify-center rounded-lg text-xs font-semibold text-white shadow-sm sm:h-8 sm:w-8 sm:text-sm"
               >
                 {p}
               </span>
@@ -109,7 +109,7 @@ export default function LeaderboardTablePagination({
                 className={cn(
                   "flex h-7 w-7 items-center justify-center rounded-lg text-xs font-semibold transition-colors sm:h-8 sm:w-8 sm:text-sm",
                   isCurrentPage
-                    ? "bg-[#1E293B] text-white shadow-sm"
+                    ? "bg-brand-slate text-white shadow-sm"
                     : "text-slate-600 hover:bg-slate-100 hover:text-slate-900",
                   isDisabled && "pointer-events-none opacity-50",
                 )}

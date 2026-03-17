@@ -10,28 +10,28 @@ export const naplesCoordinates = {
 export const LOGIN_FEATURES: LoginFeatureType[] = [
   {
     icon: MapPin,
-    mainColor: "#ef4444",
+    mainColor: "var(--color-brand-red)",
     bgColor: "bg-red-100",
     text: "Global Map",
     subText: "Explore pizzerias worldwide",
   },
   {
     icon: Star,
-    mainColor: "#eab308",
+    mainColor: "var(--color-brand-yellow)",
     bgColor: "bg-yellow-100",
     text: "Rate & Review",
     subText: "Share your experiences",
   },
   {
     icon: Trophy,
-    mainColor: "#8b5cf6",
+    mainColor: "var(--color-brand-violet)",
     bgColor: "bg-purple-100",
     text: "Achievements",
     subText: "Unlock pizza milestones",
   },
   {
     icon: Users,
-    mainColor: "#22c55e",
+    mainColor: "var(--color-brand-green)",
     bgColor: "bg-green-100",
     text: "Community",
     subText: "Connect with pizza lovers",

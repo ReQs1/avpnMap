@@ -9,8 +9,7 @@ function GlobalNotFound() {
   return (
     <>
       <MinimalHeader />
-
-      <div className="mx-auto flex max-w-[675px] grow flex-col items-center gap-6 px-4 pb-10">
+      <div className="mx-auto flex w-full max-w-[675px] flex-col items-center gap-6 px-4 pt-8 pb-10 text-slate-800">
         <NotFoundTitle />
 
         <NotFoundFeatureCards />
