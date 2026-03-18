@@ -29,12 +29,21 @@ export class LeaderboardService implements OnModuleInit {
   ) {}
 
   async onModuleInit() {
-    await this.ensureLeaderboardExists();
+    const repaired = await this.ensureLeaderboardExists();
+
+    if (!repaired) {
+      this.catchUpMissedRefresh();
+    }
   }
 
   // Checks if the leaderboard is missing and triggers a rebuild if needed
-  async ensureLeaderboardExists() {
-    if (this.isProcessing) return;
+  async ensureLeaderboardExists(): Promise<boolean> {
+    if (this.isProcessing) {
+      this.logger.warn(
+        'WATCHDOG: Skipping existence check — operation already in progress.',
+      );
+      return false;
+    }
 
     try {
       const exists = await this.redis.exists(LB_REDIS_KEYS.META);
@@ -45,9 +54,58 @@ export class LeaderboardService implements OnModuleInit {
         );
         await this.forceRefresh();
         this.logger.log('WATCHDOG: Repair successful.');
+        return true;
       }
+
+      return false;
     } catch (error) {
       this.logger.error('WATCHDOG: Check failed', error);
+      return false;
+    }
+  }
+
+  async catchUpMissedRefresh() {
+    if (this.isProcessing) {
+      this.logger.warn(
+        'WATCHDOG: Skipping catch-up — operation already in progress.',
+      );
+      return;
+    }
+
+    try {
+      const metaData = await this.redis.hgetall(LB_REDIS_KEYS.META);
+
+      if (!metaData?.nextRefresh) {
+        this.logger.warn(
+          'WATCHDOG: No nextRefresh found in meta. Leaderboard state is incomplete, forcing repair...',
+        );
+        await this.forceRefresh();
+        this.logger.log('WATCHDOG: Repair complete.');
+        return;
+      }
+
+      const nextRefreshTime = new Date(metaData.nextRefresh).getTime();
+
+      if (isNaN(nextRefreshTime)) {
+        this.logger.warn(
+          `WATCHDOG: Invalid nextRefresh value "${metaData.nextRefresh}". Leaderboard state is corrupted, forcing repair...`,
+        );
+        await this.forceRefresh();
+        this.logger.log('WATCHDOG: Repair complete.');
+        return;
+      }
+
+      if (Date.now() >= nextRefreshTime) {
+        this.logger.warn(
+          `WATCHDOG: Server overslept! Missed refresh at ${metaData.nextRefresh}. Catching up in the background...`,
+        );
+
+        await this.forceRefresh();
+
+        this.logger.log('WATCHDOG: Background catch-up complete!');
+      }
+    } catch (error) {
+      this.logger.error('WATCHDOG: Catch-up check failed', error);
     }
   }
 
