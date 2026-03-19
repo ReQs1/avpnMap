@@ -6,7 +6,7 @@ function SignOutButton() {
 
   return (
     <button
-      className="inline-flex items-center gap-2 rounded-sm p-2 text-sm font-semibold text-gray-600 transition hover:bg-gray-100 hover:text-gray-900 disabled:cursor-not-allowed disabled:opacity-50"
+      className="inline-flex items-center gap-2 rounded-sm text-sm font-semibold text-black hover:bg-gray-200 disabled:cursor-not-allowed disabled:opacity-50 lg:h-10 lg:w-10 lg:justify-center"
       aria-label="Sign out"
       onClick={() => mutate()}
       disabled={isPending}
