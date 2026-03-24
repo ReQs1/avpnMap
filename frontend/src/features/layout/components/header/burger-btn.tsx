@@ -15,7 +15,7 @@ export default function BurgerButton({
   return (
     <button
       ref={ref}
-      className="rounded-md p-2 text-black transition hover:bg-gray-200"
+      className="rounded-md p-2 text-black transition hover:bg-gray-200 dark:text-zinc-100 dark:hover:bg-zinc-800"
       onClick={handleClick}
       disabled={isThrottled}
       aria-label={open ? "Close navigation menu" : "Open navigation menu"}

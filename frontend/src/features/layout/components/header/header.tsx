@@ -19,7 +19,7 @@ function Header() {
   return (
     <header
       ref={headerRef}
-      className="border-b border-gray-200 bg-white px-6 py-4 shadow-sm"
+      className="border-b border-gray-200 bg-white px-6 py-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900"
     >
       <div className="mx-auto max-w-[600px] lg:max-w-[1400px]">
         <div className="flex items-center justify-between">
@@ -28,7 +28,7 @@ function Header() {
             <ApiStatusIndicator />
           </div>
 
-          <div className="flex items-center gap-4 lg:hidden">
+          <div className="flex items-center gap-2 lg:hidden">
             <ThemeToggle />
             {/* only burger button OR desktop navigation is visible at a time */}
             <BurgerButton

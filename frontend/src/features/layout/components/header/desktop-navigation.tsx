@@ -18,7 +18,7 @@ export default function DesktopNavigation({
       <ThemeToggle />
 
       {isLoading ? (
-        <div className="h-8 w-20 animate-pulse rounded bg-gray-200" />
+        <div className="h-8 w-20 animate-pulse rounded bg-gray-200 dark:bg-zinc-800" />
       ) : user ? (
         <UserInformation user={user} />
       ) : (

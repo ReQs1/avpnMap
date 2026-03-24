@@ -8,7 +8,7 @@ export default function ApiStatusIndicator() {
 
   return (
     <div
-      className="flex items-center gap-1.5 rounded-full bg-red-100 px-2.5 py-1 text-red-600"
+      className="flex items-center gap-1.5 rounded-full bg-red-100 px-2.5 py-1 text-red-600 dark:bg-red-500/8 dark:text-red-500"
       title="Server unavailable"
       role="status"
       aria-label="Server connection error"

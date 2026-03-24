@@ -15,7 +15,7 @@ export function ThemeToggle() {
     <button
       onClick={handleClick}
       aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
-      className="inline-flex h-10 w-10 items-center justify-center rounded-md text-black transition-colors hover:bg-gray-200"
+      className="inline-flex h-10 w-10 items-center justify-center rounded-md text-black transition-colors hover:bg-gray-200 dark:text-zinc-100 dark:hover:bg-zinc-800"
     >
       <Sun className="absolute h-5 w-5 scale-100 rotate-0 transition-all duration-300 dark:scale-0 dark:-rotate-90" />
 

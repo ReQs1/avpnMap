@@ -25,12 +25,14 @@ export default function UserInformation({
             referrerPolicy="no-referrer"
           />
           <div>
-            <p className="font-medium text-gray-800">
+            <p className="font-medium text-gray-800 dark:text-zinc-100">
               {firstName.length <= 16
                 ? firstName
                 : firstName.slice(0, 16) + "..."}
             </p>
-            <p className="text-sm text-gray-500">{user.rank.name}</p>
+            <p className="text-sm text-gray-500 dark:text-zinc-500">
+              {user.rank.name}
+            </p>
           </div>
         </div>
       </Link>
