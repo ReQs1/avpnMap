@@ -7,7 +7,7 @@ function NotFoundNavigation() {
     <div className="flex gap-4">
       <button
         onClick={() => router.history.back()}
-        className="inline-flex items-center gap-2 rounded-lg border border-gray-200 px-4 py-2 transition-colors hover:border-gray-300 hover:bg-gray-50"
+        className="inline-flex items-center gap-2 rounded-lg border border-gray-200 px-4 py-2 transition-colors hover:border-gray-300 hover:bg-gray-50 dark:border-zinc-700 dark:text-zinc-100 dark:hover:border-zinc-600 dark:hover:bg-zinc-800"
       >
         <ArrowLeft size={18} />
         <span>Go Back</span>
@@ -15,7 +15,7 @@ function NotFoundNavigation() {
 
       <Link
         to="/map"
-        className="inline-flex items-center gap-2 rounded-lg bg-red-500 px-4 py-2 text-white transition-colors hover:bg-red-600 dark:text-[#ffffff]"
+        className="inline-flex items-center gap-2 rounded-lg bg-red-500 px-4 py-2 text-white transition-colors hover:bg-red-600"
       >
         <Home size={18} />
         <span>Back to Home</span>
