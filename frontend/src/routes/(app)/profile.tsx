@@ -45,7 +45,7 @@ function RouteComponent() {
   const { data: profile } = useSuspenseQuery(profileQueryOptions(user.id));
 
   return (
-    <div className="grow bg-gray-50 px-4 py-8">
+    <div className="grow bg-gray-50 px-4 py-8 dark:bg-zinc-950">
       <div className="mx-auto max-w-6xl">
         <ProfileCard profile={profile!} />
         <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-[2fr_1fr]">

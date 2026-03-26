@@ -4,9 +4,13 @@ function AchievementsSkeleton() {
   return (
     <div className="rounded-2xl bg-white px-4 py-8 shadow-sm">
       <div className="flex items-center gap-2">
-        <Trophy size={20} className="text-gray-600" aria-hidden="true" />
-        <h2 className="text-lg font-semibold text-gray-900">Achievements</h2>
-        <div className="h-4 w-10 animate-pulse rounded bg-gray-200" />
+        <Trophy
+          size={20}
+          className="text-gray-300 dark:text-zinc-600"
+          aria-hidden="true"
+        />
+        <div className="h-7 w-32 animate-pulse rounded bg-gray-200 dark:bg-zinc-800" />
+        <div className="h-6 w-12 animate-pulse rounded-full bg-gray-200 dark:bg-zinc-800" />
       </div>
 
       <div className="mt-4 space-y-2">

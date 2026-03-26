@@ -35,17 +35,19 @@ function VisitCard({ visit }: VisitCardProps) {
 
   return (
     <>
-      <div className="flex flex-col gap-3 rounded-md border-b border-gray-100 p-2 transition-colors last:border-b-0 hover:bg-gray-200 lg:flex-row lg:justify-between lg:gap-8">
+      <div className="flex flex-col gap-3 rounded-md border-b border-gray-100 p-2 transition-colors last:border-b-0 hover:bg-gray-200 lg:flex-row lg:justify-between lg:gap-8 dark:border-zinc-700 dark:hover:bg-zinc-800">
         <div>
-          <h3 className="text-base font-bold text-gray-900">{pizzeria.name}</h3>
+          <h3 className="text-base font-bold text-gray-900 dark:text-zinc-100">
+            {pizzeria.name}
+          </h3>
 
-          <p className="mt-1 flex items-center gap-1.5 text-sm text-gray-500">
+          <p className="mt-1 flex items-center gap-1.5 text-sm text-gray-500 dark:text-zinc-400">
             <Calendar size={14} aria-hidden="true" />
             <span>{formatDate(new Date(visitedAt), timeZone)}</span>
           </p>
 
           {description && (
-            <p className="mt-2 text-sm text-balance text-gray-600 italic">
+            <p className="mt-2 text-sm text-balance text-gray-600 italic dark:text-zinc-400">
               "{description}"
             </p>
           )}
@@ -55,7 +57,9 @@ function VisitCard({ visit }: VisitCardProps) {
             {rating !== null ? (
               <StarRating rating={rating} showLabel={false} />
             ) : (
-              <span className="text-sm text-gray-400">No rating</span>
+              <span className="text-sm text-gray-400 dark:text-zinc-500">
+                No rating
+              </span>
             )}
           </div>
 

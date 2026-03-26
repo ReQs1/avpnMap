@@ -6,7 +6,10 @@ type EditFormButtonsProps = {
   onCancel: () => void;
 };
 
-export default function EditFormButtons({ form, onCancel }: EditFormButtonsProps) {
+export default function EditFormButtons({
+  form,
+  onCancel,
+}: EditFormButtonsProps) {
   return (
     <div className="mt-6 flex w-full gap-3">
       <form.Subscribe
@@ -37,7 +40,7 @@ export default function EditFormButtons({ form, onCancel }: EditFormButtonsProps
             type="button"
             onClick={onCancel}
             disabled={isSubmitting}
-            className="inline-flex h-10 flex-1 items-center justify-center rounded-md border border-gray-300 bg-white px-4 text-sm font-medium text-gray-900 transition-colors hover:bg-gray-50 disabled:opacity-50"
+            className="inline-flex h-10 flex-1 items-center justify-center rounded-md border border-gray-300 bg-white px-4 text-sm font-medium text-gray-900 transition-colors hover:bg-gray-50 disabled:opacity-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700"
           >
             Cancel
           </button>

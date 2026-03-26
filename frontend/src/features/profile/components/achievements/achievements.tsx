@@ -21,16 +21,22 @@ function Achievements({ achievements }: AchievementsProps) {
   const totalCount = achievements.length;
 
   return (
-    <div className="rounded-2xl bg-white px-4 py-8 shadow-sm">
-      <div className="flex items-center gap-2">
-        <Trophy size={20} className="text-gray-600" aria-hidden="true" />
-        <h2 className="text-lg font-semibold text-gray-900">Achievements</h2>
-        <span className="rounded-full bg-gray-100 px-2 py-0.5 text-sm text-gray-700">
+    <div className="flex h-[600px] flex-col rounded-2xl border border-transparent bg-white px-4 py-8 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+      <div className="flex shrink-0 items-center gap-2">
+        <Trophy
+          size={20}
+          className="text-gray-600 dark:text-zinc-500"
+          aria-hidden="true"
+        />
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-zinc-100">
+          Achievements
+        </h2>
+        <span className="rounded-full bg-gray-100 px-2 py-0.5 text-sm text-gray-700 dark:bg-zinc-800 dark:text-zinc-400">
           {unlockedCount}/{totalCount}
         </span>
       </div>
 
-      <div className="mt-4 space-y-2">
+      <div className="mt-4 flex-1 space-y-2 overflow-y-auto pr-2">
         {achievements.map((achievement) => (
           <AchievementCard
             key={achievement.id}
