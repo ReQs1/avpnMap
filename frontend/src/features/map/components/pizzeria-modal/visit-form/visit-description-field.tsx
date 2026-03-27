@@ -16,7 +16,10 @@ export default function VisitDescriptionField({
 }: VisitDescriptionFieldProps) {
   return (
     <div className="flex flex-col gap-2">
-      <label htmlFor={field.name} className="text-sm font-medium text-gray-700">
+      <label
+        htmlFor={field.name}
+        className="text-sm font-medium text-gray-700 dark:text-zinc-100"
+      >
         Review (optional)
       </label>
       <textarea
@@ -29,11 +32,11 @@ export default function VisitDescriptionField({
         maxLength={500}
         disabled={isDisabled}
         placeholder="Share your thoughts about this pizzeria..."
-        className="rounded-md border border-gray-300 px-3 py-2 text-sm"
+        className="rounded-md border border-gray-300 px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 dark:placeholder:text-zinc-500"
       />
       <p
-        className={cn("text-xs text-gray-500", {
-          ["text-red-500"]: field.state.value.length >= 500,
+        className={cn("text-xs text-gray-500 dark:text-zinc-400", {
+          ["text-red-500 dark:text-red-400"]: field.state.value.length >= 500,
         })}
       >
         {field.state.value.length}/500 characters

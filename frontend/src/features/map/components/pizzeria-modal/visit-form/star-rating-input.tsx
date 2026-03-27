@@ -45,8 +45,8 @@ export default function StarRatingInput({
               <Star
                 className={`h-6 w-6 transition-colors ${
                   isActive
-                    ? "fill-yellow-400 text-yellow-400"
-                    : "fill-none text-gray-300 group-hover:text-gray-400"
+                    ? "fill-yellow-400 text-yellow-400 dark:fill-amber-400 dark:text-amber-400"
+                    : "fill-none text-gray-300 group-hover:text-gray-400 dark:text-zinc-600 dark:group-hover:text-zinc-500"
                 }`}
               />
             </button>
@@ -57,7 +57,7 @@ export default function StarRatingInput({
           <button
             type="button"
             onClick={() => onChange(0)}
-            className="ml-2 text-sm text-gray-500 underline hover:text-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-1"
+            className="ml-2 text-sm text-gray-500 underline hover:text-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-1 dark:text-zinc-500 dark:hover:text-zinc-400"
           >
             Clear
           </button>

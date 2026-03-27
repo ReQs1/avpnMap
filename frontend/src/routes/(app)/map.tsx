@@ -5,6 +5,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Map } from "@vis.gl/react-maplibre";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { useMapCoordsStore } from "@/features/map/store/map-coords-store";
+import { useThemeStore } from "@/features/layout/theme-store";
 
 export const Route = createFileRoute("/(app)/map")({
   head: () => ({ meta: [{ title: "Map — avpnMap" }] }),
@@ -18,6 +19,7 @@ export const Route = createFileRoute("/(app)/map")({
 function MapPage() {
   const { latitude, longitude, zoom, setCoords, hasUserMoved } =
     useMapCoordsStore();
+  const { theme } = useThemeStore();
 
   return (
     <div className="w-full">
@@ -27,7 +29,11 @@ function MapPage() {
           latitude,
           zoom,
         }}
-        mapStyle="https://tiles.openfreemap.org/styles/liberty"
+        mapStyle={
+          theme === "dark"
+            ? "https://tiles.openfreemap.org/styles/dark"
+            : "https://tiles.openfreemap.org/styles/liberty"
+        }
         onMove={(state) => {
           const { latitude, longitude, zoom } = state.viewState;
           setCoords(longitude, latitude, zoom);

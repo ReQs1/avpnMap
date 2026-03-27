@@ -13,7 +13,7 @@ export default function PizzeriaModalVisitSection({
   onDelete: () => void;
 }) {
   return (
-    <section className="border-avpn-green/30 from-avpn-green/10 space-y-4 rounded-lg border bg-gradient-to-r to-emerald-50 p-4">
+    <section className="border-avpn-green/30 from-avpn-green/10 space-y-4 rounded-lg border bg-gradient-to-r to-emerald-50 p-4 dark:border-green-500/20 dark:bg-none">
       <VisitStatusHeader
         visitedPizzeria={visitedPizzeria}
         onEdit={onEdit}
