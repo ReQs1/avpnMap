@@ -6,7 +6,7 @@ import { useAuth } from "@/features/auth/hooks/useAuth";
 import type { Pizzeria } from "@/features/map/api/pizza-query-options";
 import type { VisitedPizzeria } from "@/features/map/types/pizzeria.types";
 import { handleVisitFormSubmit } from "@/features/visits/utils/visit-form-utils";
-import { useForm } from "@tanstack/react-form";
+import { useForm, useStore } from "@tanstack/react-form";
 import { useQueryClient } from "@tanstack/react-query";
 import { isFuture } from "date-fns";
 
@@ -45,7 +45,7 @@ export default function VisitForm({
     },
   });
 
-  const isSubmitting = form.state.isSubmitting;
+  const isSubmitting = useStore(form.store, (state) => state.isSubmitting);
 
   return (
     <form
