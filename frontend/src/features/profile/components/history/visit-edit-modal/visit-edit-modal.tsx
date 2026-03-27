@@ -1,7 +1,7 @@
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { submitVisitForm } from "@/features/visits/api/submit-visit-form";
 import type { UpdateVisitBody } from "@/features/visits/types/visit-form.types";
-import { useForm } from "@tanstack/react-form";
+import { useForm, useStore } from "@tanstack/react-form";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
@@ -87,7 +87,7 @@ export default function EditVisitModal({
     },
   });
 
-  const isSubmitting = form.state.isSubmitting;
+  const isSubmitting = useStore(form.store, (state) => state.isSubmitting);
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
