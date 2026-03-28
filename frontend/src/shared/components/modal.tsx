@@ -49,7 +49,7 @@ export default function Modal({
 
         <div
           className={cn(
-            "relative w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-xl",
+            "relative w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-xl dark:border dark:border-zinc-800 dark:bg-zinc-900",
             className,
           )}
           role="dialog"
@@ -59,7 +59,7 @@ export default function Modal({
             data-autofocus
             aria-label="Close modal"
             onClick={onClose}
-            className="absolute top-4 right-4 p-1 text-gray-400 transition-colors hover:text-gray-600 focus:text-gray-600 focus:outline-2! focus:outline-black!"
+            className="absolute top-4 right-4 p-1 text-gray-400 transition-colors hover:text-gray-600 focus:text-gray-600 focus:outline-2! focus:outline-black! dark:hover:text-zinc-300 dark:focus:outline-zinc-500!"
           >
             <X size={20} />
           </button>

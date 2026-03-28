@@ -18,7 +18,7 @@ export default function SearchCard({
           onClick();
         }
       }}
-      className="flex cursor-pointer items-center gap-2 border-b border-b-gray-200 bg-white px-3 py-2.5 -outline-offset-2 transition-colors last:border-b-0 hover:bg-gray-100 focus-visible:bg-gray-100"
+      className="flex cursor-pointer items-center gap-2 border-b border-b-gray-200 bg-white px-3 py-2.5 -outline-offset-2 transition-colors last:border-b-0 hover:bg-gray-100 focus-visible:bg-gray-100 dark:border-b-zinc-800 dark:bg-zinc-900 dark:hover:bg-zinc-800 dark:focus-visible:bg-zinc-800"
     >
       {children}
     </div>

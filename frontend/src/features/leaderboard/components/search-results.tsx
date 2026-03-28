@@ -33,18 +33,20 @@ export default function SearchResults({
 
   return (
     <div>
-      <div className="flex items-center justify-between border-b border-b-gray-200 px-3 py-2">
-        <p className="text-xs text-gray-500">
+      <div className="flex items-center justify-between border-b border-b-gray-200 px-3 py-2 dark:border-b-zinc-700">
+        <p className="text-xs text-gray-500 dark:text-zinc-400">
           {queryResponse.totalCount}{" "}
           {queryResponse.totalCount == 1 ? "result" : "results"} found
         </p>
         <div className="flex items-center gap-2">
           {queryResponse.totalCount > queryResponse.data.length && (
-            <p className="text-xs text-gray-400">Showing first 10</p>
+            <p className="text-xs text-gray-400 dark:text-zinc-500">
+              Showing first 10
+            </p>
           )}
           <button
             onClick={onLiveBadgeClick}
-            className="inline-flex items-center gap-1 rounded-full bg-green-100 px-2 py-0.5 text-[10px] font-semibold text-green-700 transition-colors hover:bg-green-200"
+            className="inline-flex items-center gap-1 rounded-full bg-green-100 px-2 py-0.5 text-[10px] font-semibold text-green-700 transition-colors hover:bg-green-200 dark:bg-green-500/10 dark:text-green-500 dark:hover:bg-green-500/20"
           >
             <Zap size={10} className="fill-green-600 text-green-600" />
             Live
@@ -67,7 +69,7 @@ export default function SearchResults({
             })}
           </div>
         ) : (
-          <p className="p-3 text-center text-sm text-gray-500">
+          <p className="p-3 text-center text-sm text-gray-500 dark:text-zinc-400">
             No {queryOpt} found
           </p>
         )}

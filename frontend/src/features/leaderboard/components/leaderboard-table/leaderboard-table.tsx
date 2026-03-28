@@ -33,14 +33,14 @@ export default function LeaderboardTable(props: LeaderboardProps) {
 
   if (items.length === 0) {
     return (
-      <div className="rounded-xl border border-gray-200 bg-white p-8 text-center text-gray-500 shadow-sm">
+      <div className="rounded-xl border border-gray-200 bg-white p-8 text-center text-gray-500 shadow-sm dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-400">
         No leaderboard data available.
       </div>
     );
   }
 
   return (
-    <div className="mx-auto overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+    <div className="mx-auto overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
       {queryOpt === "users" ? (
         <LeaderboardTableUsersHeader />
       ) : (

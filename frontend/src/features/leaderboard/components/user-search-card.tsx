@@ -25,8 +25,8 @@ export default function UserSearchCard({ user }: { user: SearchUser }) {
         alt={`${user.name} avatar`}
       />
       <div>
-        <p className="font-medium">{user.name}</p>
-        <div className="flex items-center gap-1 text-xs text-gray-500">
+        <p className="font-medium dark:text-zinc-100">{user.name}</p>
+        <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-zinc-400">
           <p>
             {user.visits} {user.visits === 1 ? "visit" : "visits"}
           </p>
