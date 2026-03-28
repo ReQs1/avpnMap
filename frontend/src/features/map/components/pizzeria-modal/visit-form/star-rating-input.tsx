@@ -57,7 +57,7 @@ export default function StarRatingInput({
           <button
             type="button"
             onClick={() => onChange(0)}
-            className="ml-2 text-sm text-gray-500 underline hover:text-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 focus-visible:ring-offset-1 dark:text-zinc-500 dark:hover:text-zinc-400"
+            className="ml-2 text-sm text-gray-500 underline hover:text-gray-700 dark:text-zinc-500 dark:hover:text-zinc-400"
           >
             Clear
           </button>

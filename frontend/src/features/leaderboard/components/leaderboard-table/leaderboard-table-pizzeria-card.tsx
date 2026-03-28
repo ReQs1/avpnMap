@@ -35,7 +35,7 @@ export default function LeaderboardTablePizzeriaCard({ pizzeria }: Props) {
         })
       }
       className={cn(
-        "relative z-0 grid grid-cols-[32px_minmax(0,1fr)_50px] items-center gap-3 border-b border-gray-100 px-4 py-3 transition-colors last:border-none last:-outline-offset-2 hover:bg-slate-200 focus-visible:z-10 focus-visible:bg-slate-200 focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:outline-none sm:grid-cols-[48px_3fr_1fr_1fr_50px] sm:gap-4 md:grid-cols-[48px_1fr_1fr_1fr_50px] dark:border-zinc-800 dark:hover:bg-zinc-800 dark:focus-visible:bg-zinc-800 dark:focus-visible:ring-zinc-600",
+        "relative z-0 grid grid-cols-[32px_minmax(0,1fr)_50px] items-center gap-3 border-b border-gray-100 px-4 py-3 transition-colors last:border-none last:-outline-offset-2 hover:bg-slate-200 focus-visible:z-10 focus-visible:bg-slate-200 sm:grid-cols-[48px_3fr_1fr_1fr_50px] sm:gap-4 md:grid-cols-[48px_1fr_1fr_1fr_50px] dark:border-zinc-800 dark:hover:bg-zinc-800 dark:focus-visible:bg-zinc-800",
         bgClass,
       )}
     >
