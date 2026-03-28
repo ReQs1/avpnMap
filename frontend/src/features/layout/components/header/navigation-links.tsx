@@ -9,7 +9,7 @@ export default function NavigationLinks({ onClose }: { onClose: () => void }) {
           <Link
             to="/map"
             onClick={onClose}
-            className="relative flex items-center gap-2 rounded-sm p-2 font-semibold transition lg:rounded-none lg:p-0 lg:focus-visible:outline-offset-8"
+            className="relative flex items-center gap-2 rounded-sm p-2 font-semibold lg:rounded-none lg:p-0 lg:focus-visible:outline-offset-8"
             activeProps={{
               className:
                 "text-red-600 bg-red-50 lg:bg-transparent lg:after:content-[''] lg:after:absolute lg:after:-bottom-1 lg:after:left-0 lg:after:w-full lg:after:h-0.5 lg:after:bg-red-600 dark:text-red-500 dark:bg-red-500/8 lg:dark:bg-transparent lg:dark:after:bg-red-500",
@@ -29,7 +29,7 @@ export default function NavigationLinks({ onClose }: { onClose: () => void }) {
             search={{ queryOpt: "users", page: 1 }}
             activeOptions={{ includeSearch: false }}
             onClick={onClose}
-            className="relative flex items-center gap-2 rounded-sm p-2 font-semibold transition lg:rounded-none lg:p-0 lg:focus-visible:outline-offset-8"
+            className="relative flex items-center gap-2 rounded-sm p-2 font-semibold lg:rounded-none lg:p-0 lg:focus-visible:outline-offset-8"
             activeProps={{
               className:
                 "text-green-600 bg-green-50 lg:bg-transparent lg:after:content-[''] lg:after:absolute lg:after:-bottom-1 lg:after:left-0 lg:after:w-full lg:after:h-0.5 lg:after:bg-green-600 dark:text-green-500 dark:bg-green-500/8 lg:dark:bg-transparent lg:dark:after:bg-green-500",
