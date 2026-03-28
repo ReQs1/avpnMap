@@ -27,7 +27,7 @@ export default function PizzeriaModal({
 
   return (
     <div
-      className="absolute top-4 left-1/2 z-50 w-[calc(100%-1rem)] max-w-md -translate-x-1/2 rounded-lg border border-gray-300 bg-white px-4 py-6 shadow-lg sm:right-2 sm:left-auto sm:w-auto sm:min-w-96 sm:translate-x-0 sm:px-6"
+      className="absolute top-4 left-1/2 z-50 w-[calc(100%-1rem)] max-w-md -translate-x-1/2 rounded-lg border border-gray-300 bg-white px-4 py-6 shadow-lg sm:right-2 sm:left-auto sm:w-auto sm:min-w-96 sm:translate-x-0 sm:px-6 dark:border-zinc-700 dark:bg-zinc-900"
       role="dialog"
     >
       {isDeleting && visitedPizzeria ? (

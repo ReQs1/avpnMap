@@ -14,7 +14,7 @@ export default function VisitRatingField({
 }: VisitRatingFieldProps) {
   return (
     <div className="flex flex-col gap-2">
-      <label className="text-sm font-medium text-gray-700">
+      <label className="text-sm font-medium text-gray-700 dark:text-zinc-100">
         Rating (optional)
       </label>
       <StarRatingInput

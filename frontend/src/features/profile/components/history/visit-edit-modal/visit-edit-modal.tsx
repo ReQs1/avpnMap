@@ -1,7 +1,7 @@
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { submitVisitForm } from "@/features/visits/api/submit-visit-form";
 import type { UpdateVisitBody } from "@/features/visits/types/visit-form.types";
-import { useForm } from "@tanstack/react-form";
+import { useForm, useStore } from "@tanstack/react-form";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
@@ -87,9 +87,11 @@ export default function EditVisitModal({
     },
   });
 
+  const isSubmitting = useStore(form.store, (state) => state.isSubmitting);
+
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape" && !form.state.isSubmitting) {
+      if (event.key === "Escape" && !isSubmitting) {
         event.stopPropagation();
         onCancel();
       }
@@ -99,15 +101,15 @@ export default function EditVisitModal({
     return () => {
       window.removeEventListener("keydown", handleKeyDown, true);
     };
-  }, [onCancel, form.state.isSubmitting]);
+  }, [onCancel, isSubmitting]);
 
   return createPortal(
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
-      onClick={!form.state.isSubmitting ? onCancel : undefined}
+      onClick={!isSubmitting ? onCancel : undefined}
     >
       <div
-        className="mx-4 w-full max-w-md rounded-lg bg-white p-6 shadow-xl"
+        className="mx-4 w-full max-w-md rounded-lg border border-transparent bg-white p-6 shadow-xl dark:border-zinc-700 dark:bg-zinc-900"
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
@@ -129,15 +131,21 @@ export default function EditVisitModal({
               onSubmit: ({ value }) => validateDateNotFuture(value),
             }}
           >
-            {(field) => <EditDateField field={field} />}
+            {(field) => (
+              <EditDateField field={field} isDisabled={isSubmitting} />
+            )}
           </form.Field>
 
           <form.Field name="rating">
-            {(field) => <EditRatingField field={field} />}
+            {(field) => (
+              <EditRatingField field={field} isDisabled={isSubmitting} />
+            )}
           </form.Field>
 
           <form.Field name="description">
-            {(field) => <EditDescriptionField field={field} />}
+            {(field) => (
+              <EditDescriptionField field={field} isDisabled={isSubmitting} />
+            )}
           </form.Field>
 
           <EditFormButtons form={form} onCancel={onCancel} />

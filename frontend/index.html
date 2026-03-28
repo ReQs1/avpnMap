@@ -39,6 +39,22 @@
     />
   </head>
   <body>
+    <script>
+      (function () {
+        let theme;
+        try {
+          theme = localStorage.getItem("data-mode");
+        } catch (_) {}
+
+        if (!theme) {
+          theme = window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light";
+        }
+
+        document.documentElement.setAttribute("data-mode", theme);
+      })();
+    </script>
     <div id="root" class="flex min-h-dvh flex-col"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

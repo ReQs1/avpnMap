@@ -4,6 +4,7 @@ import DesktopNavigation from "@/features/layout/components/header/desktop-navig
 import MobileNavigation from "@/features/layout/components/header/mobile-navigation";
 import { useMobileNavigation } from "@/features/layout/hooks/useMobileNavigation";
 import Logo from "@/shared/components/logo";
+import { ThemeToggle } from "../theme-toggle";
 
 function Header() {
   const {
@@ -18,7 +19,7 @@ function Header() {
   return (
     <header
       ref={headerRef}
-      className="border-b border-gray-200 bg-white px-6 py-4 shadow-sm"
+      className="border-b border-gray-200 bg-white px-6 py-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900"
     >
       <div className="mx-auto max-w-[600px] lg:max-w-[1400px]">
         <div className="flex items-center justify-between">
@@ -27,12 +28,15 @@ function Header() {
             <ApiStatusIndicator />
           </div>
 
-          {/* only burger button OR desktop navigation is visible at a time */}
-          <BurgerButton
-            ref={burgerButtonRef}
-            open={isOpen}
-            toggleMenu={toggleMenu}
-          />
+          <div className="flex items-center gap-2 lg:hidden">
+            <ThemeToggle />
+            {/* only burger button OR desktop navigation is visible at a time */}
+            <BurgerButton
+              ref={burgerButtonRef}
+              open={isOpen}
+              toggleMenu={toggleMenu}
+            />
+          </div>
           <DesktopNavigation onClose={closeMenu} />
         </div>
 

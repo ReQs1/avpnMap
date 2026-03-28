@@ -27,8 +27,8 @@ export default function PizzeriaSearchCard({
     >
       <img className="h-10 w-10" src={avpnLogo} alt={"AVPN logo"} />
       <div>
-        <p className="font-medium">{pizzeria.name}</p>
-        <div className="flex items-center gap-1 text-xs text-gray-500">
+        <p className="font-medium dark:text-zinc-100">{pizzeria.name}</p>
+        <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-zinc-400">
           <p>AVPN #{pizzeria.memberNumber}</p>
           <span> &middot;</span>
           <p>{pizzeria.nation}</p>

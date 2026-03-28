@@ -8,10 +8,12 @@ type StatCardProps = {
 function StatCard({ value, label, bgColor, textColor }: StatCardProps) {
   return (
     <div
-      className={`flex flex-col items-center rounded-xl ${bgColor} px-4 py-3`}
+      className={`flex flex-col items-center rounded-xl ${bgColor} px-4 py-3 dark:bg-zinc-800`}
     >
-      <span className={`text-xl font-bold ${textColor}`}>{value}</span>
-      <span className="text-xs text-gray-500">{label}</span>
+      <span className={`text-xl font-bold ${textColor} dark:text-zinc-100`}>
+        {value}
+      </span>
+      <span className="text-xs text-gray-500 dark:text-zinc-500">{label}</span>
     </div>
   );
 }

@@ -25,7 +25,7 @@ export default function MobileNavigation({
 
       <div className="flex items-center">
         {isLoading ? (
-          <div className="h-8 w-24 animate-pulse rounded bg-gray-200" />
+          <div className="h-8 w-24 animate-pulse rounded bg-gray-200 dark:bg-zinc-800" />
         ) : user ? (
           <UserInformation user={user} onClose={onClose} />
         ) : (

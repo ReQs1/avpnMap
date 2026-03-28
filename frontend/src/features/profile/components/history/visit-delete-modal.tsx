@@ -33,14 +33,14 @@ export default function DeleteVisitModal({
       onClick={!isDeleting ? onCancel : undefined}
     >
       <div
-        className="mx-4 w-full max-w-sm rounded-lg bg-white p-6 shadow-xl"
+        className="mx-4 w-full max-w-sm rounded-lg border border-transparent bg-white p-6 shadow-xl dark:border-zinc-700 dark:bg-zinc-900"
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
         aria-labelledby="delete-modal-title"
       >
         <div className="flex flex-col items-center gap-6">
-          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-red-50">
+          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-red-50 dark:bg-red-500/10">
             <AlertCircle
               size={28}
               className="text-red-500"
@@ -50,11 +50,11 @@ export default function DeleteVisitModal({
           <div className="text-center">
             <h2
               id="delete-modal-title"
-              className="text-lg font-semibold text-gray-900"
+              className="text-lg font-semibold text-gray-900 dark:text-zinc-100"
             >
               Remove Visit?
             </h2>
-            <p className="mt-1 text-sm text-gray-600">
+            <p className="mt-1 text-sm text-gray-600 dark:text-zinc-400">
               This will permanently delete your visit to{" "}
               <span className="font-medium">{pizzeriaName}</span>
             </p>
@@ -70,7 +70,7 @@ export default function DeleteVisitModal({
             <button
               onClick={onCancel}
               disabled={isDeleting}
-              className="inline-flex h-10 flex-1 items-center justify-center rounded-md border border-gray-300 bg-white px-4 text-sm font-medium text-gray-900 transition-colors hover:bg-gray-50 disabled:opacity-50"
+              className="inline-flex h-10 flex-1 items-center justify-center rounded-md border border-gray-300 bg-white px-4 text-sm font-medium text-gray-900 transition-colors hover:bg-gray-50 disabled:opacity-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700"
             >
               Cancel
             </button>

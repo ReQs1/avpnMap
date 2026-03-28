@@ -23,17 +23,19 @@ export default function ModalHeader({
 
         <div className="flex flex-col items-start justify-between gap-1">
           {pizzeria.memberNumber && (
-            <p className="rounded-full bg-gray-100 px-2 py-0.5 text-center text-sm font-semibold text-gray-800">
+            <p className="rounded-full bg-gray-100 px-2 py-0.5 text-center text-sm font-semibold text-gray-800 dark:bg-zinc-800 dark:text-zinc-100">
               <span>#</span>
               {pizzeria.memberNumber}
             </p>
           )}
-          <h2 className="text-lg font-bold text-gray-900">{pizzeria.name}</h2>
+          <h2 className="text-lg font-bold text-gray-900 dark:text-zinc-100">
+            {pizzeria.name}
+          </h2>
         </div>
       </div>
 
       <button
-        className="rounded-md p-2 text-gray-600 hover:bg-gray-200 hover:text-gray-800 focus-visible:bg-gray-200 focus-visible:text-gray-800"
+        className="rounded-md p-2 text-gray-600 hover:bg-gray-200 hover:text-gray-800 focus-visible:bg-gray-200 focus-visible:text-gray-800 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100 dark:focus-visible:bg-zinc-800 dark:focus-visible:text-zinc-100"
         onClick={onClose}
         aria-label="Close"
       >

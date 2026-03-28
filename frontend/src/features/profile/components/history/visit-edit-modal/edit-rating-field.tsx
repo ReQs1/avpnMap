@@ -7,17 +7,22 @@ type EditRatingFieldProps = {
     };
     handleChange: (value: number) => void;
   };
+  isDisabled?: boolean;
 };
 
-export default function EditRatingField({ field }: EditRatingFieldProps) {
+export default function EditRatingField({
+  field,
+  isDisabled,
+}: EditRatingFieldProps) {
   return (
     <div className="flex flex-col gap-2">
-      <label className="text-sm font-medium text-gray-700">
+      <label className="text-sm font-medium text-gray-700 dark:text-zinc-100">
         Rating (optional)
       </label>
       <StarRatingInput
         value={field.state.value}
         onChange={(rating) => field.handleChange(rating)}
+        disabled={isDisabled}
       />
     </div>
   );

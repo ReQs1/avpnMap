@@ -8,8 +8,10 @@ function Logo({ className }: { className?: string }) {
         <PizzaIcon color="white" />
       </div>
       <div>
-        <span className="text-lg font-bold md:text-xl">Pizza Tracker</span>
-        <p className="hidden text-xs text-gray-500 md:block">
+        <span className="text-lg font-bold text-black md:text-xl dark:text-zinc-100">
+          Pizza Tracker
+        </span>
+        <p className="hidden text-xs text-gray-500 md:block dark:text-zinc-500">
           AVPN Pizzerias Worldwide
         </p>
       </div>

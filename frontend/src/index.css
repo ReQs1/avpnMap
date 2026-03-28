@@ -1,21 +1,74 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where([data-mode="dark"] *));
+
 @theme {
   --color-avpn-green: #059669;
+}
+
+:root {
+  --focus-ring: #000000;
+  --document-bg: #ffffff;
+}
+
+:root[data-mode="dark"] {
+  --focus-ring: #cbd5e1;
+  --document-bg: #0e0e10;
+  color-scheme: dark;
 }
 
 * {
   font-family: "Inter", sans-serif;
 }
 
+body {
+  background-color: var(--document-bg);
+}
+
 button {
   @apply cursor-pointer;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #d1d5db;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #9ca3af;
+}
+
+:root[data-mode="dark"] ::-webkit-scrollbar-thumb {
+  background-color: #3f3f46;
+}
+
+:root[data-mode="dark"] ::-webkit-scrollbar-thumb:hover {
+  background-color: #52525b;
+}
+
+:root {
+  scrollbar-width: thin;
+  scrollbar-color: #d1d5db transparent;
+}
+
+:root[data-mode="dark"] {
+  scrollbar-color: #3f3f46 transparent;
 }
 
 /* Firefox focus outline customization */
 @supports (appearance: none) {
   :focus-visible {
-    outline: 2px solid black !important;
+    outline: 2px solid var(--focus-ring) !important;
   }
 
   :focus:not(:focus-visible) {

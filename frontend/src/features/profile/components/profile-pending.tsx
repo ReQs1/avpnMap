@@ -4,7 +4,7 @@ import ProfileCardSkeleton from "@/features/profile/components/profile-card/prof
 
 export default function PendingComponent() {
   return (
-    <div className="grow bg-gray-50 px-4 py-8">
+    <div className="grow bg-gray-50 px-4 py-8 dark:bg-zinc-950">
       <div className="mx-auto max-w-6xl">
         <ProfileCardSkeleton />
         <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-[2fr_1fr]">

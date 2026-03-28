@@ -46,7 +46,7 @@ export default function VisitFormButtons({
               type="button"
               onClick={onCloseEdit}
               disabled={isSubmitting}
-              className="inline-flex h-10 flex-1 items-center justify-center gap-2 rounded-md border border-gray-400 bg-white px-4 py-2 text-sm font-medium text-gray-900 transition-colors hover:bg-gray-100 disabled:opacity-50"
+              className="inline-flex h-10 flex-1 items-center justify-center gap-2 rounded-md border border-gray-400 bg-white px-4 py-2 text-sm font-medium text-gray-900 transition-colors hover:bg-gray-100 disabled:opacity-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700"
             >
               <span>Cancel</span>
             </button>

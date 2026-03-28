@@ -8,7 +8,7 @@ export default function LeaderboardSwitchButtons({
   queryOpt: "users" | "pizzerias";
 }) {
   return (
-    <div className="grid grid-cols-2 gap-1 rounded-lg border border-gray-200 bg-white p-1">
+    <div className="grid grid-cols-2 gap-1 rounded-lg border border-gray-200 bg-white p-1 dark:border-zinc-700 dark:bg-zinc-900">
       <Link
         to="."
         resetScroll={false}
@@ -21,8 +21,9 @@ export default function LeaderboardSwitchButtons({
         className={cn(
           "inline-flex items-center justify-center gap-2 rounded-md px-2 py-3 text-sm transition-colors",
           {
-            ["bg-red-500 text-white"]: queryOpt === "users",
-            ["bg-white text-gray-600 hover:bg-gray-100 focus-visible:bg-gray-100"]:
+            ["bg-red-500 text-white dark:bg-red-500/10 dark:text-red-500"]:
+              queryOpt === "users",
+            ["bg-white text-gray-600 hover:bg-gray-100 focus-visible:bg-gray-100 dark:bg-transparent dark:text-zinc-400 dark:hover:bg-zinc-800 dark:focus-visible:bg-zinc-800"]:
               queryOpt !== "users",
           },
         )}
@@ -44,8 +45,9 @@ export default function LeaderboardSwitchButtons({
         className={cn(
           "inline-flex items-center justify-center gap-2 rounded-md px-2 py-3 text-sm transition-colors",
           {
-            ["bg-green-600 text-white"]: queryOpt === "pizzerias",
-            ["bg-white text-gray-600 hover:bg-gray-100 focus-visible:bg-gray-100"]:
+            ["bg-green-600 text-white dark:bg-green-500/10 dark:text-green-500"]:
+              queryOpt === "pizzerias",
+            ["bg-white text-gray-600 hover:bg-gray-100 focus-visible:bg-gray-100 dark:bg-transparent dark:text-zinc-400 dark:hover:bg-zinc-800 dark:focus-visible:bg-zinc-800"]:
               queryOpt !== "pizzerias",
           },
         )}

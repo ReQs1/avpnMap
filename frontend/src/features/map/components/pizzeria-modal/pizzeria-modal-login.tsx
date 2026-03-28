@@ -3,12 +3,12 @@ import { LogIn } from "lucide-react";
 
 export default function ModalLogInBanner() {
   return (
-    <div className="space-y-3 rounded-xl border border-blue-300 bg-blue-100 px-2 py-3 sm:px-4">
-      <p className="inline-flex items-center gap-2 text-base font-semibold text-blue-900">
+    <div className="space-y-3 rounded-xl border border-blue-300 bg-blue-100 px-2 py-3 sm:px-4 dark:border-blue-500/20 dark:bg-blue-500/10">
+      <p className="inline-flex items-center gap-2 text-base font-semibold text-blue-900 dark:text-blue-400">
         <LogIn size={20} aria-hidden="true" />
         <span>Sign in to Track Visits</span>
       </p>
-      <p className="text-sm leading-5 text-pretty text-blue-700">
+      <p className="text-sm leading-5 text-pretty text-blue-700 dark:text-blue-300">
         Create an account to mark this pizzeria as visited, rate your experience
         and track your pizza journey.
       </p>

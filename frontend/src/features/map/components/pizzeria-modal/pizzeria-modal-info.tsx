@@ -11,7 +11,7 @@ export default function ModalPizzeriaInfo({
 }) {
   return (
     <div className="my-3 space-y-2">
-      <p className="mt-2 flex items-center gap-2 text-sm font-medium text-gray-600">
+      <p className="mt-2 flex items-center gap-2 text-sm font-medium text-gray-600 dark:text-zinc-400">
         <MapPin size={20} aria-hidden="true" />
         <span className="break-words">
           {pizzeria.address}, {pizzeria.nation}
@@ -19,7 +19,7 @@ export default function ModalPizzeriaInfo({
       </p>
       <a
         href={pizzeria.website}
-        className="inline-flex items-center gap-2 text-sm text-red-500 transition hover:text-red-600"
+        className="inline-flex items-center gap-2 text-sm text-red-500 transition hover:text-red-600 dark:text-red-400 dark:hover:text-red-300"
         target="_blank"
         rel="noopener noreferrer"
       >

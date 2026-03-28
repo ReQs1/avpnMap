@@ -22,19 +22,22 @@ export default function SearchBar() {
     data: queryResponse,
     isFetching,
     isError,
-  } = useQuery(searchOptions(queryOpt, debouncedQuery));
+  } = useQuery({
+    ...searchOptions(queryOpt, debouncedQuery),
+    enabled: query.trim().length > 1,
+  });
 
   const onQueryOptChange = (queryOpt: QueryOpt) => {
     setQuery("");
     setQueryOpt(queryOpt);
   };
 
-  const showResults = isError || !!queryResponse;
+  const showResults = query.trim().length > 1 && (isError || !!queryResponse);
 
   return (
     <>
       <div className="relative">
-        <div className="flex flex-col gap-3 rounded-lg border border-gray-200 bg-white p-4 shadow sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
+        <div className="flex flex-col gap-3 rounded-lg border border-gray-200 bg-white p-4 shadow sm:flex-row sm:flex-wrap sm:items-center sm:gap-4 dark:border-zinc-700 dark:bg-zinc-900">
           <SearchInput
             query={query}
             setQuery={setQuery}
@@ -43,7 +46,7 @@ export default function SearchBar() {
           />
 
           {/* Query Switch (between pizzerias and users) */}
-          <div className="flex w-fit gap-2 rounded-md bg-gray-100 p-1">
+          <div className="flex w-fit gap-2 rounded-md bg-gray-100 p-1 dark:bg-zinc-800">
             <TabButton
               icon={Users}
               label="Users"
@@ -60,7 +63,7 @@ export default function SearchBar() {
         </div>
 
         {showResults && (
-          <div className="absolute top-full right-0 left-0 z-50 w-full translate-y-2 overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg">
+          <div className="absolute top-full right-0 left-0 z-50 w-full translate-y-2 overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg dark:border-zinc-700 dark:bg-zinc-900">
             <SearchResults
               queryResponse={queryResponse}
               queryOpt={queryOpt}
@@ -96,8 +99,8 @@ function TabButton({
       className={cn(
         "inline-flex items-center gap-2 rounded-md border px-4 py-2 text-sm font-medium transition",
         isActive
-          ? "border-gray-300 bg-white text-gray-900 shadow-sm"
-          : "border-transparent bg-transparent text-gray-500 hover:text-gray-700 focus-visible:text-gray-700",
+          ? "border-gray-300 bg-white text-gray-900 shadow-sm dark:border-zinc-600 dark:bg-zinc-700 dark:text-zinc-100"
+          : "border-transparent bg-transparent text-gray-500 hover:text-gray-700 focus-visible:text-gray-700 dark:text-zinc-400 dark:hover:text-zinc-300 dark:focus-visible:text-zinc-300",
       )}
     >
       <Icon size={16} aria-hidden="true" />

@@ -23,7 +23,7 @@ function ProfileCard({ profile }: ProfileCardProps) {
   ).length;
 
   return (
-    <div className="rounded-2xl bg-white px-6 py-8 shadow-sm">
+    <div className="rounded-2xl border border-transparent bg-white px-6 py-8 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
       <div className="flex flex-col items-center gap-6 lg:flex-row lg:items-center lg:justify-between lg:gap-6">
         <div className="flex shrink-0 grow-[2] flex-col items-center gap-4 sm:flex-row">
           <ProfileAvatar
@@ -32,7 +32,7 @@ function ProfileCard({ profile }: ProfileCardProps) {
           />
 
           <div className="text-center sm:text-left">
-            <h1 className="text-xl font-bold text-gray-900">
+            <h1 className="text-xl font-bold text-gray-900 dark:text-zinc-100">
               {profile.username}
             </h1>
             <RankBadge

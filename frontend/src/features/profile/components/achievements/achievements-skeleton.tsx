@@ -2,27 +2,31 @@ import { Trophy } from "lucide-react";
 
 function AchievementsSkeleton() {
   return (
-    <div className="rounded-2xl bg-white px-4 py-8 shadow-sm">
-      <div className="flex items-center gap-2">
-        <Trophy size={20} className="text-gray-600" aria-hidden="true" />
-        <h2 className="text-lg font-semibold text-gray-900">Achievements</h2>
-        <div className="h-4 w-10 animate-pulse rounded bg-gray-200" />
+    <div className="flex h-[600px] flex-col rounded-2xl border border-transparent bg-white px-4 py-8 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+      <div className="flex shrink-0 items-center gap-2">
+        <Trophy
+          size={20}
+          className="text-gray-300 dark:text-zinc-600"
+          aria-hidden="true"
+        />
+        <div className="h-7 w-32 animate-pulse rounded bg-gray-200 dark:bg-zinc-800" />
+        <div className="h-6 w-12 animate-pulse rounded-full bg-gray-200 dark:bg-zinc-800" />
       </div>
 
-      <div className="mt-4 space-y-2">
+      <div className="mt-4 flex-1 space-y-2 overflow-hidden pr-2">
         {Array.from({ length: 6 }).map((_, index) => (
           <div
             key={index}
-            className="flex items-center gap-3 rounded-xl border border-gray-200 bg-gray-50 px-4 py-3"
+            className="flex items-center gap-3 rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 dark:border-zinc-700 dark:bg-zinc-800"
           >
-            <div className="h-10 w-10 shrink-0 animate-pulse rounded-lg bg-gray-200" />
+            <div className="h-10 w-10 shrink-0 animate-pulse rounded-lg bg-gray-200 dark:bg-zinc-700" />
 
             <div className="min-w-0 flex-1 space-y-2">
-              <div className="h-4 w-24 animate-pulse rounded bg-gray-200" />
-              <div className="h-3 w-40 animate-pulse rounded bg-gray-200" />
+              <div className="h-4 w-24 animate-pulse rounded bg-gray-200 dark:bg-zinc-700" />
+              <div className="h-3 w-40 animate-pulse rounded bg-gray-200 dark:bg-zinc-700" />
             </div>
 
-            <div className="h-6 w-6 shrink-0 animate-pulse rounded-full bg-gray-200" />
+            <div className="h-6 w-6 shrink-0 animate-pulse rounded-full bg-gray-200 dark:bg-zinc-700" />
           </div>
         ))}
       </div>
