@@ -22,14 +22,17 @@ export default function SearchBar() {
     data: queryResponse,
     isFetching,
     isError,
-  } = useQuery(searchOptions(queryOpt, debouncedQuery));
+  } = useQuery({
+    ...searchOptions(queryOpt, debouncedQuery),
+    enabled: query.trim().length > 1,
+  });
 
   const onQueryOptChange = (queryOpt: QueryOpt) => {
     setQuery("");
     setQueryOpt(queryOpt);
   };
 
-  const showResults = isError || !!queryResponse;
+  const showResults = query.trim().length > 1 && (isError || !!queryResponse);
 
   return (
     <>
