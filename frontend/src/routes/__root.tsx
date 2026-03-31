@@ -13,6 +13,7 @@ import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { useEffect, useRef } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { CookieBanner } from "@/features/layout/components/cookie-banner";
+import BmcButton from "@/features/layout/components/bmc-button";
 
 const RootLayout = () => {
   const { error } = useAuth();
@@ -40,6 +41,7 @@ const RootLayout = () => {
       <TanStackRouterDevtools />
       <ReactQueryDevtools initialIsOpen={false} />
       <CookieBanner />
+      <BmcButton />
     </>
   );
 };

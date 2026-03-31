@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { loadBMCWidget } from "../utils/load-bmc-widget";
 
 export function CookieBanner() {
   const [showBanner, setShowBanner] = useState(() => {
@@ -9,14 +8,13 @@ export function CookieBanner() {
   useEffect(() => {
     const consent = localStorage.getItem("cookie-consent");
     if (consent === "accepted") {
-      loadBMCWidget();
+      console.log("foo");
     }
   }, []);
 
   const handleAccept = () => {
     localStorage.setItem("cookie-consent", "accepted");
     setShowBanner(false);
-    loadBMCWidget();
   };
 
   const handleDecline = () => {
