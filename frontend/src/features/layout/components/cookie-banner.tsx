@@ -1,3 +1,4 @@
+import { initGA } from "@/shared/utils/analytics";
 import { useState, useEffect } from "react";
 
 export function CookieBanner() {
@@ -8,13 +9,14 @@ export function CookieBanner() {
   useEffect(() => {
     const consent = localStorage.getItem("cookie-consent");
     if (consent === "accepted") {
-      console.log("foo");
+      initGA();
     }
   }, []);
 
   const handleAccept = () => {
     localStorage.setItem("cookie-consent", "accepted");
     setShowBanner(false);
+    initGA();
   };
 
   const handleDecline = () => {

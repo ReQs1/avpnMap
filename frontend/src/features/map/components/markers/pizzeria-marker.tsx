@@ -6,6 +6,7 @@ import type {
   PizzeriaWithVisit,
 } from "@/features/map/api/pizza-query-options";
 import { Marker } from "@vis.gl/react-maplibre";
+import { hasConsent, logEvent } from "@/shared/utils/analytics";
 
 function PizzeriaMarker({
   pizzeria,
@@ -19,12 +20,22 @@ function PizzeriaMarker({
   const isActive = currOpenPizzeriaId === pizzeria.id;
   useCloseOnEsc(isActive, onClick);
 
+  const handleClick = () => {
+    const isAccepted = hasConsent();
+    if (isAccepted) {
+      onClick(pizzeria.id);
+      logEvent("Map", "Pizzeria_Click", pizzeria.name);
+    } else {
+      onClick(pizzeria.id);
+    }
+  };
+
   return (
     <>
       <Marker
         longitude={pizzeria.lng}
         latitude={pizzeria.lat}
-        onClick={() => onClick(pizzeria.id)}
+        onClick={handleClick}
         anchor="bottom"
       >
         <img
