@@ -1,11 +1,18 @@
 import { useEffect, useState } from "react";
 import { useRouterState } from "@tanstack/react-router";
 import { cn } from "@/shared/utils/utils";
+import { hasConsent, logEvent } from "@/shared/utils/analytics";
 
 function BmcButton() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const isLeaderboard = pathname === "/leaderboard";
   const [hiddenByScroll, setHiddenByScroll] = useState(false);
+
+  const handleClick = () => {
+    if (hasConsent()) {
+      logEvent("Donation", "Click_BMC", pathname);
+    }
+  };
 
   const isEffectivelyHidden = isLeaderboard && hiddenByScroll;
 
@@ -31,6 +38,7 @@ function BmcButton() {
       href="https://buymeacoffee.com/req___"
       target="_blank"
       rel="noopener noreferrer"
+      onClick={handleClick}
       className={cn(
         "fixed right-5 bottom-5 z-50 flex items-center gap-2.5 rounded-full px-4 py-2.5 text-sm font-bold",
         "bg-white text-zinc-900 shadow-sm ring-1 ring-black/5",
