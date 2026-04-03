@@ -32,16 +32,14 @@ function PizzeriaMarker({
 
   return (
     <>
-      <Marker
-        longitude={pizzeria.lng}
-        latitude={pizzeria.lat}
-        onClick={handleClick}
-        anchor="bottom"
-      >
-        <img
-          src={MarkerIcon}
-          className="h-14 w-10 cursor-pointer transition-opacity duration-200"
-        />
+      <Marker longitude={pizzeria.lng} latitude={pizzeria.lat} anchor="bottom">
+        <button
+          onClick={handleClick}
+          aria-label={pizzeria.name}
+          className="cursor-pointer transition-opacity duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+        >
+          <img src={MarkerIcon} className="h-14 w-10" />
+        </button>
       </Marker>
 
       {currOpenPizzeriaId === pizzeria.id && (

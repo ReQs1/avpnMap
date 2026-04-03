@@ -14,16 +14,15 @@ function ClusterMarker({
   onClick,
 }: ClusterMarkerProps) {
   return (
-    <Marker latitude={latitude} longitude={longitude} onClick={onClick}>
-      <div
-        className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-red-500 text-white shadow-lg transition-transform hover:scale-110"
-        style={{
-          fontSize: "12px",
-          fontWeight: "bold",
-        }}
+    <Marker latitude={latitude} longitude={longitude}>
+      <button
+        onClick={onClick}
+        aria-label={`Cluster of ${pointCount} pizzerias`}
+        className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-red-500 text-white shadow-lg transition-transform hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+        style={{ fontSize: "12px", fontWeight: "bold" }}
       >
         {pointCount}
-      </div>
+      </button>
     </Marker>
   );
 }
