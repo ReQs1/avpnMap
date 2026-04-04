@@ -1,9 +1,10 @@
 import { cn } from "@/shared/utils/utils";
+import { Link } from "@tanstack/react-router";
 import { PizzaIcon } from "lucide-react";
 
 function Logo({ className }: { className?: string }) {
   return (
-    <div className={cn("flex items-center gap-3", className)}>
+    <Link to="/map" className={cn("flex items-center gap-3", className)}>
       <div className="rounded-xl bg-red-500 p-2" aria-hidden="true">
         <PizzaIcon color="white" />
       </div>
@@ -15,7 +16,7 @@ function Logo({ className }: { className?: string }) {
           AVPN Pizzerias Worldwide
         </p>
       </div>
-    </div>
+    </Link>
   );
 }
 
