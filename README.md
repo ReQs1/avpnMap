@@ -46,20 +46,35 @@ A full-stack web application for tracking and discovering [Associazione Verace P
 
 - Node.js 22+
 - pnpm
-- PostgreSQL
-- Redis — run locally via Docker or use a managed service such as [Upstash](https://upstash.com/)
-
-```sh
-# Redis via Docker
-docker run -d --rm --name redis -p 6379:6379 redis:latest
-```
+- Docker (for running PostgreSQL and Redis)
 
 ### Backend
 
+1. Start the database and cache using Docker Compose:
+
 ```sh
 cd backend
-cp .env.example .env   # fill in all values
+docker compose up -d
+```
+
+2. Configure your environment variables:
+
+```sh
+cp .env.example .env
+```
+
+Ensure the following values are set in your `.env` to connect to the local Docker services:
+```env
+DATABASE_URL=postgresql://postgres:somepassword@localhost:5432/avpnmap
+REDIS_HOST=localhost
+REDIS_PORT=6379
+```
+
+3. Install dependencies and set up the database:
+
+```sh
 pnpm install
+pnpx prisma generate
 pnpx prisma migrate deploy
 pnpx prisma db seed
 pnpm run start:dev
@@ -73,10 +88,3 @@ cp .env.example .env
 pnpm install
 pnpm run dev
 ```
-
----
-
-## TODO
-- fix names in db (there are "?" or different chars)
-- Block map interaction while a visit edit/delete is in progress
-- [x] dark mode
